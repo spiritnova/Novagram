@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.site-title{
+    text-decoration: none;
+    color: white;
+    margin-left: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+}
+
+.nav{
+    background-color: #121212;
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    padding-top: 35px;
+    border-right: 1px solid rgb(67, 67, 67);
+}
+
+
+.nav-links{
+    list-style-type: none;
+    margin-top: 40px;
+    padding: 0;
+    width: 230px;
+    margin-left: 10px;
+}
+
+.active{
+    font-weight: bold;
+}
+
+.nav-links li a {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    border-radius: 24px;
+    margin-bottom: 20px;
+    transition: 0.2s all;
+}
+
+.nav-links li a:hover{
+    background-color: #1f1f1f;
+}
+
+.icons{
+    color: white;
+    margin-right: 15px;
+    font-size: 22px;
+}
+
+.nav-links li a:hover .icons{
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    font-weight: bold;
+    color: #f7709b;
+}
+
+.nav-links li a:active{
+    color: #666666;
+    background-color: transparent;
+}
+
+.nav-links li a:active .icons{
+    transform: scale(1);
+    color: #666666;
+}
+
+.buttons{
+    background-color: #121212;
+    color: white;
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    border-color: transparent;
+    border-radius: 24px;
+    margin-bottom: 20px;
+    width: 230px;
+    text-align: left;
+    margin-left: -2px;
+    outline: none;
+}
+
+.buttons:hover{
+    background-color: #1f1f1f;
+}
+
+.buttons:hover .icons{
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    color: #f7709b;
+}
+
+.buttons:active{
+    color: #666666;
+    background-color: transparent;
+}
+
+.buttons:active .icons{
+    transform: scale(1);
+    color: #666666;
+}
+
+
+/* LIGHT THEME */
+.site-title-light{
+    text-decoration: none;
+    color: black;
+    margin-left: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+}
+
+.nav-light{
+    background-color: #f5e5e5;
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    padding-top: 35px;
+    border-right: 1px solid rgb(67, 67, 67);
+}
+
+.nav-links-light{
+    list-style-type: none;
+    margin-top: 40px;
+    padding: 0;
+    width: 230px;
+    margin-left: 10px;
+}
+
+.nav-links-light li a {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    border-radius: 24px;
+    margin-bottom: 20px;
+}
+
+.nav-links-light li a:hover{
+    background-color: #dfdfdf;
+}
+
+.nav-links-light li a:hover .icons-light{
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    font-weight: bold;
+    color: #f7709b;
+}
+
+.nav-links-light li a:active{
+    color: #666666;
+    background-color: transparent;
+}
+
+.nav-links-light li a:active .icons-light{
+    transform: scale(1);
+    color: #666666;
+}
+
+
+.buttons-light{
+    background-color: transparent;
+    color: black;
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    border-color: transparent;
+    border-radius: 24px;
+    margin-bottom: 20px;
+    width: 230px;
+    text-align: left;
+    margin-left: -2px;
+    outline: none;
+}
+
+.buttons-light:hover{
+    background-color: #e4e4e4;
+}
+
+.buttons-light:hover .icons-light{
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    color: #f7709b;
+}
+
+.icons-light{
+    color: black;
+    margin-right: 15px;
+    font-size: 22px;
+}
+
+.buttons-light:active{
+    color: #666666;
+    background-color: transparent;
+}
+
+.buttons-light:active .icons-light{
+    transform: scale(1);
+    color: #666666;
+}
+
+
+
+@media (max-width : 1240px){
+    .nav-names{
+        display: none;
+    }
+
+    .nav{
+        width: 75px;
+    }
+
+    .nav-light{
+        width: 75px;
+    }
+
+    .nav-links{
+        width: 56px;
+    }
+
+    .buttons{
+        width: 56px;
+    }
+
+    .nav-links li a:hover{
+        background-color: transparent;
+    }
+
+    .buttons:hover{
+        background-color: transparent;
+    }
+}

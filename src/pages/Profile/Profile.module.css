@@ -1,0 +1,138 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 50vh;
+    padding: 20px;
+    position: relative;
+}
+
+.section{
+    justify-content: center;
+    text-align: center;
+}
+
+.profile-img-div{
+    justify-content: center;
+    text-align: right;
+    margin-top: 50px;
+    width: 50%;
+    display: flex;
+}
+
+.profile-img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #fff;
+    justify-content: center;
+    margin-left: 100px;
+}
+
+.profile-data{
+    justify-content: center;
+    text-align: left;
+    width: 80%;
+    margin-top: 10px;
+}
+
+.profile-username{
+    display: flex;
+    align-items: center;
+}
+
+.profile-username p{
+    font-size: 20px;
+}
+
+.setting{
+    cursor: pointer;
+    margin-left: 20px;
+    padding: 7px 16px;
+    border-radius: 4px;
+    font-weight:600;
+    background-color: #fff;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+.setting:hover{
+    background-color: rgb(220, 220, 220);
+}
+
+.profile-info{
+    display: flex;
+    margin-top: 25px;
+    font-size: 16px;
+}
+
+.profile-info div{
+    margin-right: 40px;
+}
+
+.profile-description{
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+.profile-description div{
+    font-weight: bold;
+}
+
+.profile-description p{
+    margin-bottom: 0px;
+}
+
+.icon{
+    font-size: 22px;
+    margin-left: 15px;
+    color: white;
+}
+
+.icon:hover{
+    color: rgb(206, 206, 206);
+}
+
+.divider{
+    justify-content: center;
+    text-align: center;
+    display: flex;
+}
+
+.line{
+    background-color: #343434;
+    width: 950px;
+    height: 1px;
+}
+
+
+.links{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    margin-right: 60px;
+    margin-bottom: 19px;
+    border-top: 1px solid white;
+    padding-top: 15px;
+}
+
+.routes{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+.nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 55px;
+}
+
+.icons{
+    margin-right: 10px;
+}

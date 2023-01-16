@@ -1,0 +1,51 @@
+.wrapper{
+    width: 100%;
+    max-width: 900px;
+}
+
+
+.activity-wrapper{
+    display: flex;
+    flex-direction: column;
+    padding: 30px 60px;
+}
+
+.para{
+    font-size: 23px;
+    font-weight: normal !important;
+}
+
+.para2{
+    font-weight: bold;
+}
+
+.location-wrapper{
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.location{
+    display: flex;
+    flex-direction: column;
+}
+
+.location-icon{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.icon{
+    font-size: 25px;
+}
+
+.status{
+    color: rgb(2, 180, 2);
+}
+
+.line{
+    height: 1px;
+    width: 559px;
+    background-color: #2c2c2c;
+    margin-bottom: 20px;
+}

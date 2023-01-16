@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.icons{
+    color: white;
+    margin-right: 15px;
+    font-size: 22px;
+}
+
+.more-div{
+    display: flex;
+    justify-content: center;
+}
+
+.more{
+    background-color: #121212;
+    display: block;
+    color: white;
+    outline: none;
+    padding: 10px 16px;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 140px;
+    font-size: 16px;
+    width: 230px;
+    text-align: left;
+    border-radius: 24px;
+    border: none;
+}
+
+.more:hover{
+    background-color: #1f1f1f;
+    cursor: pointer;
+}
+
+.more:hover .icons{
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    font-weight: bold;
+    color: #f7709b;
+}
+
+.dropdown-content{
+    display: flex;
+    flex-direction: column;
+    background-color: #333333;
+    border-radius: 6px;
+    position: absolute;
+    top: 480px;
+    left: 10px;
+    width: 238px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-content a{
+    color: white;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    display: block;
+    padding: 11px 16px;
+}
+
+.buttons{
+    color: white;
+    background-color: transparent;
+    outline: none;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    display: block;
+    padding: 11px 16px;
+    border: none;
+    text-align: left;
+}
+
+.buttons:hover{
+    background-color: #121212;
+    color: #f7709b;
+}
+
+.dropdown-content a:hover{
+    background-color: #121212;
+    color: #f7709b;
+}
+
+.dropdown-icons{
+    font-size: 24px;
+    width: 20px;
+    float: right;
+}
+
+
+/* LIGHT MODE */
+
+.icons-light{
+    color: black;
+    margin-right: 15px;
+    font-size: 22px;
+}
+
+.more-light{
+    background-color: white;
+    display: block;
+    color: black;
+    outline: none;
+    padding: 10px 16px;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 160px;
+    font-size: 16px;
+    width: 230px;
+    text-align: left;
+    border-radius: 24px;
+    border-color: transparent;
+}
+
+.more-light:hover{
+    background-color: #e4e4e4;
+    cursor: pointer;
+}
+
+.more-light:hover .icons-light{
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    font-weight: bold;
+    color: #f7709b;
+}
+
+
+.dropdown-content-light{
+    display: flex;
+    flex-direction: column;
+    background-color: #e4e5f1	;
+    color: black;
+    border-radius: 6px;
+    position: absolute;
+    top: 480px;
+    left: 10px;
+    width: 238px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-content-light a{
+    color: black;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    display: block;
+    padding: 11px 16px;
+}
+
+.buttons-light{
+    color: black;
+    background-color: transparent;
+    outline: none;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    display: block;
+    padding: 11px 16px;
+    border: none;
+    text-align: left;
+}
+
+.buttons-light:hover{
+    background-color: #dddddd;
+    color: #121212;
+}
+
+.dropdown-content-light a:hover{
+    background-color: #dddddd;
+    color: #121212;
+}
+
+@media (max-width : 1240px){
+    .nav-names{
+        display: none;
+    }
+
+    .more{
+        width: 57px;
+    }
+
+    .more:hover{
+        background-color: transparent;
+    }
+}
