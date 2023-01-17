@@ -17,9 +17,10 @@ export default function Home(){
                 <li style={{color : 'green'}}>Step 10: Saved Route</li>
                 <li style={{color : 'green'}}>Step 11: Implemented the login activity location using the ipgeolocation api</li>
                 <li style={{color : 'green'}}>Step 12: Settings design</li>
-                <li style={{color : 'red'}}>Step #: Fix the dropdown menu button ( disappear when clicking on a link )</li>
+                <li style={{color : 'green'}}>Step 13: Create button design</li>
+                <li style={{color : 'green'}}>Step 14: decide between flask or firebase</li>
+                <li style={{color : 'red'}}>Step #: Fix the dropdown menu button ( disappear when clicking on a link ) try using useRef</li>
                 <li style={{color : 'red'}}>Step #: Mobile responsivity 20%</li>
-                <li style={{color : 'red'}}>Step #: Try the Instagram api https://developers.facebook.com/docs/instagram-basic-display-api/getting-started</li>
             </ul>
 
             <h2>Logs: </h2>

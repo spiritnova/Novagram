@@ -1,55 +1,38 @@
 import styles from './Login.module.css'
-import { useState, useEffect} from 'react'
+import { useEffect, useRef, useState} from 'react'
 import { useTheme } from '../ThemeContext';
 import { Link } from 'react-router-dom';
 
 export default function Login(props){
-    const [enteredPassword, setEnteredPassword] = useState('');
-    const [passwordIsValid, setPasswordIsValid] = useState(true);
-
-    const [enteredUsername, setEnteredUsername] = useState('');
-    const [usernameIsValid, setUsernameIsValid] = useState(true);
-
-    const [formIsValid, setFormIsValid] = useState(false)
+    const passwordRef = useRef()
+    const usernameRef = useRef()
 
     const darkTheme = useTheme()
 
+    const [data, setData] = useState([{}])
 
     useEffect(() => {
-        const identifier = setTimeout(() => {
-           setFormIsValid(enteredUsername.trim().length >=4 && enteredPassword.trim().length >=8)
-        }, 500);
+        fetch("/users")
+        .then(res => res.json())
+        .then(
+            data => {
+                setData(data)
+                console.log(data)
+            }
+        )
+    }, [])
 
-        return () => {
-            clearTimeout(identifier)
-        }
-    },[enteredUsername, enteredPassword])
-
-
-    const usernameChangeHandler =(e) => {
-        setEnteredUsername(e.target.value)
-    }
-
-    const passwordChangeHandler = (e) => {
-        setEnteredPassword(e.target.value)  
-    }
 
     const formSubmissionHandler = (e) => {
         e.preventDefault();
 
-        if(enteredUsername === '' || enteredUsername.trim().length < 4){
-            setUsernameIsValid(false)
+        if(usernameRef.current.value === ''){
             return
         }
 
-        if(enteredPassword === '' || enteredPassword.trim().length < 8){
-            setPasswordIsValid(false)
+        if(passwordRef.current.value === ''){
             return
         }
-
-
-        setPasswordIsValid(enteredPassword.trim().length >= 8 )
-        setUsernameIsValid(enteredUsername.trim().length >= 4)
 
         props.onLogin()
     }
@@ -60,22 +43,18 @@ export default function Login(props){
                 <div className={`${styles.cover} ${darkTheme ? '' : styles['cover-light']} `}>
                     <h1>Login</h1>
                     <input 
-                    className={`${styles.inputs} ${usernameIsValid ? '' : styles['inputs-disabled']}`} 
+                    className={styles.inputs} 
                     type='text' 
                     placeholder="username" 
-                    value={enteredUsername}
-                    onChange={usernameChangeHandler}
+                    ref={usernameRef}
                     />
-                    {!usernameIsValid && <p>Invalid Username</p>}
                     <input 
-                        className={`${styles.inputs} ${passwordIsValid ? '' : styles['inputs-disabled']}`} 
+                        className={styles.inputs}
                         type='password' 
                         placeholder="password" 
-                        value={enteredPassword}
-                        onChange={passwordChangeHandler} 
+                        ref={passwordRef}
                     />
-                    {!passwordIsValid && <p>Invalid Password</p>}
-                    <button className={formIsValid ? styles.loginBtn : styles['loginBtn-disabled']} disabled={!formIsValid}>Login</button>
+                    <button className={styles.loginBtn}>Login</button>
 
                     <p>Don't have an account? <Link to="/register" className={styles.links}>Sign up</Link></p>
                     <p>Or</p>
