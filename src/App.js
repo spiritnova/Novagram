@@ -1,5 +1,7 @@
 import { Route, Routes, Navigate} from "react-router-dom";
 import { useEffect, useState } from 'react'
+import { useCookie } from './hooks/useCookie'
+import uuid from 'react-uuid'
 
 import { ThemeProvider } from "./ThemeContext";
 import AuthContext from "./context/auth-context";
@@ -29,17 +31,22 @@ import Register from "./pages/Register";
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+if (window !== undefined) {
+  let csrfToken = window.crypto.randomUUID();
+}
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState()
 
-  function loginHandler(username, password){
-    localStorage.setItem('isLoggedIn', '1')
+  function loginHandler(){
+    sessionStorage.setItem('isLoggedIn', '1')
     setIsLoggedIn(true);
   }
 
-  function logoutHandler(username, password)
+  function logoutHandler()
   {
-      localStorage.removeItem('isLoggedIn')
+      sessionStorage.removeItem('isLoggedIn')
       setIsLoggedIn(false);
   }
 
