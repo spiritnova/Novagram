@@ -74,6 +74,13 @@ export default function Register() {
             onChange={nameChangeHandler}
             onBlur={validateNameHandler}
           />
+          {!nameIsValid ? (
+            <li className={styles["password-error"]}>
+              Name must contain at least 4 letters
+            </li>
+          ) : (
+            ""
+          )}
           <input
             className={`${styles.inputs} ${
               usernameIsValid ? "" : styles["inputs-disabled"]

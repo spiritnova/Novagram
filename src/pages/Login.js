@@ -1,5 +1,5 @@
 import styles from "./Login.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTheme } from "../ThemeContext";
 import { Link } from "react-router-dom";
 
@@ -10,15 +10,6 @@ export default function Login(props) {
   const darkTheme = useTheme();
 
   const [data, setData] = useState([{}]);
-
-  useEffect(() => {
-    fetch("/register")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        console.log(data);
-      });
-  }, []);
 
   const formSubmissionHandler = (e) => {
     e.preventDefault();
@@ -31,8 +22,30 @@ export default function Login(props) {
       return;
     }
 
-    props.onLogin();
+    const data = {
+      "username" : usernameRef.current.value,
+      "password" : passwordRef.current.value,
+    }
+    
+    fetch("/login", {
+      method : "POST",
+      headers : {"Content-Type": "application/json"},
+      body : JSON.stringify(data),
+    })
+    .then(
+      res => res.json()
+    )
+    .then(data => {
+      if(data.username || data.password){
+        console.log(data)
+        setData(data)
+      }
+      else{
+        props.onLogin();
+      }
+    })
   };
+
 
   return (
     <div className={styles.wrapper}>
@@ -46,15 +59,19 @@ export default function Login(props) {
           <input
             className={styles.inputs}
             type="text"
+            name="username"
             placeholder="username"
             ref={usernameRef}
           />
+          {data.username && <p className={styles.error}>{data.username}</p>}
           <input
             className={styles.inputs}
             type="password"
+            name="password"
             placeholder="password"
             ref={passwordRef}
           />
+          {data.password && <p className={styles.error}>{data.password}</p>}
           <button className={styles.loginBtn}>Login</button>
 
           <p>

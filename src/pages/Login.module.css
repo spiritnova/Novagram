@@ -26,6 +26,12 @@
     color: black;
 }
 
+.error{
+    color: red;
+    width: 300px;
+    text-align: center;
+}
+
 
 @media only screen and (max-width : 600px)
 {
