@@ -36,12 +36,14 @@ export default function Login(props) {
       res => res.json()
     )
     .then(data => {
-      if(data.username || data.password){
-        console.log(data)
-        setData(data)
-      }
-      else{
+      setData(data)
+      console.log(data.data)
+      if(data.success){
+        console.log("success")
         props.onLogin();
+      }
+      if(data.data){
+        props.sendData(data.data)
       }
     })
   };
@@ -51,6 +53,7 @@ export default function Login(props) {
     <div className={styles.wrapper}>
       <form onSubmit={formSubmissionHandler}>
         <div
+          style={{height: 570}}
           className={`${styles.cover} ${
             darkTheme ? "" : styles["cover-light"]
           } `}

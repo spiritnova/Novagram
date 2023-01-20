@@ -1,6 +1,6 @@
 import styles from "./Login.module.css";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [enteredPassword, setEnteredPassword] = useState("");
@@ -13,9 +13,11 @@ export default function Register() {
   const [nameIsValid, setNameIsValid] = useState();
 
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState("");
-  const [confirmPasswordIsValid, setConfirmPasswordIsValid] = useState();
 
   const [formIsValid, setFormIsValid] = useState(false);
+
+
+  const [data, setData] = useState([{}])
 
   useEffect(() => {
     setFormIsValid(
@@ -54,88 +56,101 @@ export default function Register() {
     setEnteredConfirmPassword(e.target.value);
   };
 
-  const validateConfirmPassword = () => {
-    setConfirmPasswordIsValid(enteredPassword === enteredConfirmPassword);
-  };
+
+  let navigate = useNavigate()
+
+
+  const formSubmissionHandler = (e) => {
+    e.preventDefault()
+
+    const data = {
+      "name" : enteredName,
+      "username" : enteredUsername,
+      "password" : enteredPassword,
+      "confirmPassword": enteredConfirmPassword
+    }
+
+
+    fetch("/register", {
+      method : "POST",
+      headers : {"Content-Type": "application/json"},
+      body : JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(data => {
+      setData(data)
+      if(data.success){
+        navigate("/login")
+      }
+    })
+  }
 
   return (
     <div className={styles.wrapper}>
-      <form action="/register" method="post">
+      <form onSubmit={formSubmissionHandler}>
         <div className={styles.cover}>
-          <h1>Register</h1>
+          <h1 className={styles.title}>Register</h1>
           <input
-            className={`${styles.inputs} ${
-              nameIsValid ? "" : styles["inputs-disabled"]
-            }`}
+            className={styles.inputs}
             type="text"
             name="name"
             placeholder="name"
             value={enteredName}
             onChange={nameChangeHandler}
             onBlur={validateNameHandler}
+            required
           />
           {!nameIsValid ? (
-            <li className={styles["password-error"]}>
+            <p className={styles["password-warning"]}>
               Name must contain at least 4 letters
-            </li>
+            </p>
           ) : (
             ""
           )}
+          {data.name && <p>Name must contain at least 4 letters</p>}
           <input
-            className={`${styles.inputs} ${
-              usernameIsValid ? "" : styles["inputs-disabled"]
-            }`}
+            className={styles.inputs}
             type="text"
             name="username"
             placeholder="username"
             value={enteredUsername}
             onChange={usernameChangeHandler}
             onBlur={validateUsernameHandler}
+            required
           />
-          {!usernameIsValid ? (
-            <li className={styles["password-error"]}>
-              Username must contain at least 4 letters
-            </li>
-          ) : (
-            ""
-          )}
+          {data.username && 
+            <p className={styles["password-error"]}>
+              {data.username}
+            </p>
+            }
+            {!usernameIsValid && <p className={styles['password-warning']}>Username must contain at least 4 letters</p>}
           <input
-            className={`${styles.inputs} ${
-              passwordIsValid ? "" : styles["inputs-disabled"]
-            }`}
+            className={styles.inputs}
             type="password"
             placeholder="password"
             name="password"
             value={enteredPassword}
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
+            required
           />
-          {!passwordIsValid ? (
-            <li className={styles["password-error"]}>
-              Password must contain at least 8 characters
-            </li>
-          ) : (
-            ""
-          )}
+          {!passwordIsValid && <p className={styles["password-warning"]}>Password must contain at least 8 characters</p>}
+          {data.password && <p className={styles['password-error']}>{data.password}</p>}
           <input
-            className={`${styles.inputs} ${
-              confirmPasswordIsValid ? "" : styles["inputs-disabled"]
-            }`}
+            className={styles.inputs}
             type="password"
             name="confirmPassword"
             placeholder="confirm password"
             value={enteredConfirmPassword}
             onChange={confirmPasswordChangeHandler}
-            onBlur={validateConfirmPassword}
+            required
           />
-          {!confirmPasswordIsValid ? (
-            <li className={styles["password-error"]}>Passwords do not match</li>
-          ) : (
-            ""
-          )}
+          {data.confirmPassword && 
+            <p className={styles["password-error"]}>Passwords do not match</p>
+            }
           <button
             className={
-              formIsValid ? styles.loginBtn : styles["loginBtn-disabled"]
+              styles.loginBtn
             }
             disabled={!formIsValid}
           >
