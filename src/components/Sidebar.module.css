@@ -294,11 +294,25 @@
     font-size: 80px;
 }
 
-.modal-button{
+.modal-label{
     padding: 5px 16px;
     background-color: rgb(54, 127, 255);
     color: white;
     border-radius: 8px;
     border: none;
     margin-bottom: 20px;
+}
+
+.modal-label input{
+    display: none;
+}
+
+.modal-close{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
 }

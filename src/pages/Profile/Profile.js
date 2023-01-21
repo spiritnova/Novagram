@@ -16,7 +16,9 @@ export default function Profile() {
     <div>
       <div className={styles.wrapper}>
         <div className={styles["profile-img-div"]}>
-          <div className={styles["profile-img"]}></div>
+          <div className={styles["profile-img"]}>
+            <img src={data.userData.picture}></img>
+          </div>
         </div>
 
         <div className={styles["profile-data"]}>

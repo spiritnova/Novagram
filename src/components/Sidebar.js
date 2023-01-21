@@ -9,6 +9,7 @@ import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faPhotoFilm } from '@fortawesome/free-solid-svg-icons'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import { useState } from 'react'
@@ -16,13 +17,19 @@ import { useTheme } from '../ThemeContext'
 
 import Dropdown from './Dropdown'
 import AuthContext from '../context/auth-context'
+import { useData } from '../context/user-context'
 import Backdrop from './UI Kit/Backdrop'
 
 export default function Sidebar(props){
-
     const [showBackdrop, setShowBackdrop] = useState(false)
     const [showModal, setShowModal] = useState(false)
+
+    const [image, setImage] = useState('')
+    const [loading, setIsLoading] = useState(false)
+
+
     const darkTheme = useTheme()
+    const userData = useData()
 
     darkTheme // Used to match the Body and Wrapper'S color depending on the theme
     ? document.body.style = 'background : #121212'
@@ -36,6 +43,35 @@ export default function Sidebar(props){
     const handleClose = () => {
         setShowBackdrop(false)
         setShowModal(false)
+    }
+
+    const uploadImage = async (e) => {
+        const files = e.target.files
+        const data = new FormData()
+        data.append('file', files[0])
+        data.append('upload_preset', 'novagram')
+        setIsLoading(true)
+        const res = await fetch("https://api.cloudinary.com/v1_1/dj3sulxro/image/upload", {
+            method: "POST",
+            body: data
+        })
+        const file = await res.json()
+
+        setImage(file.secure_url)
+        setIsLoading(false)
+
+        const img = {
+            "image": image,
+            "username": userData.userData.username
+        }
+
+        console.log(image)
+
+        fetch("/profile", {
+            method: "POST",
+            headers : {"Content-Type": "application/json"},
+            body: JSON.stringify(img)
+        })
     }
 
     return (
@@ -91,11 +127,16 @@ export default function Sidebar(props){
                             <p>Drag photos and videos here</p>
 
                             <div>
-                                <button className={styles['modal-button']}>Select from computer</button>
+                                <label className={styles['modal-label']}>
+                                    Select from computer
+                                    <input type="file" onChange={uploadImage}/>
+                                </label>
                             </div>
 
                             <div>
-                                <button onClick={handleClose}>Close</button>
+                                <button onClick={handleClose} className={styles['modal-close']}>
+                                    <FontAwesomeIcon icon={faXmark}/> 
+                                </button>
                             </div>
                        </div>}
                     </div>
