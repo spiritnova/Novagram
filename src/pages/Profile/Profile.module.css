@@ -46,6 +46,11 @@
     margin-bottom: 0 !important;
 }
 
+.bio{
+    white-space: pre-line;
+    width: 150px;
+}
+
 .setting{
     cursor: pointer;
     margin-left: 20px;

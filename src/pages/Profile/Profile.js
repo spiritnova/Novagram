@@ -47,12 +47,12 @@ export default function Profile() {
 
           <div className={styles["profile-description"]}>
             <div>{data.userData.name}</div>
-            <p>React web developer</p>
-            <p>Graphic Designer</p>
-            <p>Gamer</p>
-            <p>Anime/Manga(hwa, hua)</p>
-            <p>Hiking</p>
-            <p>Fahita/Shawarma/Hambaga</p>
+            <p className={styles.bio}>React web developer
+            Graphic Designer
+            Gamer
+            Anime/Manga(hwa, hua)
+            Hiking
+            Fahita/Shawarma/Hambaga</p>
           </div>
         </div>
       </div>

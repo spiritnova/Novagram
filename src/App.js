@@ -1,7 +1,7 @@
 import { Route, Routes, Navigate} from "react-router-dom";
 import { useEffect, useState } from 'react'
-import { useCookie } from './hooks/useCookie'
-import uuid from 'react-uuid'
+// import { useCookie } from './hooks/useCookie'
+// import uuid from 'react-uuid'
 
 import { ThemeProvider } from "./ThemeContext";
 import AuthContext from "./context/auth-context";
@@ -33,12 +33,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {UserContext} from "./context/user-context";
 
 
-if (window !== undefined) {
-  let csrfToken = window.crypto.randomUUID();
-}
-
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState()
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn'))
   const [userData, setUserData] = useState({})
 
 
@@ -47,14 +43,14 @@ const App = () => {
   }
 
   function loginHandler(){
-    sessionStorage.setItem('isLoggedIn', '1')
+    localStorage.setItem('isLoggedIn', '1')
     setIsLoggedIn(true);
   }
 
   function logoutHandler()
   {
-      sessionStorage.removeItem('isLoggedIn')
-      setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn')
+    setIsLoggedIn(false);
   }
 
   useEffect(() => {
@@ -91,7 +87,7 @@ const App = () => {
                     <Route path="login_activity" element={isLoggedIn ? <LoginActivity /> : <Navigate to ="/login"/>} />
                     <Route path="help" element={isLoggedIn ? <Help /> : <Navigate to ="/login"/>} />
                   </Route>
-                  <Route path="login" element={!isLoggedIn ? <Login onLogin={loginHandler} sendData={sendData}/> : <Navigate to ="/"/>}/>
+                  <Route path="login" element={isLoggedIn ? <Home/> : <Login onLogin={loginHandler} sendData={sendData}/>}/>
                   <Route path="register" element={!isLoggedIn ? <Register/> : <Navigate to ="/"/>}/>
                 </Routes>
             </Wrapper>
