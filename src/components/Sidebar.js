@@ -12,7 +12,7 @@ import { faPhotoFilm } from '@fortawesome/free-solid-svg-icons'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useTheme } from '../ThemeContext'
 
 import Dropdown from './Dropdown'
@@ -30,6 +30,7 @@ export default function Sidebar(props){
 
     const darkTheme = useTheme()
     const userData = useData()
+
 
     darkTheme // Used to match the Body and Wrapper'S color depending on the theme
     ? document.body.style = 'background : #121212'
@@ -64,8 +65,6 @@ export default function Sidebar(props){
             "image": image,
             "username": userData.userData.username
         }
-
-        console.log(image)
 
         fetch("/profile", {
             method: "POST",

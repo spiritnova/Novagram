@@ -67,10 +67,10 @@ const App = () => {
 
   return (
       <ThemeProvider>
-        <UserContext.Provider value={{userData : userData}}>
-          <AuthContext.Provider value={{isLoggedIn : isLoggedIn}}>
-            <Sidebar onLogout={logoutHandler}/>
+        <AuthContext.Provider value={{isLoggedIn : isLoggedIn}}>
+          <UserContext.Provider value={{userData : userData}}>
             <Wrapper>
+              <Sidebar onLogout={logoutHandler}/>
                 <Routes>
                   <Route path="/" element={isLoggedIn ? <Home/> : <Navigate to = "/login"/>} />
                   <Route path="explore" element={isLoggedIn ? <Explore /> : <Navigate to ="/login"/>} />
@@ -91,8 +91,8 @@ const App = () => {
                   <Route path="register" element={!isLoggedIn ? <Register/> : <Navigate to ="/"/>}/>
                 </Routes>
             </Wrapper>
-          </AuthContext.Provider>
-        </UserContext.Provider>
+          </UserContext.Provider>
+        </AuthContext.Provider>
       </ThemeProvider>
   );
 };
