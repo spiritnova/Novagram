@@ -43,7 +43,7 @@
     flex-direction: column;
     background-color: #333333;
     border-radius: 6px;
-    position: absolute;
+    position: fixed;
     top: 455px;
     left: 10px;
     width: 238px;

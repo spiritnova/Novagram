@@ -43,7 +43,7 @@ export default function Login(props) {
         props.onLogin();
       }
       if(data.data){
-        props.sendData(data.data)
+        localStorage.setItem('user', JSON.stringify(data.data))
       }
     })
   };

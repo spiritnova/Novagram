@@ -2,16 +2,15 @@ import Backdrop from "../../components/UI Kit/Backdrop";
 import styles from "./Settings.module.css";
 import { useState } from "react";
 import { useTheme } from "../../ThemeContext";
-import { useData } from "../../context/user-context";
 
 export default function EditProfile() {
   const [showBackdrop, setShowBackdrop] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const data = useData();
+  const user = JSON.parse(localStorage.getItem('user'))
 
-  const [enteredName, setEnteredName] = useState(data.userData.name);
-  const [enteredUsername, setEnteredUsername] = useState(data.userData.username);
+  const [enteredName, setEnteredName] = useState(user.name);
+  const [enteredUsername, setEnteredUsername] = useState(user.username);
 
   const nameChangeHandler = (e) => {
     setEnteredName(e.target.value);
@@ -44,7 +43,7 @@ export default function EditProfile() {
           className={darkTheme ? styles.imgDiv : styles["imgDiv-light"]}
         ></div>
         <div className={styles.pfp}>
-          <p>{data.userData.username}</p>
+          <p>{user.username}</p>
           <button type="button" onClick={handleShow}>
             Change profile photo
           </button>

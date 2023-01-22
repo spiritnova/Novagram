@@ -5,25 +5,27 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faTableCells } from "@fortawesome/free-solid-svg-icons";
 
 import { Link, Outlet } from "react-router-dom";
-import { useData } from "../../context/user-context";
+import { useState } from "react";
 
 
 export default function Profile() {
-    const data = useData()
 
+    // const [postCount, setPostCount] = useState();
+
+    const user = JSON.parse(localStorage.getItem('user'))
 
   return (
     <div>
       <div className={styles.wrapper}>
         <div className={styles["profile-img-div"]}>
           <div className={styles["profile-img"]}>
-            <img src={data.userData.picture}></img>
+            <img src={user.picture} alt="profile"></img>
           </div>
         </div>
 
         <div className={styles["profile-data"]}>
           <div className={styles["profile-username"]}>
-            <p>{data.userData.username}</p>
+            <p>{user.username}</p>
             <Link to="/settings" className={styles.setting}>
               Edit profile
             </Link>
@@ -48,7 +50,7 @@ export default function Profile() {
           </div>
 
           <div className={styles["profile-description"]}>
-            <div>{data.userData.name}</div>
+            <div>{user.name}</div>
             <p className={styles.bio}>React web developer
             Graphic Designer
             Gamer
@@ -82,7 +84,7 @@ export default function Profile() {
         </div>
 
         <div className={styles.routes}>
-          <Outlet />
+          <Outlet/>
         </div>
       </div>
     </div>
