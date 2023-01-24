@@ -10,9 +10,10 @@ import { faSquarePlus } from '@fortawesome/free-regular-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faPhotoFilm } from '@fortawesome/free-solid-svg-icons'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, useRef } from 'react'
 import { useTheme } from '../ThemeContext'
 
 import Dropdown from './Dropdown'
@@ -21,14 +22,19 @@ import Backdrop from './UI Kit/Backdrop'
 
 export default function Sidebar(props){
     const [showBackdrop, setShowBackdrop] = useState(false)
-    const [showModal, setShowModal] = useState(false)
 
     const [image, setImage] = useState('')
     const [loading, setIsLoading] = useState(false)
 
+    const modal = useRef()
+    const modal2 = useRef()
+    const modal3 = useRef()
+
+    const pic = useRef()
+    const fileInput = useRef()
+
     const [selectedFile, setSelectedFile] = useState()
     const [preview, setPreview] = useState()
-
 
     const darkTheme = useTheme()
     const user = JSON.parse(localStorage.getItem('user'))
@@ -39,20 +45,57 @@ export default function Sidebar(props){
     ? document.body.style = 'background : #121212'
     : document.body.style = 'background : #f2f2f2'
 
-    const handleShow = () => {
+    const handleShow = (e) => {
         setShowBackdrop(true)
-        setShowModal(true)
+        modal.current.style.display = "flex"
     }
 
     const handleClose = () => {
         setShowBackdrop(false)
-        setShowModal(false)
+        setPreview(undefined)
 
-        let modal2 = document.getElementById("modal2")
-        let modal3 = document.getElementById("modal3")
-        modal2.style.display = "none"
-        modal3.style.display = "none"
+        modal.current.style.display = "none"
+        modal2.current.style.display = "none"
+        modal3.current.style.display = "none"
     }
+
+    const modalBack = (page) => () => {
+        if (page === "page"){
+            modal.current.style.display = "none"
+            setShowBackdrop(false)
+        }
+
+        if(page === "page2"){
+            modal.current.style.display = "flex"
+            modal2.current.style.display = "none"
+            fileInput.current.value = ''
+            setSelectedFile(undefined)
+            setPreview(undefined)
+        }
+
+        if(page === "page3"){
+            modal3.current.style.display = "none"
+            modal2.current.style.display = "flex"
+        }
+    }
+
+    const modalHandler = () => {
+        modal2.current.style.display ="none"
+        modal3.current.style.display ="flex"
+    }
+
+    const inputChangeHandler = (e) => {
+        modal.current.style.display = "none"
+        modal2.current.style.display = "flex"
+
+        if(!e.target.files || e.target.files.length === 0){
+            setSelectedFile(undefined)
+            return
+        }
+
+        setSelectedFile(e.target.files[0])
+    }
+    
 
     useEffect(() => {
         if(!selectedFile){
@@ -67,34 +110,20 @@ export default function Sidebar(props){
     }, [selectedFile])
 
     const uploadImage = async (e) => {
-
-        let modal1 = document.getElementById("modal1")
-        let modal2 = document.getElementById("modal2")
-
-        modal1.style.display = "none"
-        modal2.style.display = "flex"
-
         const files = e.target.files
         console.log(files, files[0])
-
-        if(!e.target.files || e.target.files.length === 0){
-            setSelectedFile(undefined)
-            return
-        }
-
-        setSelectedFile(e.target.files[0])
 
         const data = new FormData()
         data.append('file', files[0])
         data.append('upload_preset', 'novagram')
         setIsLoading(true)
-        // const res = await fetch("https://api.cloudinary.com/v1_1/dj3sulxro/image/upload", {
-        //     method: "POST",
-        //     body: data
-        // })
-        // const file = await res.json()
+        const res = await fetch("https://api.cloudinary.com/v1_1/dj3sulxro/image/upload", {
+            method: "POST",
+            body: data
+        })
+        const file = await res.json()
 
-        // setImage(file.secure_url)
+        setImage(file.secure_url)
         setIsLoading(false)
 
         const img = {
@@ -107,14 +136,6 @@ export default function Sidebar(props){
             headers : {"Content-Type": "application/json"},
             body: JSON.stringify(img)
         })
-    }
-
-    const modalHandler = () => {
-        let modal2 = document.getElementById("modal2")
-        let modal3 = document.getElementById("modal3")
-
-        modal2.style.display ="none"
-        modal3.style.display ="flex"
     }
 
     return (
@@ -155,7 +176,7 @@ export default function Sidebar(props){
                 <Dropdown onLogout={props.onLogout}/>
             </nav> : ''}
             {showBackdrop && <Backdrop/>}
-            {showModal && <div id="modal1" className={styles.modal}>
+            <div className={styles.modal} ref={modal}>
                 <div>
                     <p>Create new post</p>
                 </div>
@@ -169,61 +190,66 @@ export default function Sidebar(props){
                 <div>
                     <label className={styles['modal-label']}>
                         Select from computer
-                        <input type="file" onChange={uploadImage}/>
+                        <input ref={fileInput} type="file" onChange={inputChangeHandler}/>
                     </label>
                 </div>
-                <div className={styles['modal-preview']}>
-                    {selectedFile && <img src={preview}/>}
+
+                <div>
+                    <button className={styles['modal-previous']} onClick={modalBack("page")}>
+                        <FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>
+                    </button>
                 </div>
-            </div>}
-            <div id="modal2" className={styles.modal2}>
+            
+                <div className={styles['modal-preview']}>
+                    {selectedFile && <img ref={pic} src={preview}/>}
+                </div>
+            </div>
+
+
+            <div className={styles.modal2} ref={modal2}>
                 <div>
                     <p>Create new post</p>
                 </div>
 
                 <div className={styles['modal-preview']}>
-                    {selectedFile && <img src={preview}/>}
+                    {selectedFile && <img  src={preview}/>}
                 </div>
 
                 <div>
-                    <button className={styles['modal-previous']}>
-                        back
+                    <button className={styles['modal-previous']} onClick={modalBack("page2")}>
+                        <FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>
                     </button>
                 </div>
 
                 <div>
-                    <button className={styles['modal-next']} onClick={modalHandler}>
+                    <button className={styles['modal-next2']} onClick={modalHandler}>
                         Next
                     </button>
                 </div>
             </div>
-            <div id="modal3" className={styles.modal2}>
-                <div>
+            <div className={styles.modal3} ref={modal3}>
+                <div className={styles.modalDiv}>
                     <p>Create new post</p>
+
+                    <button className={styles['modal-previous']} onClick={modalBack("page3")}>
+                        <FontAwesomeIcon icon={faChevronLeft}/>
+                    </button>
+                    <button className={styles['modal-share']} onClick={uploadImage}>Share</button>
                 </div>
 
-                <div>
-                    <div className={styles['modal-preview']}>
+                <div className={styles.caption}>
+                    <div className={styles['modal-preview3']}>
                         {selectedFile && <img src={preview}/>}
                     </div>
 
-                    <div>
-                        <textarea></textarea>
+                    <div className={styles.textarea}>
+                        <textarea placeholder='Write a caption...'/>
                     </div>
                 </div>
-
-                <div>
-                    <button className={styles['modal-previous']}>
-                        back
-                    </button>
-                </div>
-
-                <div>
-                    <button onClick={handleClose} className={styles['modal-close']}>
-                        <FontAwesomeIcon icon={faXmark}/> 
-                    </button>
-                </div>
             </div>
+            {showBackdrop && <button onClick={handleClose} className={styles['modal-close']}>
+                <FontAwesomeIcon icon={faXmark}/> 
+            </button>}
         </div>
     )
 }
