@@ -68,7 +68,7 @@ const App = () => {
                 <Route path="/" element={isLoggedIn ? <Home/> : <Navigate to = "/login"/>} />
                 <Route path="explore" element={isLoggedIn ? <Explore /> : <Navigate to ="/login"/>} />
                 <Route path="messages" element={isLoggedIn ? <Messages /> : <Navigate to ="/login"/>} />
-                <Route path="profile" element={isLoggedIn ? <Profile /> : <Navigate to ="/login"/>} >
+                <Route path="profile/:username" element={isLoggedIn ? <Profile /> : <Navigate to ="/login"/>} >
                   <Route path="" element={isLoggedIn ? <Posts /> : <Navigate to ="/login"/>} />
                   <Route path="saved" element={isLoggedIn ? <Saved /> : <Navigate to ="/login"/>} />
                 </Route>

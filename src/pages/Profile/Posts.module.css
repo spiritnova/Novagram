@@ -9,11 +9,88 @@
 .card{
     width: 298px;
     height: 298px;
-    background-color: greenyellow;
 }
 
 .card img{
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.card img:hover{
+    opacity: 0.5;
+}
+
+.buttons{
+    position: relative;
+    bottom: 55%;
+    width: 131px;
+    margin-left: 90px;
+}
+
+.buttons:hover .test{
+    opacity: 0.5;
+}
+
+.card:hover .button{
+    opacity: 1;
+}
+
+.button{
+    font-size: 25px;
+    margin-right: 20px;
+    margin-left: 20px;
+    color: white;
+    opacity: 0;
+}
+
+.loader{
+    border-radius: 50%;
+    box-shadow: 0 1em 0 -.2em currentcolor;
+    position: relative;
+    animation: loader-14 0.8s ease-in-out alternate infinite;
+    animation-delay: 0.32s;
+    top: -1em;
+    width: 1em;
+    height: 1em;
+    color: white;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.loader::after{
+    content: '';
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    box-shadow: inherit;
+    animation: inherit;
+}
+.loader::before{
+    content: '';
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    box-shadow: inherit;
+    animation: inherit;
+}
+
+.loader::before{
+    left: -1em;
+    animation-delay: 0.48s;
+}
+.loader::after{
+    right: -1em;
+    animation-delay: 0.16s;
+}
+
+@keyframes loader-14 {
+    0% {
+        box-shadow: 0 2em 0 -.2em white;
+    }
+    100% {
+        box-shadow: 0 1em 0 -.2em white;
+    }
 }

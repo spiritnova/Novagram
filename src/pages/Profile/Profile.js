@@ -67,14 +67,14 @@ export default function Profile() {
 
       <div className={styles.section}>
         <div className={styles.nav}>
-          <Link to="/profile" className={styles.links}>
+          <Link to={`/profile/${user.username}`} className={styles.links}>
             <FontAwesomeIcon
               icon={faTableCells}
               className={styles.icons}
             ></FontAwesomeIcon>
             POSTS
           </Link>
-          <Link to="/profile/saved" className={styles.links}>
+          <Link to={`/profile/${user.username}/saved`} className={styles.links}>
             <FontAwesomeIcon
               icon={faBookmark}
               className={styles.icons}

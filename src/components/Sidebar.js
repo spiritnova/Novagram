@@ -32,6 +32,7 @@ export default function Sidebar(props){
 
     const pic = useRef()
     const fileInput = useRef()
+    const caption = useRef()
 
     const [selectedFile, setSelectedFile] = useState()
     const [preview, setPreview] = useState()
@@ -110,7 +111,7 @@ export default function Sidebar(props){
     }, [selectedFile])
 
     const uploadImage = async (e) => {
-        const files = e.target.files
+        const files = fileInput.current.target.files
         console.log(files, files[0])
 
         const data = new FormData()
@@ -126,15 +127,17 @@ export default function Sidebar(props){
         setImage(file.secure_url)
         setIsLoading(false)
 
-        const img = {
+
+        const post = {
             "image": image,
-            "username": user.username
+            "username": user.username,
+            "caption" : caption.current.target.value
         }
 
         fetch("/profile", {
             method: "POST",
             headers : {"Content-Type": "application/json"},
-            body: JSON.stringify(img)
+            body: JSON.stringify(post)
         })
     }
 
@@ -168,7 +171,7 @@ export default function Sidebar(props){
                         <FontAwesomeIcon icon={faSquarePlus} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>Create</span>
                         </button>
                     </li>
-                    <ActiveLink to="/profile">
+                    <ActiveLink to={`/profile/${user.username}`}>
                         <FontAwesomeIcon icon={faUser} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>Profile</span>
                     </ActiveLink>
                 </ul>
@@ -243,7 +246,7 @@ export default function Sidebar(props){
                     </div>
 
                     <div className={styles.textarea}>
-                        <textarea placeholder='Write a caption...'/>
+                        <textarea ref={caption} placeholder='Write a caption...'/>
                     </div>
                 </div>
             </div>
