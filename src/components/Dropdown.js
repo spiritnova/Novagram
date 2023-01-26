@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme, useThemeUpdate } from '../ThemeContext'
 
+import Wrapper from './UI Kit/Wrapper'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './Dropdown.module.css'
 
@@ -24,7 +26,7 @@ export default function Dropdown(props){
     const darkTheme = useTheme()
 
     return (
-        <div>
+        <Wrapper>
             {isActive ? <div className={darkTheme ? styles['dropdown-content'] : styles['dropdown-content-light']}>
                 <Link to='/settings'>
                 Settings<FontAwesomeIcon icon={faGear} className={styles['dropdown-icons']}/>
@@ -46,6 +48,6 @@ export default function Dropdown(props){
                     <FontAwesomeIcon icon={faBars} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>More</span>
                 </button>
             </div>
-        </div>
+        </Wrapper>
     )
 }

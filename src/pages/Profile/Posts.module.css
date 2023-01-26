@@ -4,6 +4,7 @@
     flex-wrap: wrap;
     row-gap: 28px;
     column-gap: 28px;
+    overflow-x: hidden;
 }
 
 .card{

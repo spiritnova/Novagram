@@ -5,7 +5,8 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faTableCells } from "@fortawesome/free-solid-svg-icons";
 
 import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
+// import { useState } from "react";
+import Wrapper from "../../components/UI Kit/Wrapper";
 
 
 export default function Profile() {
@@ -15,7 +16,7 @@ export default function Profile() {
     const user = JSON.parse(localStorage.getItem('user'))
 
   return (
-    <div>
+    <Wrapper>
       <div className={styles.wrapper}>
         <div className={styles["profile-img-div"]}>
           <div className={styles["profile-img"]}>
@@ -87,6 +88,6 @@ export default function Profile() {
           <Outlet/>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }

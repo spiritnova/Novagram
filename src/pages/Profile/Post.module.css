@@ -1,0 +1,82 @@
+.backdrop{
+    width: 100%;
+    height: 200vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999 !important;
+    overflow: hidden;
+}
+
+.backdrop::-webkit-scrollbar{
+    display: none;
+}
+
+.modal-close{
+    position: absolute;
+    top: 0;
+    right: 15px;
+    font-size: 28px;
+}
+
+.modal-close button{
+    background :none;
+    color: white;
+    border: none;
+}
+
+.modal{
+    display: flex;
+    position: fixed;
+    top: 5%;
+    left: 12%;
+    z-index: 35000 !important;
+    background-color: #1b1b1b;
+    height: 700px;
+}
+
+.modal::-webkit-scrollbar{
+    display: none;
+}
+
+.modal-img{
+    width: 650px;
+}
+
+.modal-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-details{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-details-control{
+    border-bottom: 1px solid gray;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-details-control p{
+    margin-bottom: 0px !important;
+    margin-left: 20px;
+    text-align: left;
+}
+
+.modal-details-comments{
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid gray;
+}
+
+.modal-details-reactions{
+    height: 100px;
+}

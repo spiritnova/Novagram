@@ -4,10 +4,20 @@ import { Link } from 'react-router-dom'
 
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState } from 'react'
+
+import Post from './Post'
 
 export default function Posts(){
+    const [showModal, setShowModal] = useState(false)
+
+    {showModal 
+        ? document.body.style.overflow = "hidden" 
+        : document.body.style.overflow ="auto"
+    }
 
     const user = JSON.parse(localStorage.getItem('user'))
+
 
     const postsQuery = useQuery({
         queryKey: ["posts"],
@@ -18,24 +28,30 @@ export default function Posts(){
     if (postsQuery.isLoading) return <div className={styles.loader}></div>
     if (postsQuery.isError) return <pre>{JSON.stringify(postsQuery.error)}</pre>
 
-    if(postsQuery.isError){console.log(postsQuery.error)}
-    console.log(postsQuery.data)
+
+    const postViewHandler = () => {
+        setShowModal(true)
+    }
+
+    const handleClose = () => {
+        setShowModal(false)
+        console.log("test")
+    }
 
     return(
-        <div>
-            <div className={styles.cards}>
-                {postsQuery.data.map(post => (
-                    <Link to = "/profile">
-                        <div key={post} className={styles.card}>
-                            <img src={post.image} className={styles.test} alt="posts"></img>
-                            <div className={styles.buttons}>
-                                <FontAwesomeIcon icon={faHeart} className={styles.button}></FontAwesomeIcon>
-                                <FontAwesomeIcon icon={faComment} className={styles.button}></FontAwesomeIcon>
-                            </div>
+        <div className={styles.cards}>
+            {postsQuery.data.map(post => (
+                <Link key={post.id} to ={`/profile/${user.username}/${post.id}`} onClick={postViewHandler}>
+                    <div className={styles.card}>
+                        <img src={post.image} className={styles.test} alt="posts"></img>
+                        <div className={styles.buttons}>
+                            <FontAwesomeIcon icon={faHeart} className={styles.button}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faComment} className={styles.button}></FontAwesomeIcon>
                         </div>
-                    </Link>
-                ))}
-            </div>
+                    </div>
+                </Link>
+            ))}
+            {showModal && <Post onClose={handleClose}/>}
         </div>
     )
 }
