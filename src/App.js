@@ -7,7 +7,7 @@ import { ThemeProvider } from "./ThemeContext";
 import AuthContext from "./context/auth-context";
 
 import Sidebar from "./components/Sidebar";
-import Wrapper from "./components/Wrapper";
+import Container from "./components/Container";
 
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
@@ -63,13 +63,15 @@ const App = () => {
       <ThemeProvider>
         <AuthContext.Provider value={{isLoggedIn : isLoggedIn}}>
           <Sidebar onLogout={logoutHandler}/>
-          <Wrapper>
+          <Container>
               <Routes>
                 <Route path="/" element={isLoggedIn ? <Home/> : <Navigate to = "/login"/>} />
                 <Route path="explore" element={isLoggedIn ? <Explore /> : <Navigate to ="/login"/>} />
                 <Route path="messages" element={isLoggedIn ? <Messages /> : <Navigate to ="/login"/>} />
                 <Route path="profile/:username" element={isLoggedIn ? <Profile /> : <Navigate to ="/login"/>} >
-                  <Route path="" element={isLoggedIn ? <Posts /> : <Navigate to ="/login"/>} />
+                  <Route path="" element={isLoggedIn ? <Posts /> : <Navigate to ="/login"/>} >
+                    <Route path=":id" element={isLoggedIn ? <Posts/> : <Navigate to ="/login"/>}/>
+                  </Route>
                   <Route path="saved" element={isLoggedIn ? <Saved /> : <Navigate to ="/login"/>} />
                 </Route>
                 <Route path="settings" element={isLoggedIn ? <Settings /> : <Navigate to ="/login"/>}>
@@ -83,7 +85,7 @@ const App = () => {
                 <Route path="login" element={isLoggedIn ? <Home/> : <Login onLogin={loginHandler}/>}/>
                 <Route path="register" element={!isLoggedIn ? <Register/> : <Navigate to ="/"/>}/>
               </Routes>
-          </Wrapper>
+          </Container>
         </AuthContext.Provider>
       </ThemeProvider>
   );

@@ -1,0 +1,41 @@
+.container{
+    position: absolute;
+    top: 0;
+    left: 250px;
+    width: 100%;
+    padding: 10px;
+    max-width: 1269px;
+    margin: auto;
+    flex-grow: 0 0 auto;
+    overflow: hidden;
+    color: white;
+    background-color: #121212;
+    z-index: 555;
+}
+
+
+.container-light{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 250px;
+    width: 100%;
+    max-width: 1269px;
+    padding: 10px;
+    overflow-x: hidden;
+    color: black;
+    background-color: rgb(231, 231, 231);
+    z-index: 555;
+}
+
+
+@media (max-width: 1240px){
+    .container{
+        left: 75px;
+    }
+
+    .container-light{
+        left: 75px;
+    }
+}
