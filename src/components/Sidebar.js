@@ -18,7 +18,6 @@ import { useTheme } from '../ThemeContext'
 
 import Dropdown from './Dropdown'
 import AuthContext from '../context/auth-context'
-import Backdrop from './UI Kit/Backdrop'
 
 export default function Sidebar(props){
     const [showBackdrop, setShowBackdrop] = useState(false)
@@ -29,6 +28,11 @@ export default function Sidebar(props){
     const modal = useRef()
     const modal2 = useRef()
     const modal3 = useRef()
+
+    {showBackdrop
+        ? document.body.style.overflow = "hidden"
+        : document.body.style.overflow = "auto"
+    }
 
     const pic = useRef()
     const fileInput = useRef()
@@ -111,12 +115,13 @@ export default function Sidebar(props){
     }, [selectedFile])
 
     const uploadImage = async (e) => {
-        const files = fileInput.current.target.files
-        console.log(files, files[0])
+        const files = fileInput.current.files
 
         const data = new FormData()
+
         data.append('file', files[0])
         data.append('upload_preset', 'novagram')
+        
         setIsLoading(true)
         const res = await fetch("https://api.cloudinary.com/v1_1/dj3sulxro/image/upload", {
             method: "POST",
@@ -131,7 +136,7 @@ export default function Sidebar(props){
         const post = {
             "image": image,
             "username": user.username,
-            "caption" : caption.current.target.value
+            "caption" : caption.current.value
         }
 
         fetch("/profile", {
@@ -178,7 +183,7 @@ export default function Sidebar(props){
 
                 <Dropdown onLogout={props.onLogout}/>
             </nav> : ''}
-            {showBackdrop && <Backdrop/>}
+            {showBackdrop && <div className={styles.backdrop}></div>}
             <div className={styles.modal} ref={modal}>
                 <div>
                     <p>Create new post</p>

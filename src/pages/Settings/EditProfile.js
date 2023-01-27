@@ -1,4 +1,3 @@
-import Backdrop from "../../components/UI Kit/Backdrop";
 import styles from "./Settings.module.css";
 import { useState } from "react";
 import { useTheme } from "../../ThemeContext";
@@ -11,6 +10,11 @@ export default function EditProfile() {
 
   const [enteredName, setEnteredName] = useState(user.name);
   const [enteredUsername, setEnteredUsername] = useState(user.username);
+
+  {showBackdrop
+  ? document.body.style.overflow = "hidden"
+  : document.body.style.overflow = "auto"
+  }
 
   const nameChangeHandler = (e) => {
     setEnteredName(e.target.value);
@@ -177,6 +181,7 @@ export default function EditProfile() {
           </button>
         </div>
       </form>
+      {showBackdrop && <div className={styles.backdrop}></div>}
       {showModal && (
         <div className={styles.modal}>
           <p>Change Profile Photo</p>
@@ -185,7 +190,6 @@ export default function EditProfile() {
           <button onClick={handleClose}>Cancel</button>
         </div>
       )}
-      {showBackdrop && <Backdrop />}
     </div>
   );
 }

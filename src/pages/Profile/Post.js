@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import styles from './Post.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faBookmark, faComment, faHeart, faXmark } from '@fortawesome/free-solid-svg-icons'
 import Wrapper from '../../components/UI Kit/Wrapper'
 
 export default function Post(props){
@@ -35,16 +35,69 @@ export default function Post(props){
                 </div>
                 <div className={styles['modal-details']}>
                     <div className={styles['modal-details-control']}>
-                        {/* <img></img> */}
+                        <div className={styles['modal-pfp']}>
+                            {/* <img></img> */}
+                        </div>
                         <p>{user.username}</p>
                         {/* <button></button> */}
                     </div>
                     <div className={styles['modal-details-comments']}>
-                        <h3>No Comments yet</h3>
-                        <p>Start the conversation</p>
+                        {/* <p>{postQuery.data.data.caption}</p> */}
+                        <div className={styles['modal-comment']}>
+                            <div className={styles['modal-pfp']}></div>
+                            <div className={styles['modal-comment-container']}>
+                                <div className={styles['modal-comment-details']}>
+                                    <p className={styles['modal-comment-user']}>{user.username}</p>
+                                    <p className={styles['modal-comment-content']}>{postQuery.data.data.caption}</p>
+                                </div>
+                                <div className={styles['modal-comment-date']}>
+                                    {postQuery.data.data.date}
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles['modal-comment']}>
+                            <div className={styles['modal-pfp']}></div>
+                            <div className={styles['modal-comment-container']}>
+                                <div className={styles['modal-comment-details']}>
+                                    <p className={styles['modal-comment-user']}>lemon_maho</p>
+                                    <p className={styles['modal-comment-content']}>the comment</p>
+                                    <button className={styles['modal-comment-like']}>
+                                        <FontAwesomeIcon icon={faHeart}/>
+                                    </button>
+                                </div>
+                                <div className={styles['modal-comment-date']}>
+                                    2 days ago
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className={styles['modal-details-reactions']}></div>
-                    <div className={styles['modal-details-post']}></div>
+                    <div className={styles['modal-details-reactions']}>
+                        <div className={styles.icons}>
+                            <div className={styles['icons-left']}>
+                                <button className={styles.icon}>
+                                    <FontAwesomeIcon icon={faHeart}/>
+                                </button>
+                                <button className={styles.icon}>
+                                    <FontAwesomeIcon icon={faComment}/>
+                                </button>
+                            </div>
+                            <div className={styles['icons-right']}>
+                                <button className={styles.icon}>
+                                    <FontAwesomeIcon icon={faBookmark}/>
+                                </button>
+                            </div>
+                        </div>
+                        <div></div>
+                        <div className={styles['modal-post-date']}><p>{postQuery.data.data.date}</p></div>
+                    </div>
+                    <div className={styles['modal-details-post']}>
+                        <div>
+                            <textarea type="text" placeholder='Add a comment...'/>
+                        </div>
+                        <div>
+                            <button>Post</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </Wrapper>
