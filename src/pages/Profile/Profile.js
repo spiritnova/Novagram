@@ -5,22 +5,23 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faTableCells } from "@fortawesome/free-solid-svg-icons";
 
 import { Link, Outlet } from "react-router-dom";
-// import { useState } from "react";
+import { useState } from "react";
 import Wrapper from "../../components/UI Kit/Wrapper";
 
 
 export default function Profile() {
 
-    // const [postCount, setPostCount] = useState();
+    const [postCount, setPostCount] = useState();
 
     const user = JSON.parse(localStorage.getItem('user'))
+    const picture = localStorage.getItem('picture')
 
   return (
     <Wrapper>
       <div className={styles.wrapper}>
         <div className={styles["profile-img-div"]}>
           <div className={styles["profile-img"]}>
-            <img src={user.picture} alt="profile"></img>
+            <img src={picture ? picture : user.picture} alt="profile"></img>
           </div>
         </div>
 
@@ -40,13 +41,13 @@ export default function Profile() {
 
           <div className={styles["profile-info"]}>
             <div>
-              <span>16</span> posts
+              <span><b>{postCount}</b></span> posts
             </div>
             <div>
-              <span>96</span> followers
+              <span><b>96</b></span> followers
             </div>
             <div>
-              <span>150</span> following
+              <span><b>153</b></span> following
             </div>
           </div>
 
@@ -85,7 +86,7 @@ export default function Profile() {
         </div>
 
         <div className={styles.routes}>
-          <Outlet/>
+          <Outlet context={[setPostCount]}/>
         </div>
       </div>
     </Wrapper>

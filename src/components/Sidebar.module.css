@@ -270,11 +270,11 @@
     max-height: 600px;
 
     width: 100%;
-    max-width: 550px;
+    max-width: 34.375em;
 
     position: absolute;
-    top: 12%;
-    left: 31%;
+    top: 11%;
+    left: 33%;
 
     background-color: rgb(44, 44, 44);
     border-radius: 14px;
@@ -393,7 +393,7 @@
     max-height: 556px;
 
     width: 100%;
-    max-width: 550px;
+    max-width: 34.375em;
 
     position: absolute;
     top: 13%;
@@ -438,7 +438,7 @@
     max-height: 594.5px;
 
     width: 100%;
-    max-width: 882px;
+    max-width: 55.125em;
 
     position: absolute;
     top: 13%;

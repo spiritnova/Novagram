@@ -39,7 +39,6 @@ export default function Login(props) {
     .then(data => {
       setData(data)
       if(data.success){
-        console.log("success")
         props.onLogin();
       }
       if(data.data){

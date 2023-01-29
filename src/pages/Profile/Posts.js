@@ -1,23 +1,29 @@
 import styles from './Posts.module.css'
 import { useQuery } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
+import { Link, useOutletContext } from 'react-router-dom'
 
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Post from './Post'
+import Wrapper from '../../components/UI Kit/Wrapper'
 
 export default function Posts(){
     const [showModal, setShowModal] = useState(false)
 
-    {showModal 
-        ? document.body.style.overflow = "hidden" 
-        : document.body.style.overflow ="auto"
+    // const [setPostCount] = useOutletContext()
+
+
+    if (showModal){
+        document.body.style.overflow = "hidden"
+    }
+
+    else{
+        document.body.style.overflow ="auto"
     }
 
     const user = JSON.parse(localStorage.getItem('user'))
-
 
     const postsQuery = useQuery({
         queryKey: ["posts"],
@@ -28,6 +34,8 @@ export default function Posts(){
     if (postsQuery.isLoading) return <div className={styles.loader}></div>
     if (postsQuery.isError) return <pre>{JSON.stringify(postsQuery.error)}</pre>
 
+    // setPostCount(postsQuery.data.length)
+
 
     const postViewHandler = () => {
         setShowModal(true)
@@ -35,23 +43,26 @@ export default function Posts(){
 
     const handleClose = () => {
         setShowModal(false)
-        console.log("test")
     }
 
+
     return(
-        <div className={styles.cards}>
-            {postsQuery.data.map(post => (
-                <Link key={post.id} to ={`/profile/${user.username}/${post.id}`} onClick={postViewHandler}>
-                    <div className={styles.card}>
-                        <img src={post.image} className={styles.test} alt="posts"></img>
-                        <div className={styles.buttons}>
-                            <FontAwesomeIcon icon={faHeart} className={styles.button}></FontAwesomeIcon>
-                            <FontAwesomeIcon icon={faComment} className={styles.button}></FontAwesomeIcon>
+        <Wrapper>
+            {postsQuery.data.length === 0 ? <div className={styles.noPosts}>No posts yet</div> :
+            <div className={styles.cards}>
+                {postsQuery.data.map(post => (
+                    <Link key={post.id} to ={`/profile/${user.username}/${post.id}`} onClick={postViewHandler}>
+                        <div className={styles.card}>
+                            <img src={post.image} className={styles.test} alt="posts"></img>
+                            <div className={styles.buttons}>
+                                <FontAwesomeIcon icon={faHeart} className={styles.button}></FontAwesomeIcon>
+                                <FontAwesomeIcon icon={faComment} className={styles.button}></FontAwesomeIcon>
+                            </div>
                         </div>
-                    </div>
-                </Link>
-            ))}
-            {showModal && <Post onClose={handleClose}/>}
-        </div>
+                    </Link>
+                ))}
+                {showModal && <Post onClose={handleClose}/>}
+            </div>}
+        </Wrapper>
     )
 }

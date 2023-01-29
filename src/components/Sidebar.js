@@ -130,8 +130,12 @@ export default function Sidebar(props){
         const file = await res.json()
 
         setImage(file.secure_url)
-        setIsLoading(false)
 
+        console.log(file.eager[0].secure_url)
+        setIsLoading(false)
+        
+        setShowBackdrop(false)
+        modal.current.style.display = "none"
 
         const post = {
             "image": image,

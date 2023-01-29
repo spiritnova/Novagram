@@ -1,5 +1,5 @@
 import styles from "./Settings.module.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTheme } from "../../ThemeContext";
 
 export default function EditProfile() {
@@ -7,13 +7,18 @@ export default function EditProfile() {
   const [showModal, setShowModal] = useState(false);
 
   const user = JSON.parse(localStorage.getItem('user'))
+  const picture = localStorage.getItem('picture')
 
   const [enteredName, setEnteredName] = useState(user.name);
   const [enteredUsername, setEnteredUsername] = useState(user.username);
 
-  {showBackdrop
-  ? document.body.style.overflow = "hidden"
-  : document.body.style.overflow = "auto"
+
+  if (showModal){
+    document.body.style.overflow = "hidden"
+  }
+
+  else{
+      document.body.style.overflow ="auto"
   }
 
   const nameChangeHandler = (e) => {
@@ -40,12 +45,59 @@ export default function EditProfile() {
 
   const darkTheme = useTheme();
 
+  const [image, setImage] = useState()
+  const [loading, setIsLoading] = useState()
+
+  const pfpInput = useRef()
+
+  const uploadImage = async () => {
+    const files = pfpInput.current.files
+    
+    const data = new FormData()
+
+    data.append('file', files[0])
+    data.append('upload_preset', 'novagram')
+
+    setIsLoading(true)
+    const res = await fetch("https://api.cloudinary.com/v1_1/dj3sulxro/image/upload", {
+        method: "POST",
+        body: data
+    })
+    const file = await res.json()
+
+    setImage(file.secure_url)
+    setIsLoading(false)
+
+    setShowBackdrop(false)
+    setShowModal(false)
+
+    user['picture'] = file.eager[0].secure_url
+
+    localStorage.setItem('picture', file.eager[0].secure_url)
+
+    console.log(user.picture)
+
+    console.log(file.eager[0].secure_url)
+
+
+    fetch("/profile/picture", {
+      method: "POST",
+      headers : {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        "image": image,
+        "username": user.username
+      })
+    })
+  }
+
   return (
     <div className={styles.forms}>
       <div className={styles.profile}>
         <div
           className={darkTheme ? styles.imgDiv : styles["imgDiv-light"]}
-        ></div>
+        >
+          <img src={picture ? picture : user.picture}></img>
+        </div>
         <div className={styles.pfp}>
           <p>{user.username}</p>
           <button type="button" onClick={handleShow}>
@@ -185,7 +237,10 @@ export default function EditProfile() {
       {showModal && (
         <div className={styles.modal}>
           <p>Change Profile Photo</p>
-          <button>Upload Photo</button>
+          <label>
+            Upload photo
+            <input type="file" ref={pfpInput} onChange={uploadImage}/>
+          </label>
           <button>Remove Current Photo</button>
           <button onClick={handleClose}>Cancel</button>
         </div>

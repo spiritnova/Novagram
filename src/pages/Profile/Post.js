@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import styles from './Post.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBookmark, faComment, faHeart, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faBookmark, faComment, faEllipsis, faHeart, faXmark } from '@fortawesome/free-solid-svg-icons'
 import Wrapper from '../../components/UI Kit/Wrapper'
 
 export default function Post(props){
@@ -39,10 +39,11 @@ export default function Post(props){
                             {/* <img></img> */}
                         </div>
                         <p>{user.username}</p>
-                        {/* <button></button> */}
+                        <button className={styles['modal-comment-like']}>
+                            <FontAwesomeIcon icon={faEllipsis}/>
+                        </button>
                     </div>
                     <div className={styles['modal-details-comments']}>
-                        {/* <p>{postQuery.data.data.caption}</p> */}
                         <div className={styles['modal-comment']}>
                             <div className={styles['modal-pfp']}></div>
                             <div className={styles['modal-comment-container']}>

@@ -36,6 +36,9 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn'))
 
   function loginHandler(){
+    setIsLoggedIn(false)
+    sessionStorage.removeItem('isLoggedIn')
+
     sessionStorage.setItem('isLoggedIn', '1')
     setIsLoggedIn(true);
   }
