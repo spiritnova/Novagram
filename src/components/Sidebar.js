@@ -131,7 +131,6 @@ export default function Sidebar(props){
 
         setImage(file.secure_url)
 
-        console.log(file.eager[0].secure_url)
         setIsLoading(false)
         
         setShowBackdrop(false)

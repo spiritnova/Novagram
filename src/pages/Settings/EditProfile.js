@@ -65,20 +65,13 @@ export default function EditProfile() {
     })
     const file = await res.json()
 
-    setImage(file.secure_url)
+    setImage(file.eager[0].secure_url)
     setIsLoading(false)
 
     setShowBackdrop(false)
     setShowModal(false)
 
-    user['picture'] = file.eager[0].secure_url
-
     localStorage.setItem('picture', file.eager[0].secure_url)
-
-    console.log(user.picture)
-
-    console.log(file.eager[0].secure_url)
-
 
     fetch("/profile/picture", {
       method: "POST",

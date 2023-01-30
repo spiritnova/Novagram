@@ -1,20 +1,34 @@
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useRef } from 'react'
 import styles from './Post.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faComment, faEllipsis, faHeart, faXmark } from '@fortawesome/free-solid-svg-icons'
 import Wrapper from '../../components/UI Kit/Wrapper'
 
+import sendComment from '../../api/sendComment'
+
 export default function Post(props){
 
     const { id } = useParams()
     const user = JSON.parse(localStorage.getItem('user'))
+    const picture = localStorage.getItem('picture')
+    const comment = useRef()
 
+    const queryClient = useQueryClient()
 
     const postQuery = useQuery({
         queryKey: ["posts", id],
         queryFn: () => fetch(`/posts/${user.username}/${id}`)
         .then(res => res.json()),
+    })
+
+    const newCommentMutation = useMutation({
+        mutationFn: sendComment,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["posts", id], { exact: true })
+            comment.current.value = ""
+        }
     })
 
     if(postQuery.isLoading) return <div className={styles.loader}></div>
@@ -36,7 +50,7 @@ export default function Post(props){
                 <div className={styles['modal-details']}>
                     <div className={styles['modal-details-control']}>
                         <div className={styles['modal-pfp']}>
-                            {/* <img></img> */}
+                            <img alt="pfp" src={picture ? picture : user.picture}></img>
                         </div>
                         <p>{user.username}</p>
                         <button className={styles['modal-comment-like']}>
@@ -45,7 +59,9 @@ export default function Post(props){
                     </div>
                     <div className={styles['modal-details-comments']}>
                         <div className={styles['modal-comment']}>
-                            <div className={styles['modal-pfp']}></div>
+                            <div className={styles['modal-pfp']}>
+                                <img alt="pfp" src={picture ? picture : user.picture}></img>
+                            </div>
                             <div className={styles['modal-comment-container']}>
                                 <div className={styles['modal-comment-details']}>
                                     <p className={styles['modal-comment-user']}>{user.username}</p>
@@ -56,12 +72,15 @@ export default function Post(props){
                                 </div>
                             </div>
                         </div>
-                        <div className={styles['modal-comment']}>
-                            <div className={styles['modal-pfp']}></div>
+                        {postQuery.data.data.comments.map(comment => (
+                        <div key={comment.id} className={styles['modal-comment']}>
+                            <div className={styles['modal-pfp']}>
+                                <img alt="pfp" src={picture ? picture : user.picture}></img>
+                            </div>
                             <div className={styles['modal-comment-container']}>
                                 <div className={styles['modal-comment-details']}>
                                     <p className={styles['modal-comment-user']}>lemon_maho</p>
-                                    <p className={styles['modal-comment-content']}>the comment</p>
+                                    <p className={styles['modal-comment-content']}>{comment.content}</p>
                                     <button className={styles['modal-comment-like']}>
                                         <FontAwesomeIcon icon={faHeart}/>
                                     </button>
@@ -71,6 +90,7 @@ export default function Post(props){
                                 </div>
                             </div>
                         </div>
+                        ))}
                     </div>
                     <div className={styles['modal-details-reactions']}>
                         <div className={styles.icons}>
@@ -93,10 +113,13 @@ export default function Post(props){
                     </div>
                     <div className={styles['modal-details-post']}>
                         <div>
-                            <textarea type="text" placeholder='Add a comment...'/>
+                            <textarea ref={comment} type="text" placeholder='Add a comment...'/>
                         </div>
                         <div>
-                            <button>Post</button>
+                            <button disabled={postQuery.isLoading} onClick={() => newCommentMutation.mutate({
+                                comment: comment.current.value,
+                                id: id
+                            })}>Post</button>
                         </div>
                     </div>
                 </div>
