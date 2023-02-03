@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useTheme, useThemeUpdate } from '../ThemeContext'
+import { useTheme, useThemeUpdate } from '../context/ThemeContext'
 
 import Wrapper from './UI Kit/Wrapper'
 

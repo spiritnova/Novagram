@@ -1,4 +1,4 @@
-import { useTheme } from '../ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 import styles from './Container.module.css'
 
 export default function Container({children}){

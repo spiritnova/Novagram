@@ -1,13 +1,15 @@
 import styles from "./Login.module.css";
 import { useRef, useState } from "react";
-import { useTheme } from "../ThemeContext";
-import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login(props) {
   const passwordRef = useRef();
   const usernameRef = useRef();
 
   const darkTheme = useTheme();
+
+  const navigate = useNavigate()
 
   const [data, setData] = useState([{}]);
 
@@ -41,9 +43,11 @@ export default function Login(props) {
       if(data.success){
         props.onLogin();
       }
-      if(data.data){
-        localStorage.setItem('user', JSON.stringify(data.data))
-      }
+      sessionStorage.setItem('user_id', data.user_id)
+      sessionStorage.setItem('username', data.username)
+      sessionStorage.setItem('name', data.name)
+      sessionStorage.setItem('picture', data.picture)
+      navigate("/")
     })
   };
 

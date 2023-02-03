@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 // import { useCookie } from './hooks/useCookie'
 // import uuid from 'react-uuid'
 
-import { ThemeProvider } from "./ThemeContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import AuthContext from "./context/auth-context";
 
 import Sidebar from "./components/Sidebar";
@@ -30,14 +30,16 @@ import Register from "./pages/Register";
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NotFound from "./components/NotFound";
 
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn'))
 
+  
   function loginHandler(){
-    setIsLoggedIn(false)
-    sessionStorage.removeItem('isLoggedIn')
+    // setIsLoggedIn(false)
+    // sessionStorage.removeItem('isLoggedIn')
 
     sessionStorage.setItem('isLoggedIn', '1')
     setIsLoggedIn(true);
@@ -68,25 +70,26 @@ const App = () => {
           <Sidebar onLogout={logoutHandler}/>
           <Container>
               <Routes>
-                <Route path="/" element={isLoggedIn ? <Home/> : <Navigate to = "/login"/>} />
-                <Route path="explore" element={isLoggedIn ? <Explore /> : <Navigate to ="/login"/>} />
-                <Route path="messages" element={isLoggedIn ? <Messages /> : <Navigate to ="/login"/>} />
-                <Route path="profile/:username" element={isLoggedIn ? <Profile /> : <Navigate to ="/login"/>} >
-                  <Route path="" element={isLoggedIn ? <Posts /> : <Navigate to ="/login"/>} >
-                    <Route path=":id" element={isLoggedIn ? <Posts/> : <Navigate to ="/login"/>}/>
+                <Route path="/" element={isLoggedIn ? <Home/> :<Navigate to ="/login"/>} />
+                <Route path="explore" element={<Explore />} />
+                <Route path="messages" element={<Messages />} />
+                <Route path="profile" element={<Profile/>}>
+                  <Route path=":username" element={<Posts />} >
+                    <Route path=":id" element={<Posts/>} />
                   </Route>
-                  <Route path="saved" element={isLoggedIn ? <Saved /> : <Navigate to ="/login"/>} />
+                  <Route path=":username/saved" element={<Saved />} />
                 </Route>
-                <Route path="settings" element={isLoggedIn ? <Settings /> : <Navigate to ="/login"/>}>
-                  <Route path="" element={isLoggedIn ? <EditProfile/> : <Navigate to ="/login"/>} />
-                  <Route path="password_change" element={isLoggedIn ? <PasswordChange /> : <Navigate to ="/login"/>} />
-                  <Route path="emails/notifications" element={isLoggedIn ? <EmailNotifications /> : <Navigate to ="/login"/>} />
-                  <Route path="privacy_and_security" element={isLoggedIn ? <PrivacySecurity /> : <Navigate to ="/login"/>} />
-                  <Route path="login_activity" element={isLoggedIn ? <LoginActivity /> : <Navigate to ="/login"/>} />
-                  <Route path="help" element={isLoggedIn ? <Help /> : <Navigate to ="/login"/>} />
+                <Route path="settings" element={<Settings />}>
+                  <Route path="" element={<EditProfile/>} />
+                  <Route path="password_change" element={<PasswordChange />} />
+                  <Route path="emails/notifications" element={<EmailNotifications />} />
+                  <Route path="privacy_and_security" element={<PrivacySecurity />} />
+                  <Route path="login_activity" element={<LoginActivity />} />
+                  <Route path="help" element={<Help />} />
                 </Route>
-                <Route path="login" element={isLoggedIn ? <Home/> : <Login onLogin={loginHandler}/>}/>
+                <Route path="login" element={!isLoggedIn ? <Login onLogin={loginHandler}/> : <Navigate to ="/"/>}/>
                 <Route path="register" element={!isLoggedIn ? <Register/> : <Navigate to ="/"/>}/>
+                <Route path="*" element={<NotFound/>} />
               </Routes>
           </Container>
         </AuthContext.Provider>
