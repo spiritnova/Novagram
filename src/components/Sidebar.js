@@ -14,7 +14,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import { useContext, useEffect, useState, useRef } from 'react'
-import { useTheme } from '../ThemeContext'
+import { useTheme } from '../context/ThemeContext'
 
 import Dropdown from './Dropdown'
 import AuthContext from '../context/auth-context'
@@ -29,10 +29,10 @@ export default function Sidebar(props){
     const modal2 = useRef()
     const modal3 = useRef()
 
-    {showBackdrop
-        ? document.body.style.overflow = "hidden"
-        : document.body.style.overflow = "auto"
-    }
+    if(showBackdrop){
+        document.body.style.overflow = "hidden"
+    } else { document.body.style.overflow = "auto" }
+
 
     const pic = useRef()
     const fileInput = useRef()
@@ -42,7 +42,8 @@ export default function Sidebar(props){
     const [preview, setPreview] = useState()
 
     const darkTheme = useTheme()
-    const user = JSON.parse(localStorage.getItem('user'))
+    
+    const username = sessionStorage.getItem('username')
 
     const ctx = useContext(AuthContext)
 
@@ -138,7 +139,7 @@ export default function Sidebar(props){
 
         const post = {
             "image": image,
-            "username": user.username,
+            "username": username,
             "caption" : caption.current.value
         }
 
@@ -179,7 +180,7 @@ export default function Sidebar(props){
                         <FontAwesomeIcon icon={faSquarePlus} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>Create</span>
                         </button>
                     </li>
-                    <ActiveLink to={`/profile/${user.username}`}>
+                    <ActiveLink to={`/profile/${username}`}>
                         <FontAwesomeIcon icon={faUser} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>Profile</span>
                     </ActiveLink>
                 </ul>
@@ -212,7 +213,7 @@ export default function Sidebar(props){
                 </div>
             
                 <div className={styles['modal-preview']}>
-                    {selectedFile && <img ref={pic} src={preview}/>}
+                    {selectedFile && <img ref={pic} alt="imgpreview" src={preview}/>}
                 </div>
             </div>
 
@@ -223,7 +224,7 @@ export default function Sidebar(props){
                 </div>
 
                 <div className={styles['modal-preview']}>
-                    {selectedFile && <img  src={preview}/>}
+                    {selectedFile && <img alt="preview" src={preview}/>}
                 </div>
 
                 <div>
@@ -250,7 +251,7 @@ export default function Sidebar(props){
 
                 <div className={styles.caption}>
                     <div className={styles['modal-preview3']}>
-                        {selectedFile && <img src={preview}/>}
+                        {selectedFile && <img alt="preview" src={preview}/>}
                     </div>
 
                     <div className={styles.textarea}>

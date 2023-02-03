@@ -2,14 +2,13 @@ import styles from './Settings.module.css'
 
 export default function PasswordChange(){
 
-    const picture = localStorage.getItem('picture')
-    const user = JSON.parse(localStorage.getItem('user'))
+    const picture = sessionStorage.getItem('picture')
 
     return(
         <div className={styles['profile-wrapper']}>
             <div className={styles.profile} style={{ marginBottom: 20 }}>
                 <div className={styles.imgDiv}>
-                    <img src={picture ? picture : user.picture}></img>
+                    <img alt="profilepic" src={picture}></img>
                 </div>
                 <div className={styles.pfp}>
                     <p>lemon_maho</p>

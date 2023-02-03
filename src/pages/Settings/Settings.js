@@ -1,6 +1,6 @@
 import styles from './Settings.module.css'
 import { Link, Outlet } from 'react-router-dom'
-import { useTheme } from '../../ThemeContext'
+import { useTheme } from '../../context/ThemeContext'
 
 export default function Settings(){
 

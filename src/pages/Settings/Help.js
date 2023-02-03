@@ -1,5 +1,5 @@
 import styles from './Settings.module.css'
-import { useTheme } from '../../ThemeContext'
+import { useTheme } from '../../context/ThemeContext'
 
 export default function Help(){
     const darkTheme = useTheme()

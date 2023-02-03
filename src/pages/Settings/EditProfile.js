@@ -1,16 +1,17 @@
 import styles from "./Settings.module.css";
 import { useRef, useState } from "react";
-import { useTheme } from "../../ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function EditProfile() {
   const [showBackdrop, setShowBackdrop] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const user = JSON.parse(localStorage.getItem('user'))
-  const picture = localStorage.getItem('picture')
+  const username = sessionStorage.getItem('username')
+  const name = sessionStorage.getItem('name')
+  const picture = sessionStorage.getItem('picture')
 
-  const [enteredName, setEnteredName] = useState(user.name);
-  const [enteredUsername, setEnteredUsername] = useState(user.username);
+  const [enteredName, setEnteredName] = useState(name);
+  const [enteredUsername, setEnteredUsername] = useState(username);
 
 
   if (showModal){
@@ -45,12 +46,15 @@ export default function EditProfile() {
 
   const darkTheme = useTheme();
 
-  const [image, setImage] = useState()
   const [loading, setIsLoading] = useState()
 
   const pfpInput = useRef()
 
   const uploadImage = async () => {
+
+    setShowBackdrop(false)
+    setShowModal(false)
+    
     const files = pfpInput.current.files
     
     const data = new FormData()
@@ -65,20 +69,16 @@ export default function EditProfile() {
     })
     const file = await res.json()
 
-    setImage(file.eager[0].secure_url)
     setIsLoading(false)
 
-    setShowBackdrop(false)
-    setShowModal(false)
-
-    localStorage.setItem('picture', file.eager[0].secure_url)
+    ('picture', file.eager[0].secure_url)
 
     fetch("/profile/picture", {
       method: "POST",
       headers : {"Content-Type": "application/json"},
       body: JSON.stringify({
-        "image": image,
-        "username": user.username
+        "image": file.eager[0].secure_url,
+        "username": username
       })
     })
   }
@@ -89,10 +89,10 @@ export default function EditProfile() {
         <div
           className={darkTheme ? styles.imgDiv : styles["imgDiv-light"]}
         >
-          <img src={picture ? picture : user.picture}></img>
+          <img alt="profilePicture" src={picture}></img>
         </div>
         <div className={styles.pfp}>
-          <p>{user.username}</p>
+          <p>{username}</p>
           <button type="button" onClick={handleShow}>
             Change profile photo
           </button>
