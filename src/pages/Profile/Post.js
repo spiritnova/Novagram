@@ -11,8 +11,13 @@ import sendComment from '../../api/sendComment'
 export default function Post(props){
 
     const { id } = useParams()
-    const user = JSON.parse(localStorage.getItem('user'))
-    const picture = localStorage.getItem('picture')
+
+    const user = useParams()
+
+    const username = sessionStorage.getItem('username')
+    const picture = sessionStorage.getItem('picture')
+    const user_id = sessionStorage.getItem('user_id')
+
     const comment = useRef()
 
     const queryClient = useQueryClient()
@@ -50,7 +55,7 @@ export default function Post(props){
                 <div className={styles['modal-details']}>
                     <div className={styles['modal-details-control']}>
                         <div className={styles['modal-pfp']}>
-                            <img alt="pfp" src={picture ? picture : user.picture}></img>
+                            <img alt="pfp" src={picture}></img>
                         </div>
                         <p>{user.username}</p>
                         <button className={styles['modal-comment-like']}>
@@ -60,7 +65,7 @@ export default function Post(props){
                     <div className={styles['modal-details-comments']}>
                         <div className={styles['modal-comment']}>
                             <div className={styles['modal-pfp']}>
-                                <img alt="pfp" src={picture ? picture : user.picture}></img>
+                                <img alt="pfp" src={picture}></img>
                             </div>
                             <div className={styles['modal-comment-container']}>
                                 <div className={styles['modal-comment-details']}>
@@ -75,11 +80,11 @@ export default function Post(props){
                         {postQuery.data.data.comments.map(comment => (
                         <div key={comment.id} className={styles['modal-comment']}>
                             <div className={styles['modal-pfp']}>
-                                <img alt="pfp" src={picture ? picture : user.picture}></img>
+                                <img alt="pfp" src={comment.picture}></img>
                             </div>
                             <div className={styles['modal-comment-container']}>
                                 <div className={styles['modal-comment-details']}>
-                                    <p className={styles['modal-comment-user']}>lemon_maho</p>
+                                    <p className={styles['modal-comment-user']}>{comment.username}</p>
                                     <p className={styles['modal-comment-content']}>{comment.content}</p>
                                     <button className={styles['modal-comment-like']}>
                                         <FontAwesomeIcon icon={faHeart}/>
@@ -118,6 +123,7 @@ export default function Post(props){
                         <div>
                             <button disabled={postQuery.isLoading} onClick={() => newCommentMutation.mutate({
                                 comment: comment.current.value,
+                                user_id : user_id,
                                 id: id
                             })}>Post</button>
                         </div>

@@ -1,18 +1,16 @@
 import styles from './Posts.module.css'
 import { useQuery } from '@tanstack/react-query'
-import { Link, useOutletContext } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import Post from './Post'
 import Wrapper from '../../components/UI Kit/Wrapper'
 
 export default function Posts(){
     const [showModal, setShowModal] = useState(false)
-
-    // const [setPostCount] = useOutletContext()
 
 
     if (showModal){
@@ -23,7 +21,9 @@ export default function Posts(){
         document.body.style.overflow ="auto"
     }
 
-    const user = JSON.parse(localStorage.getItem('user'))
+    const username = sessionStorage.getItem('username')
+
+    const user = useParams()
 
     const postsQuery = useQuery({
         queryKey: ["posts"],
@@ -31,10 +31,10 @@ export default function Posts(){
         .then(res => res.json()),
     })
 
+
     if (postsQuery.isLoading) return <div className={styles.loader}></div>
     if (postsQuery.isError) return <pre>{JSON.stringify(postsQuery.error)}</pre>
 
-    // setPostCount(postsQuery.data.length)
 
 
     const postViewHandler = () => {
