@@ -6,7 +6,9 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faTableCells } from "@fortawesome/free-solid-svg-icons";
 
 import { Link, Outlet, useParams } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 
 export default function Profile() {
@@ -19,11 +21,18 @@ export default function Profile() {
 
   const user = useParams()
 
+
   useMemo(() => {
     if (user.username !== username){
       setDifferentProfile(true)
     }
-  }, [user])
+  }, [username, user.username])
+
+
+  const userQuery = useQuery({
+    queryKey: ["posts", user.username],
+    queryFn : () => axios.get(`/user/${user.username}`),
+  })
 
   const [postCount, setPostCount] = useState()
 
@@ -32,7 +41,7 @@ export default function Profile() {
       <div className={styles.wrapper}>
         <div className={styles["profile-img-div"]}>
           <div className={styles["profile-img"]}>
-            <img src={picture} alt="profile"></img>
+            <img src={differentProfile ? userQuery.data?.data.picture : picture} alt="profile"></img>
           </div>
         </div>
 
@@ -55,7 +64,7 @@ export default function Profile() {
           <div className={styles["profile-info"]}>
             <div>
               <span>
-                <b>{postCount}</b>
+                <b>{postCount ?? 0}</b>
               </span>{" "}
               posts
             </div>
@@ -74,10 +83,10 @@ export default function Profile() {
           </div>
 
           <div className={styles["profile-description"]}>
-            <div>{name}</div>
+            <div>{differentProfile ?  userQuery.data?.data.name : name}</div>
             <p className={styles.bio}>
               React web developer Graphic Designer Gamer Anime/Manga(hwa, hua)
-              Hiking Fahita/Shawarma/Hambaga
+              Hiking Fahita/Shawarma/Hambaga (Hardcoded for now)
             </p>
           </div>
         </div>

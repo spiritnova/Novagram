@@ -1,6 +1,6 @@
 import styles from './Posts.module.css'
 import { useQuery } from '@tanstack/react-query'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useOutletContext, useParams } from 'react-router-dom'
 
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,6 +12,7 @@ import Wrapper from '../../components/UI Kit/Wrapper'
 export default function Posts(){
     const [showModal, setShowModal] = useState(false)
 
+    const  setPostCount  = useOutletContext()
 
     if (showModal){
         document.body.style.overflow = "hidden"
@@ -21,8 +22,6 @@ export default function Posts(){
         document.body.style.overflow ="auto"
     }
 
-    const username = sessionStorage.getItem('username')
-
     const user = useParams()
 
     const postsQuery = useQuery({
@@ -31,27 +30,19 @@ export default function Posts(){
         .then(res => res.json()),
     })
 
+    setPostCount(postsQuery.data?.count) // This gets the posts count from backend and sends it to profile through context
+
 
     if (postsQuery.isLoading) return <div className={styles.loader}></div>
     if (postsQuery.isError) return <pre>{JSON.stringify(postsQuery.error)}</pre>
-
-
-
-    const postViewHandler = () => {
-        setShowModal(true)
-    }
-
-    const handleClose = () => {
-        setShowModal(false)
-    }
 
 
     return(
         <Wrapper>
             {postsQuery.data.length === 0 ? <div className={styles.noPosts}>No posts yet</div> :
             <div className={styles.cards}>
-                {postsQuery.data.map(post => (
-                    <Link key={post.id} to ={`/profile/${user.username}/${post.id}`} onClick={postViewHandler}>
+                {postsQuery.data.posts.map(post => (
+                    <Link key={post.id} to ={`/profile/${user.username}/${post.id}`} onClick={() => setShowModal(true)}>
                         <div className={styles.card}>
                             <img src={post.image} className={styles.test} alt="posts"></img>
                             <div className={styles.buttons}>
@@ -61,7 +52,7 @@ export default function Posts(){
                         </div>
                     </Link>
                 ))}
-                {showModal && <Post onClose={handleClose}/>}
+                {showModal && <Post onClose={() => setShowModal(false)}/>}
             </div>}
         </Wrapper>
     )

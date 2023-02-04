@@ -14,8 +14,7 @@ export default function Post(props){
 
     const user = useParams()
 
-    const username = sessionStorage.getItem('username')
-    const picture = sessionStorage.getItem('picture')
+    // const picture = sessionStorage.getItem('picture')
     const user_id = sessionStorage.getItem('user_id')
 
     const comment = useRef()
@@ -55,7 +54,7 @@ export default function Post(props){
                 <div className={styles['modal-details']}>
                     <div className={styles['modal-details-control']}>
                         <div className={styles['modal-pfp']}>
-                            <img alt="pfp" src={picture}></img>
+                            <img alt="pfp" src={postQuery.data.data.picture}></img>
                         </div>
                         <p>{user.username}</p>
                         <button className={styles['modal-comment-like']}>
@@ -65,7 +64,7 @@ export default function Post(props){
                     <div className={styles['modal-details-comments']}>
                         <div className={styles['modal-comment']}>
                             <div className={styles['modal-pfp']}>
-                                <img alt="pfp" src={picture}></img>
+                                <img alt="pfp" src={postQuery.data.data.picture}></img>
                             </div>
                             <div className={styles['modal-comment-container']}>
                                 <div className={styles['modal-comment-details']}>
