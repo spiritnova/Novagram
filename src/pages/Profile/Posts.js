@@ -4,7 +4,7 @@ import { Link, useOutletContext, useParams } from 'react-router-dom'
 
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Post from './Post'
 import Wrapper from '../../components/UI Kit/Wrapper'
@@ -30,7 +30,9 @@ export default function Posts(){
         .then(res => res.json()),
     })
 
-    setPostCount(postsQuery.data?.count) // This gets the posts count from backend and sends it to profile through context
+    useEffect(() => {
+        setPostCount(postsQuery.data?.count) // This gets the posts count from backend and sends it to profile through context
+    }, [postsQuery, setPostCount])
 
 
     if (postsQuery.isLoading) return <div className={styles.loader}></div>

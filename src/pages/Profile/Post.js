@@ -1,18 +1,23 @@
 import { useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import styles from './Post.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faComment, faEllipsis, faHeart, faXmark } from '@fortawesome/free-solid-svg-icons'
 import Wrapper from '../../components/UI Kit/Wrapper'
 
 import sendComment from '../../api/sendComment'
+import axios from 'axios'
 
 export default function Post(props){
+
+    const [liked, setIsLiked] = useState(false)
 
     const { id } = useParams()
 
     const user = useParams()
+
+    const heart = useRef()
 
     // const picture = sessionStorage.getItem('picture')
     const user_id = sessionStorage.getItem('user_id')
@@ -38,6 +43,23 @@ export default function Post(props){
     if(postQuery.isLoading) return <div className={styles.loader}></div>
     if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error)}</pre>
 
+
+    const onLikeHandler = () => {
+        setIsLiked(prev => !prev)
+        if(liked){
+            heart.current.style.color = 'red'
+        }
+        else{
+            heart.current.style.color = 'white'
+        }
+
+        axios.post('/post/like', {
+            post_id: postQuery.data.data.id,
+            user_id : user_id,
+            status : liked,
+        })
+
+    }
     return(
         <Wrapper>
             <div className={styles.backdrop}>
@@ -100,7 +122,7 @@ export default function Post(props){
                         <div className={styles.icons}>
                             <div className={styles['icons-left']}>
                                 <button className={styles.icon}>
-                                    <FontAwesomeIcon icon={faHeart}/>
+                                    <FontAwesomeIcon icon={faHeart} onClick={onLikeHandler} ref={heart}/>
                                 </button>
                                 <button className={styles.icon}>
                                     <FontAwesomeIcon icon={faComment}/>
