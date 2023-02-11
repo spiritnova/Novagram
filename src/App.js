@@ -34,13 +34,18 @@ import NotFound from "./components/NotFound";
 
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn'))
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const log = sessionStorage.getItem('isLoggedIn')
+
+    if (log === '1'){
+      setIsLoggedIn(true)
+    }
+  }, [])
 
   
   function loginHandler(){
-    // setIsLoggedIn(false)
-    // sessionStorage.removeItem('isLoggedIn')
-
     sessionStorage.setItem('isLoggedIn', '1')
     setIsLoggedIn(true);
   }
@@ -50,19 +55,7 @@ const App = () => {
     sessionStorage.removeItem('isLoggedIn')
     localStorage.removeItem('user')
     setIsLoggedIn(false);
-  }
-
-  useEffect(() => {
-    const log = sessionStorage.getItem('isLoggedIn')
-
-    if (log !== '1'){
-      setIsLoggedIn(false)
-    }
-    else{
-      setIsLoggedIn(true)
-    }
-  }, [])
-  
+  }  
 
   return (
       <ThemeProvider>

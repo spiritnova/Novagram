@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useRef, useState } from 'react'
+import { createRef, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './Post.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faComment, faEllipsis, faHeart, faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -19,7 +19,6 @@ export default function Post(props){
 
     const heart = useRef()
 
-    // const picture = sessionStorage.getItem('picture')
     const user_id = sessionStorage.getItem('user_id')
 
     const comment = useRef()
@@ -40,18 +39,8 @@ export default function Post(props){
         }
     })
 
-    if(postQuery.isLoading) return <div className={styles.loader}></div>
-    if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error)}</pre>
-
-
     const onLikeHandler = () => {
-        setIsLiked(prev => !prev)
-        if(liked){
-            heart.current.style.color = 'red'
-        }
-        else{
-            heart.current.style.color = 'white'
-        }
+        setIsLiked(current => !current)
 
         axios.post('/post/like', {
             post_id: postQuery.data.data.id,
@@ -59,7 +48,38 @@ export default function Post(props){
             status : liked,
         })
 
+        // => This prevents the query from sticking to it's prevState
+        queryClient.invalidateQueries(["posts", id], { exact : true} )
     }
+
+    const refsById = useMemo(() => {
+        const refs = {}
+        postQuery.data?.data.comments.forEach(comment => {
+            refs[comment.id] = createRef(null)
+        });
+
+        return refs
+    }, [postQuery.data?.data.comments])
+
+
+    useEffect(() => {
+        postQuery.data?.data.comments.forEach(comment => {
+            comment.likes.forEach((like) => {
+                if(like.username === user.username){
+                    console.log(refsById[comment.id])
+                    refsById[comment.id].current.style.color = 'red'
+                }
+                else{
+                    refsById[comment.id].current.style.color = 'white'
+                }
+            })
+        })
+    })
+
+
+    if(postQuery.isLoading) return <div className={styles.loader}></div>
+    if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error)}</pre>
+
     return(
         <Wrapper>
             <div className={styles.backdrop}>
@@ -98,7 +118,7 @@ export default function Post(props){
                                 </div>
                             </div>
                         </div>
-                        {postQuery.data.data.comments.map(comment => (
+                        {postQuery.data.data.comments.map((comment, i) => (
                         <div key={comment.id} className={styles['modal-comment']}>
                             <div className={styles['modal-pfp']}>
                                 <img alt="pfp" src={comment.picture}></img>
@@ -107,7 +127,17 @@ export default function Post(props){
                                 <div className={styles['modal-comment-details']}>
                                     <p className={styles['modal-comment-user']}>{comment.username}</p>
                                     <p className={styles['modal-comment-content']}>{comment.content}</p>
-                                    <button className={styles['modal-comment-like']}>
+                                    <button  className={styles['modal-comment-like']} 
+                                        onClick={() => {
+                                            axios.post("/comment/like", {
+                                                id: comment.id,
+                                                post_id: postQuery.data.data.id,
+                                                user_id : user_id,
+                                            })
+                                        }}
+                                        data-key={comment.id}
+                                        ref={refsById[comment.id]}
+                                        >
                                         <FontAwesomeIcon icon={faHeart}/>
                                     </button>
                                 </div>
@@ -121,8 +151,12 @@ export default function Post(props){
                     <div className={styles['modal-details-reactions']}>
                         <div className={styles.icons}>
                             <div className={styles['icons-left']}>
-                                <button className={styles.icon}>
-                                    <FontAwesomeIcon icon={faHeart} onClick={onLikeHandler} ref={heart}/>
+                                <button 
+                                    className={styles.icon} 
+                                    ref={heart} onClick={onLikeHandler}
+                                    style={postQuery.data.data.likes.length ? {color : 'red'} : {color : 'white'}}
+                                >
+                                    <FontAwesomeIcon icon={faHeart}/>
                                 </button>
                                 <button className={styles.icon}>
                                     <FontAwesomeIcon icon={faComment}/>

@@ -14,6 +14,18 @@ export default function Home(){
                 <li>Used another api and used the above IP to get the location https://rapidapi.com/xakageminato/api/ip-geolocation-ipwhois-io</li>
                 <li>Like functionality done</li>
             </ul>
+
+            <h2>TODO:</h2>
+            <ul>
+                <li>Bookmarking</li>
+                <li>Search bar</li>
+                <li>Notifications</li>
+                <li>Post settings ( delete, edit )</li>
+                <li>Home page</li>
+                <li>Explore page</li>
+                <li>follow system</li>
+                <li>edit profile</li>
+            </ul>
         </div>
     )
 }
