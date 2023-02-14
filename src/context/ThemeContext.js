@@ -14,7 +14,7 @@ export function useThemeUpdate(){
 
 
 export function ThemeProvider({ children }){
-    const [darkTheme, setDarkTheme] = useState(true)
+    const [darkTheme, setDarkTheme] = useState(localStorage.getItem('theme') ? true : false)
 
 
     function toggleTheme(){

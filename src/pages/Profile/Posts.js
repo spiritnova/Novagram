@@ -46,7 +46,7 @@ export default function Posts(){
                 {postsQuery.data.posts.map(post => (
                     <Link key={post.id} to ={`/profile/${user.username}/${post.id}`} onClick={() => setShowModal(true)}>
                         <div className={styles.card}>
-                            <img src={post.image} className={styles.test} alt="posts"></img>
+                            <img src={post.image} className={styles.test} alt="posts"/>
                             <div className={styles.buttons}>
                                 <FontAwesomeIcon icon={faHeart} className={styles.button}></FontAwesomeIcon>
                                 <FontAwesomeIcon icon={faComment} className={styles.button}></FontAwesomeIcon>

@@ -12,6 +12,7 @@ import axios from 'axios'
 export default function Post(props){
 
     const [liked, setIsLiked] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
     const { id } = useParams()
 
@@ -66,7 +67,6 @@ export default function Post(props){
         postQuery.data?.data.comments.forEach(comment => {
             comment.likes.forEach((like) => {
                 if(like.username === user.username){
-                    console.log(refsById[comment.id])
                     refsById[comment.id].current.style.color = 'red'
                 }
                 else{
@@ -75,6 +75,16 @@ export default function Post(props){
             })
         })
     })
+
+    function postDeleteHandler(){
+        setShowModal(false)
+
+        axios.post("/post/delete", {
+            "id": postQuery.data?.data.id
+        })
+
+        queryClient.invalidateQueries(["posts"])
+    }
 
 
     if(postQuery.isLoading) return <div className={styles.loader}></div>
@@ -99,7 +109,7 @@ export default function Post(props){
                             <img alt="pfp" src={postQuery.data.data.picture}></img>
                         </div>
                         <p>{user.username}</p>
-                        <button className={styles['modal-comment-like']}>
+                        <button className={styles['modal-comment-like']} onClick={() => setShowModal(true)}>
                             <FontAwesomeIcon icon={faEllipsis}/>
                         </button>
                     </div>
@@ -185,6 +195,26 @@ export default function Post(props){
                     </div>
                 </div>
             </div>
+
+
+            {showModal && 
+            <Wrapper>
+                <div className={styles['post-backdrop']}>
+                    <div className={styles['modal-close']}>
+                        <button onClick={() => setShowModal(false)}>
+                            <FontAwesomeIcon icon={faXmark}/>
+                        </button>
+                    </div>
+                </div>
+
+                <div className={styles['post-edit']}>
+                    <div className={styles['post-buttons']}>
+                        <button onClick={postDeleteHandler}>Delete</button>
+                        <button>Edit</button>
+                        <button onClick={() => setShowModal(false)}>Cancel</button>
+                    </div>
+                </div>
+            </Wrapper>}
         </Wrapper>
     )
 }

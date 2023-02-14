@@ -31,7 +31,7 @@
     position: fixed;
     top: 5%;
     left: 12%;
-    z-index: 35000 !important;
+    z-index: 3500 !important;
     background-color: #0e0e0e;
     height: 700px;
 }
@@ -208,4 +208,46 @@
 .icons-right{
     position: absolute;
     right: 15px;
+}
+
+.post-edit{
+    background-color: #262626;
+    height: 100%;
+    max-height: 124px;
+    width: 100%;
+    max-width: 400px;
+
+    position: fixed;
+    top: 35%;
+    left: 36%;
+    z-index: 35000 !important;
+    border-radius: 14px;
+}
+
+.post-backdrop{
+    width: 100%;
+    height: 200vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20000 !important;
+}
+
+.post-buttons{
+  display: flex;
+  flex-direction: column;
+}
+
+.post-buttons button{
+    background: none;
+    border: none;
+    border-radius: 14px;
+    border-bottom: 1px solid rgb(55, 55, 55);
+    padding: 8px 16px;
+    color: white;
+}
+
+.post-buttons button:nth-child(1){
+    color: rgb(250, 77, 77);
 }

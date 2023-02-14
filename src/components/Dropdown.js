@@ -17,11 +17,9 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 export default function Dropdown(props){
     const [isActive, setIsActive] = useState(false) // This is to set the state of the visibility of the dropdown
 
-    const toggleTheme = useThemeUpdate()
+    const username = sessionStorage.getItem('username')
 
-    const moreClickHandler = () => {
-        setIsActive (current => !current) // Toggles the dropdown menu to show or hide
-    }
+    const toggleTheme = useThemeUpdate()
 
     const darkTheme = useTheme()
 
@@ -31,7 +29,7 @@ export default function Dropdown(props){
                 <Link to='/settings'>
                 Settings<FontAwesomeIcon icon={faGear} className={styles['dropdown-icons']}/>
                 </Link>
-                <Link to='/profile/saved'>
+                <Link to={`/profile/${username}/saved`}>
                 Saved <FontAwesomeIcon icon={faBookmark} className={styles['dropdown-icons']}/>
                 </Link>
                 <button className={darkTheme ? styles.buttons : styles['buttons-light']} onClick={toggleTheme}>
@@ -44,7 +42,9 @@ export default function Dropdown(props){
             </div> : ''}
 
             <div className={styles['more-div']}>
-                <button className={darkTheme ? styles.more : styles['more-light']} onClick={moreClickHandler}>
+                <button 
+                className={darkTheme ? styles.more : styles['more-light']} 
+                onClick={() => setIsActive(prev => !prev)}>
                     <FontAwesomeIcon icon={faBars} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>More</span>
                 </button>
             </div>

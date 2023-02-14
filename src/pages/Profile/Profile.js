@@ -18,6 +18,7 @@ export default function Profile() {
   const picture = sessionStorage.getItem('picture')
   const username = sessionStorage.getItem('username')
   const name = sessionStorage.getItem('name')
+  const bio = sessionStorage.getItem('bio')
 
   const user = useParams()
 
@@ -35,6 +36,10 @@ export default function Profile() {
   })
 
   const [postCount, setPostCount] = useState()
+
+  const followHandler = () => {
+    console.log("followed")
+  }
 
   return (
     <Wrapper>
@@ -58,7 +63,13 @@ export default function Profile() {
                   className={styles.icon}
                 ></FontAwesomeIcon>
               </Link>
-            </Wrapper>: ''}
+            </Wrapper>:
+             <button 
+             className={styles.follow}
+             onClick={followHandler}
+             >
+              Follow
+            </button>}
           </div>
 
           <div className={styles["profile-info"]}>
@@ -85,8 +96,7 @@ export default function Profile() {
           <div className={styles["profile-description"]}>
             <div>{differentProfile ?  userQuery.data?.data.name : name}</div>
             <p className={styles.bio}>
-              React web developer Graphic Designer Gamer Anime/Manga(hwa, hua)
-              Hiking Fahita/Shawarma/Hambaga (Hardcoded for now)
+              {bio}
             </p>
           </div>
         </div>

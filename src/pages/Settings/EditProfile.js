@@ -1,6 +1,7 @@
 import styles from "./Settings.module.css";
 import { useRef, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import axios from "axios";
 
 export default function EditProfile() {
   const [showBackdrop, setShowBackdrop] = useState(false);
@@ -9,9 +10,14 @@ export default function EditProfile() {
   const username = sessionStorage.getItem('username')
   const name = sessionStorage.getItem('name')
   const picture = sessionStorage.getItem('picture')
+  const bio = sessionStorage.getItem('bio')
+  const email = sessionStorage.getItem('email')
+
 
   const [enteredName, setEnteredName] = useState(name);
   const [enteredUsername, setEnteredUsername] = useState(username);
+  const [enteredBio, setEnteredBio] = useState(bio)
+  const [enteredEmail, setEnteredMail] = useState(email)
 
 
   if (showModal){
@@ -30,6 +36,14 @@ export default function EditProfile() {
     setEnteredUsername(e.target.value)
   }
 
+  const bioChangeHandler = e => {
+    setEnteredBio(e.target.value)
+  }
+
+  const emailChangeHandler = e => {
+    setEnteredMail(e.target.value)
+  }
+
   const handleShow = () => {
     setShowModal(true);
     setShowBackdrop(true);
@@ -46,8 +60,6 @@ export default function EditProfile() {
 
   const darkTheme = useTheme();
 
-  const [loading, setIsLoading] = useState()
-
   const pfpInput = useRef()
 
   const uploadImage = async () => {
@@ -62,16 +74,14 @@ export default function EditProfile() {
     data.append('file', files[0])
     data.append('upload_preset', 'novagram')
 
-    setIsLoading(true)
     const res = await fetch("https://api.cloudinary.com/v1_1/dj3sulxro/image/upload", {
         method: "POST",
         body: data
     })
     const file = await res.json()
 
-    setIsLoading(false)
 
-    ('picture', file.eager[0].secure_url)
+    sessionStorage.setItem('picture', file.eager[0].secure_url)
 
     fetch("/profile/picture", {
       method: "POST",
@@ -80,6 +90,24 @@ export default function EditProfile() {
         "image": file.eager[0].secure_url,
         "username": username
       })
+    })
+  }
+
+
+  // Editing the profile Submit function
+
+  function editsSubmitHandler(){
+    axios.post("/profile/edit", {
+      "user": username,
+      "name": enteredName,
+      "username": enteredUsername,
+      "bio": enteredBio,
+      "email": enteredEmail,
+    }).then(res => {
+      sessionStorage.setItem('username', res.data.data.username)
+      sessionStorage.setItem('name', res.data.data.name)
+      sessionStorage.setItem('bio', res.data.data.bio)
+      sessionStorage.setItem('email', res.data.data.email)
     })
   }
 
@@ -167,7 +195,13 @@ export default function EditProfile() {
               darkTheme ? styles["form-input"] : styles["form-input-light"]
             }
           >
-            <textarea type="text" placeholder="bio" id="bio"></textarea>
+            <textarea 
+            type="text" 
+            placeholder="bio" 
+            id="bio" 
+            onChange={bioChangeHandler}
+            value={enteredBio}
+            />
             <span>Personal Information</span>
             <p>
               Provide your personal information, even if the account is used for
@@ -190,6 +224,8 @@ export default function EditProfile() {
               type="email"
               placeholder="johndoe@hotmail.com"
               id="email"
+              onChange={emailChangeHandler}
+              value={enteredEmail}
             ></input>
           </div>
         </div>
@@ -221,7 +257,7 @@ export default function EditProfile() {
         </div>
 
         <div className={styles["submit-btn-div"]}>
-          <button className={styles["submit-btn"]} type="submit">
+          <button className={styles["submit-btn"]} type="submit" onClick={editsSubmitHandler}>
             Submit
           </button>
         </div>

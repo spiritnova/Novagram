@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate} from "react-router-dom";
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 // import { useCookie } from './hooks/useCookie'
 // import uuid from 'react-uuid'
 
@@ -27,23 +27,19 @@ import Help from "./pages/Settings/Help"
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import NotFound from "./components/NotFound";
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NotFound from "./components/NotFound";
+import Post from "./pages/Profile/Post";
 
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('isLoggedIn') ? true : false)
 
-  useEffect(() => {
-    const log = sessionStorage.getItem('isLoggedIn')
-
-    if (log === '1'){
-      setIsLoggedIn(true)
-    }
-  }, [])
-
+  if(!isLoggedIn){
+    document.body.style.overflowY = 'hidden'
+  }
   
   function loginHandler(){
     sessionStorage.setItem('isLoggedIn', '1')
@@ -60,19 +56,21 @@ const App = () => {
   return (
       <ThemeProvider>
         <AuthContext.Provider value={{isLoggedIn : isLoggedIn}}>
-          <Sidebar onLogout={logoutHandler}/>
+          {isLoggedIn? <Sidebar onLogout={logoutHandler}/> : ''}
           <Container>
               <Routes>
                 <Route path="/" element={isLoggedIn ? <Home/> :<Navigate to ="/login"/>} />
-                <Route path="explore" element={<Explore />} />
-                <Route path="messages" element={<Messages />} />
-                <Route path="profile" element={<Profile/>}>
+                <Route path="explore" element={isLoggedIn ? <Explore /> : <Navigate to ="/login"/>} >
+                  <Route path=":id" element={<Post/>}/>
+                </Route>
+                <Route path="messages" element={isLoggedIn ? <Messages /> : <Navigate to ="/login"/>} />
+                <Route path="profile" element={isLoggedIn ? <Profile/> : <Navigate to ="/"/>}>
                   <Route path=":username" element={<Posts />} >
                     <Route path=":id" element={<Posts/>} />
                   </Route>
                   <Route path=":username/saved" element={<Saved />} />
                 </Route>
-                <Route path="settings" element={<Settings />}>
+                <Route path="settings" element={isLoggedIn ? <Settings /> : <Navigate to ="/login"/>}>
                   <Route path="" element={<EditProfile/>} />
                   <Route path="password_change" element={<PasswordChange />} />
                   <Route path="emails/notifications" element={<EmailNotifications />} />
