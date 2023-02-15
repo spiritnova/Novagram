@@ -6,7 +6,7 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faTableCells } from "@fortawesome/free-solid-svg-icons";
 
 import { Link, Outlet, useParams } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
@@ -22,6 +22,8 @@ export default function Profile() {
 
   const user = useParams()
 
+  const defaultImage = user.username.charAt(0).toUpperCase()
+
 
   useMemo(() => {
     if (user.username !== username){
@@ -29,16 +31,36 @@ export default function Profile() {
     }
   }, [username, user.username])
 
-
   const userQuery = useQuery({
     queryKey: ["posts", user.username],
-    queryFn : () => axios.get(`/user/${user.username}`),
+    queryFn : () => axios.post(`/user/${user.username}`, {
+      "username": username
+    }),
   })
+
+  const [followed, setFollowed] = useState()
+
+  useEffect(() => {
+    userQuery.data?.data.following.forEach(follow => {
+      if(follow.username === user.username){
+        setFollowed(true)
+      }
+    });
+  }, [user.username, userQuery.data?.data.following])
+
 
   const [postCount, setPostCount] = useState()
 
+
+
   const followHandler = () => {
-    console.log("followed")
+    setFollowed(prev => !prev)
+
+    axios.post("/follow", {
+      "state": followed,
+      "follower": username,
+      "followed": user.username
+    })
   }
 
   return (
@@ -46,7 +68,14 @@ export default function Profile() {
       <div className={styles.wrapper}>
         <div className={styles["profile-img-div"]}>
           <div className={styles["profile-img"]}>
-            <img src={differentProfile ? userQuery.data?.data.picture : picture} alt="profile"></img>
+            {differentProfile 
+            ? (userQuery.data?.data.picture 
+              ? <img src={userQuery.data?.data.picture} alt="profile"></img> 
+              : <div className={styles.defaultImg}><span>{defaultImage}</span></div>) 
+            : !picture 
+              ? <div className={styles.defaultImg}><span>{defaultImage}</span></div> 
+              : <img src={userQuery.data?.data.picture} alt="profile"></img>}
+          
           </div>
         </div>
 
@@ -68,7 +97,7 @@ export default function Profile() {
              className={styles.follow}
              onClick={followHandler}
              >
-              Follow
+              {followed ? 'Unfollow' : 'Follow'}
             </button>}
           </div>
 
@@ -81,13 +110,21 @@ export default function Profile() {
             </div>
             <div>
               <span>
-                <b>96</b>
+                <b>{differentProfile 
+                    ? userQuery.data?.data.user_followers.length 
+                    : userQuery.data?.data.followers.length
+                  }
+                </b>
               </span>{" "}
               followers
             </div>
             <div>
               <span>
-                <b>153</b>
+                <b>{differentProfile
+                ? userQuery.data?.data.user_following.length
+                : userQuery.data?.data.following.length
+                }
+              </b>
               </span>{" "}
               following
             </div>
@@ -96,7 +133,7 @@ export default function Profile() {
           <div className={styles["profile-description"]}>
             <div>{differentProfile ?  userQuery.data?.data.name : name}</div>
             <p className={styles.bio}>
-              {bio}
+              {differentProfile ? userQuery.data?.data.bio : bio}
             </p>
           </div>
         </div>

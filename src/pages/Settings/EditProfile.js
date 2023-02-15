@@ -7,6 +7,8 @@ export default function EditProfile() {
   const [showBackdrop, setShowBackdrop] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const modal = useRef()
+
   const username = sessionStorage.getItem('username')
   const name = sessionStorage.getItem('name')
   const picture = sessionStorage.getItem('picture')
@@ -53,6 +55,11 @@ export default function EditProfile() {
     setShowModal(false);
     setShowBackdrop(false);
   };
+
+  const handleBackdrop = (e) => {
+    setShowModal(false)
+    setShowBackdrop(false)
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -262,9 +269,9 @@ export default function EditProfile() {
           </button>
         </div>
       </form>
-      {showBackdrop && <div className={styles.backdrop}></div>}
+      {showBackdrop && <div className={styles.backdrop} onClick={handleBackdrop}></div>}
       {showModal && (
-        <div className={styles.modal}>
+        <div className={styles.modal} ref={modal}>
           <p>Change Profile Photo</p>
           <label>
             Upload photo

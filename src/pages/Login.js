@@ -40,18 +40,27 @@ export default function Login(props) {
     )
     .then(data => {
       setData(data)
-      if(data.success){
-        props.onLogin();
-      }
       sessionStorage.setItem('user_id', data.user_id)
       sessionStorage.setItem('username', data.username)
       sessionStorage.setItem('name', data.name)
-      sessionStorage.setItem('picture', data.picture)
-      navigate("/")
+
+      if(data.picture !== null){
+        console.log(data.picture)
+        sessionStorage.setItem('picture', data.picture)
+      }
+
+      if(data.bio){
+        sessionStorage.setItem('bio', data.bio)
+      }
+      if(data.email){
+        sessionStorage.setItem('email', data.email)
+      }
+      if(data.success){
+        props.onLogin();
+        navigate("/")
+      }
     })
   };
-
-
   return (
     <div className={styles.wrapper}>
       <form onSubmit={formSubmissionHandler}>

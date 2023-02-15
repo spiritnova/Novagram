@@ -38,10 +38,9 @@ export default function Posts(){
     if (postsQuery.isLoading) return <div className={styles.loader}></div>
     if (postsQuery.isError) return <pre>{JSON.stringify(postsQuery.error)}</pre>
 
-
     return(
         <Wrapper>
-            {postsQuery.data.length === 0 ? <div className={styles.noPosts}>No posts yet</div> :
+            {postsQuery.data.count === 0 ? <div className={styles.noPosts}>No posts yet</div> :
             <div className={styles.cards}>
                 {postsQuery.data.posts.map(post => (
                     <Link key={post.id} to ={`/profile/${user.username}/${post.id}`} onClick={() => setShowModal(true)}>

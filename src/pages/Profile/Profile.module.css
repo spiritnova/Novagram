@@ -34,6 +34,22 @@
     border-radius: 50%;
 }
 
+.defaultImg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-left: 64px;
+}
+
+.defaultImg span{
+    color: white;
+    font-size: 75px;
+}
+
 .profile-data{
     justify-content: center;
     text-align: left;

@@ -49,6 +49,11 @@ const App = () => {
   function logoutHandler()
   {
     sessionStorage.removeItem('isLoggedIn')
+    sessionStorage.removeItem('username')
+    sessionStorage.removeItem('picture')
+    sessionStorage.removeItem('email')
+    sessionStorage.removeItem('name')
+    sessionStorage.removeItem('user_id')
     localStorage.removeItem('user')
     setIsLoggedIn(false);
   }  
