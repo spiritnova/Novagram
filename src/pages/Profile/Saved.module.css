@@ -1,6 +1,5 @@
 .cards{
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     gap: 28px;
     margin-top: 10px;
@@ -15,7 +14,7 @@
 .buttonDiv{
     display: flex;
     justify-content: flex-end;
-    margin-right: 150px;
+    margin-right: 10px;
     margin-top: 20px;
 }
 .button{

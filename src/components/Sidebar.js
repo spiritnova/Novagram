@@ -116,6 +116,10 @@ export default function Sidebar(props){
     }, [selectedFile])
 
     const uploadImage = async (e) => {
+        setShowBackdrop(false)
+        modal.current.style.display = "none"
+        modal3.current.style.display = "none"
+
         const files = fileInput.current.files
 
         const data = new FormData()
@@ -133,9 +137,6 @@ export default function Sidebar(props){
         setImage(file.secure_url)
 
         setIsLoading(false)
-        
-        setShowBackdrop(false)
-        modal.current.style.display = "none"
 
         const post = {
             "image": image,

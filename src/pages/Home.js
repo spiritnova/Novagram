@@ -20,7 +20,6 @@ export default function Home(){
                 <li>Search bar</li>
                 <li>Notifications</li>
                 <li>Home page</li>
-                <li>follow system</li>
             </ul>
         </div>
     )

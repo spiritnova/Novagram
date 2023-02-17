@@ -1,7 +1,7 @@
 import Wrapper from "../../components/UI Kit/Wrapper";
 import styles from "./Profile.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faTableCells } from "@fortawesome/free-solid-svg-icons";
 
@@ -9,11 +9,15 @@ import { Link, Outlet, useParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import Follower from "../../components/Follower";
+import ProfileInfo from "../../components/ProfileInfo";
 
 
 export default function Profile() {
 
   const [differentProfile, setDifferentProfile] = useState(false)
+  const [followersIsActive, setFollowersIsActive] = useState(false)
+  const [followingIsActive, setFollowingIsActive] = useState(false)
 
   const picture = sessionStorage.getItem('picture')
   const username = sessionStorage.getItem('username')
@@ -38,7 +42,7 @@ export default function Profile() {
     }),
   })
 
-  const [followed, setFollowed] = useState()
+  const [followed, setFollowed] = useState(false)
 
   useEffect(() => {
     userQuery.data?.data.following.forEach(follow => {
@@ -51,6 +55,22 @@ export default function Profile() {
 
   const [postCount, setPostCount] = useState()
 
+  let followers
+
+  if(differentProfile){
+    followers = userQuery.data?.data.user_followers
+  }
+  else{
+    followers = userQuery.data?.data.followers
+  }
+
+  let following
+  if(differentProfile){
+    following = userQuery.data?.data.user_following
+  }
+  else{
+    following = userQuery.data?.data.following
+  }
 
 
   const followHandler = () => {
@@ -61,6 +81,18 @@ export default function Profile() {
       "follower": username,
       "followed": user.username
     })
+  }
+
+  const followersClickHandler = () => {
+    setFollowersIsActive(true)
+  }
+  const followingClickHandler = () => {
+    setFollowingIsActive(true)
+  }
+
+  const closeModalHandler = () => {
+    setFollowersIsActive(false)
+    setFollowingIsActive(false)
   }
 
   return (
@@ -101,34 +133,45 @@ export default function Profile() {
             </button>}
           </div>
 
-          <div className={styles["profile-info"]}>
-            <div>
-              <span>
-                <b>{postCount ?? 0}</b>
-              </span>{" "}
-              posts
+          <ProfileInfo 
+          followersClick={followersClickHandler}
+          followingClick={followingClickHandler}
+          differentProfile={differentProfile}
+          postCount={postCount}
+          userFollowersLength={userQuery.data?.data.user_followers.length}
+          userFollowingLength={userQuery.data?.data.user_following.length}
+          followersLength={userQuery.data?.data.followers.length}
+          followingLength={userQuery.data?.data.following.length}
+          />
+
+          {followersIsActive && 
+          <Wrapper>
+            <div className={styles.backdrop} onClick={() => setFollowersIsActive(false)}></div>
+            <div className={styles.modal}>
+              <div className={styles.title}>
+                <span>Followers</span>
+                <button><FontAwesomeIcon icon={faXmark} onClick={closeModalHandler}/></button>
+              </div>
+              {followers.length !== 0 ?  followers.map(follow => (
+                <Follower key={follow.username} username={follow.username} name={follow.name} picture={follow.picture} />
+              )): <div className={styles.negative}><span>No Followers</span></div>}
             </div>
-            <div>
-              <span>
-                <b>{differentProfile 
-                    ? userQuery.data?.data.user_followers.length 
-                    : userQuery.data?.data.followers.length
-                  }
-                </b>
-              </span>{" "}
-              followers
+          </Wrapper>
+          }
+          {followingIsActive && 
+          <Wrapper>
+            <div className={styles.backdrop} onClick={() => setFollowingIsActive(false)}></div>
+            <div className={styles.modal}>
+              <div className={styles.title}>
+                <span>Following</span>
+                <button><FontAwesomeIcon icon={faXmark} onClick={closeModalHandler}/></button>
+              </div>
+              {following.length !== 0 ?  following.map(follow => (
+                <Follower key={follow.username} username={follow.username} name={follow.name} picture={follow.picture} />
+              )): <div className={styles.negative}><span>Not following anyone</span></div>}
             </div>
-            <div>
-              <span>
-                <b>{differentProfile
-                ? userQuery.data?.data.user_following.length
-                : userQuery.data?.data.following.length
-                }
-              </b>
-              </span>{" "}
-              following
-            </div>
-          </div>
+          </Wrapper>
+          }
 
           <div className={styles["profile-description"]}>
             <div>{differentProfile ?  userQuery.data?.data.name : name}</div>
