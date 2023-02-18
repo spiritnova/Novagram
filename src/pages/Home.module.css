@@ -1,4 +1,81 @@
-.home{
+.cards{
     display: flex;
     flex-direction: column;
+    margin-left: 200px;
+    margin-top: 20px;
+    width: 37.5%;
+    overflow-x: hidden;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 2rem;
+}
+
+.info{
+    display: flex;
+    align-items: center;
+    padding: 10px 0px;
+}
+
+.username{
+    margin-left: 0.5rem;
+}
+
+.pfp{
+    width: 2rem;
+    height: 2rem;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.date{
+    margin-left: 0.5rem;
+    color: rgb(180, 180, 180);
+}
+
+.img{
+    vertical-align: top;
+    height: 468px;
+    width: 468px;
+}
+
+.img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.buttons{
+    padding: 10px 0px;
+}
+
+.buttons button{
+    background: none;
+    color: white;
+    font-size: 1.4rem;
+    margin-right: 1rem;
+}
+
+.footer{
+    display: flex;
+    flex-direction: column;
+}
+
+.footer button{
+    text-align: left;
+    background: none;
+    color: rgb(148, 148, 148);
+}
+
+.footer input{
+    background: none;
+    color: white;
+    border: none;
+    padding: 10px 0px;
+    border-bottom: 1px solid white;
+    outline: none;
+    font-size: 15px;
 }

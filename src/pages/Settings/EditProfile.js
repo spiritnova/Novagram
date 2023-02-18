@@ -15,6 +15,8 @@ export default function EditProfile() {
   const bio = sessionStorage.getItem('bio')
   const email = sessionStorage.getItem('email')
 
+  const defaultImage = username.charAt(0).toUpperCase()
+
 
   const [enteredName, setEnteredName] = useState(name);
   const [enteredUsername, setEnteredUsername] = useState(username);
@@ -124,7 +126,12 @@ export default function EditProfile() {
         <div
           className={darkTheme ? styles.imgDiv : styles["imgDiv-light"]}
         >
-          <img alt="profilePicture" src={picture}></img>
+          
+          {picture 
+          ? <img alt="profilePicture" src={picture}></img>
+          : defaultImage
+        }
+          
         </div>
         <div className={styles.pfp}>
           <p>{username}</p>

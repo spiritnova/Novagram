@@ -22,16 +22,15 @@ import AuthContext from '../context/auth-context'
 export default function Sidebar(props){
     const [showBackdrop, setShowBackdrop] = useState(false)
 
-    const [image, setImage] = useState('')
     const [loading, setIsLoading] = useState(false)
 
     const modal = useRef()
     const modal2 = useRef()
     const modal3 = useRef()
 
-    if(showBackdrop){
-        document.body.style.overflow = "hidden"
-    } else { document.body.style.overflow = "auto" }
+    showBackdrop // Used to hide the scrollbar when Modal is opened
+        ? document.body.style.overflow = "hidden"
+        : document.body.style.overflow = "auto"
 
 
     const pic = useRef()
@@ -47,9 +46,14 @@ export default function Sidebar(props){
 
     const ctx = useContext(AuthContext)
 
-    darkTheme // Used to match the Body and Wrapper'S color depending on the theme
+    darkTheme // Used to match the Body and Wrapper's color depending on the theme
     ? document.body.style = 'background : #121212'
     : document.body.style = 'background : #f2f2f2'
+
+    if(modal.current.style.display === 'flex'){
+        document.body.style.overflow = 'hidden'
+
+    }
 
     const handleShow = (e) => {
         setShowBackdrop(true)
@@ -59,6 +63,10 @@ export default function Sidebar(props){
     const handleClose = () => {
         setShowBackdrop(false)
         setPreview(undefined)
+        setSelectedFile(undefined)
+        
+        caption.current.value = ''
+        fileInput.current.value = ''
 
         modal.current.style.display = "none"
         modal2.current.style.display = "none"
@@ -119,27 +127,41 @@ export default function Sidebar(props){
         setShowBackdrop(false)
         modal.current.style.display = "none"
         modal3.current.style.display = "none"
+        setPreview(undefined)
+        setSelectedFile(undefined)
+
+        caption.current.value = ''
 
         const files = fileInput.current.files
 
         const data = new FormData()
-
-        data.append('file', files[0])
-        data.append('upload_preset', 'novagram')
+        data.append("image", files[0])
         
         setIsLoading(true)
-        const res = await fetch("https://api.cloudinary.com/v1_1/dj3sulxro/image/upload", {
+
+        const res = await fetch("https://api.imgur.com/3/image", {
             method: "POST",
+            headers : {
+                "Authorization": "Client-ID 6997d124420fdc3"
+            },
             body: data
         })
+        // data.append('file', files[0])
+        // data.append('upload_preset', 'novagram')
+        
+        // const res = await fetch("https://api.cloudinary.com/v1_1/dj3sulxro/image/upload", {
+        //     method: "POST",
+        //     body: data
+        // })
         const file = await res.json()
-
-        setImage(file.secure_url)
 
         setIsLoading(false)
 
+        fileInput.current.value = ''
+
+
         const post = {
-            "image": image,
+            "image": file.data.link,
             "username": username,
             "caption" : caption.current.value
         }
@@ -166,10 +188,6 @@ export default function Sidebar(props){
                     </li>
                     <ActiveLink to="/explore">
                         <FontAwesomeIcon icon={faCompass} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>Explore</span>
-                    </ActiveLink>
-
-                    <ActiveLink to="/messages">
-                        <FontAwesomeIcon icon={faComment} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>Messages</span>
                     </ActiveLink>
                     <li>
                         <button className={darkTheme ? styles.buttons : styles['buttons-light']}>
@@ -247,7 +265,7 @@ export default function Sidebar(props){
                     <button className={styles['modal-previous']} onClick={modalBack("page3")}>
                         <FontAwesomeIcon icon={faChevronLeft}/>
                     </button>
-                    <button className={styles['modal-share']} onClick={uploadImage}>Share</button>
+                    <button className={styles['modal-share']} onClick={uploadImage}>{loading? "Loading..." : "Share"}</button>
                 </div>
 
                 <div className={styles.caption}>

@@ -29,14 +29,17 @@ export default function Profile() {
   const defaultImage = user.username.charAt(0).toUpperCase()
 
 
-  useMemo(() => {
+  useMemo(() => { // This hook is to check whenever we visit other profiles
     if (user.username !== username){
       setDifferentProfile(true)
     }
-  }, [username, user.username])
+    else{
+      setDifferentProfile(false)
+    }
+  }, [user.username, username])
 
   const userQuery = useQuery({
-    queryKey: ["posts", user.username],
+    queryKey: ["userData", user.username],
     queryFn : () => axios.post(`/user/${user.username}`, {
       "username": username
     }),
@@ -72,16 +75,17 @@ export default function Profile() {
     following = userQuery.data?.data.following
   }
 
-
   const followHandler = () => {
     setFollowed(prev => !prev)
 
     axios.post("/follow", {
-      "state": followed,
+      "state": !followed,
       "follower": username,
       "followed": user.username
     })
   }
+
+
 
   const followersClickHandler = () => {
     setFollowersIsActive(true)

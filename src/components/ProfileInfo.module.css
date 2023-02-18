@@ -9,14 +9,6 @@
     margin-right: 40px;
 }
 
-.follow{
-    padding: 4px 16px !important;
-    border-radius: 8px;
-    background-color: rgb(82, 121, 249);
-    color: white;
-    margin-left: 2rem;
-}
-
 .followBtn{
     background: none;
     color: white;
@@ -25,4 +17,8 @@
 
 .followBtn:active{
     color: rgb(149, 149, 149);
+}
+
+.followBtn:disabled{
+    border: none;
 }

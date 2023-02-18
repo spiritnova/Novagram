@@ -45,7 +45,6 @@ export default function Login(props) {
       sessionStorage.setItem('name', data.name)
 
       if(data.picture !== null){
-        console.log(data.picture)
         sessionStorage.setItem('picture', data.picture)
       }
 

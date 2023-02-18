@@ -25,7 +25,7 @@ export default function Posts(){
     const user = useParams()
 
     const postsQuery = useQuery({
-        queryKey: ["posts"],
+        queryKey: ["posts", user.username],
         queryFn:() => fetch(`/posts/${user.username}`)
         .then(res => res.json()),
     })
@@ -40,7 +40,9 @@ export default function Posts(){
 
     return(
         <Wrapper>
-            {postsQuery.data.count === 0 ? <div className={styles.noPosts}>No posts yet</div> :
+            {postsQuery.data.count === 0 
+            ? <div className={styles.noPosts}>No posts yet</div> 
+            :
             <div className={styles.cards}>
                 {postsQuery.data.posts.map(post => (
                     <Link key={post.id} to ={`/profile/${user.username}/${post.id}`} onClick={() => setShowModal(true)}>

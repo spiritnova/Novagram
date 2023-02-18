@@ -272,7 +272,7 @@
     width: 100%;
     max-width: 34.375em;
 
-    position: absolute;
+    position: fixed;
     top: 11%;
     left: 33%;
 
@@ -395,7 +395,7 @@
     width: 100%;
     max-width: 34.375em;
 
-    position: absolute;
+    position: fixed;
     top: 13%;
     left: 31%;
 

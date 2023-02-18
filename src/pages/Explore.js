@@ -42,7 +42,7 @@ export default function Explore(){
                 {data.pages
                 .flatMap(data => data.posts)
                 .map(post => (
-                    <Link  key={post.id} onClick={() => {
+                    <Link to="#" key={post.id} onClick={() => {
                             setModalIsVisible(true)
                         }}>
                         <div className={styles.card}>
@@ -54,7 +54,7 @@ export default function Explore(){
                         </div>
                     </Link>
                 ))}
-                {modalIsVisible && <Post onClose={() => setModalIsVisible(false)}/>}
+                {/* {modalIsVisible && <Post onClose={() => setModalIsVisible(false)}/>} */}
                 {/* {hasNextPage && (
                     <button onClick={() => fetchNextPage()}>
                         {isFetchingNextPage ? "Loading..." : "Load More"}

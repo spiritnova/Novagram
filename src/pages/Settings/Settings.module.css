@@ -121,6 +121,11 @@
     border-radius: 50%;
     margin-right: 38px;
     text-align: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    background-color: #0095f6;
 }
 
 .imgDiv img{

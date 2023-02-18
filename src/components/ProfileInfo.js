@@ -18,7 +18,7 @@ export default function ProfileInfo({
           </span>{" "}
           posts
         </div>
-        <button className={styles.followBtn} onClick={followersClick}>
+        <button className={styles.followBtn} onClick={followersClick} disabled={differentProfile}>
           <span>
             <b>{differentProfile 
                 ? userFollowersLength
@@ -28,7 +28,7 @@ export default function ProfileInfo({
           </span>{" "}
           followers
         </button>
-        <button className={styles.followBtn} onClick={followingClick}>
+        <button className={styles.followBtn} onClick={followingClick} disabled={differentProfile}>
           <span>
             <b>{differentProfile
             ? userFollowingLength
