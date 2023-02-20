@@ -1,6 +1,6 @@
 import styles from './Posts.module.css'
 import { useQuery } from '@tanstack/react-query'
-import { Link, useOutletContext, useParams } from 'react-router-dom'
+import { Link, useLocation, useOutletContext, useParams } from 'react-router-dom'
 
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,8 +11,11 @@ import Wrapper from '../../components/UI Kit/Wrapper'
 
 export default function Posts(){
     const [showModal, setShowModal] = useState(false)
+    const [postId, setPostId] = useState()
 
     const  setPostCount  = useOutletContext()
+
+    const location = useLocation()
 
     if (showModal){
         document.body.style.overflow = "hidden"
@@ -22,11 +25,12 @@ export default function Posts(){
         document.body.style.overflow ="auto"
     }
 
+
     const user = useParams()
 
     const postsQuery = useQuery({
         queryKey: ["posts", user.username],
-        queryFn:() => fetch(`/posts/${user.username}`)
+        queryFn:() => fetch(`/${user.username}`)
         .then(res => res.json()),
     })
 
@@ -45,7 +49,12 @@ export default function Posts(){
             :
             <div className={styles.cards}>
                 {postsQuery.data.posts.map(post => (
-                    <Link key={post.id} to ={`/profile/${user.username}/${post.id}`} onClick={() => setShowModal(true)}>
+                    <Link key={post.id} onClick={
+                        () => {
+                            setShowModal(true)
+                            setPostId(post.id)
+                        }
+                        }>
                         <div className={styles.card}>
                             <img src={post.image} className={styles.test} alt="posts"/>
                             <div className={styles.buttons}>
@@ -55,7 +64,13 @@ export default function Posts(){
                         </div>
                     </Link>
                 ))}
-                {showModal && <Post onClose={() => setShowModal(false)}/>}
+                {showModal && 
+                <Post 
+                    onClose={() => setShowModal(false)}
+                    showModal={showModal}
+                    realRoute={location.pathname}
+                    pseudoRoute={`/post/${postId}`}
+                />}
             </div>}
         </Wrapper>
     )

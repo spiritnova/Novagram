@@ -29,7 +29,7 @@ export default function Dropdown(props){
                 <Link to='/settings'>
                 Settings<FontAwesomeIcon icon={faGear} className={styles['dropdown-icons']}/>
                 </Link>
-                <Link to={`/profile/${username}/saved`}>
+                <Link to={`/${username}/saved`}>
                 Saved <FontAwesomeIcon icon={faBookmark} className={styles['dropdown-icons']}/>
                 </Link>
                 <button className={darkTheme ? styles.buttons : styles['buttons-light']} onClick={toggleTheme}>

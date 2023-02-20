@@ -3,14 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import Wrapper from "../components/UI Kit/Wrapper"
 import styles from './Explore.module.css'
 import Post from "./Profile/Post"
 
 export default function Explore(){
 
+    const location = useLocation()
     const [modalIsVisible, setModalIsVisible] = useState()
+    const [postId, setPostId] = useState()
 
     function getAllPosts(page) {
         return axios
@@ -42,8 +44,9 @@ export default function Explore(){
                 {data.pages
                 .flatMap(data => data.posts)
                 .map(post => (
-                    <Link to="#" key={post.id} onClick={() => {
+                    <Link key={post.id} onClick={() => {
                             setModalIsVisible(true)
+                            setPostId(post.id)
                         }}>
                         <div className={styles.card}>
                             <img alt="posts" src={post.image}/>
@@ -54,7 +57,14 @@ export default function Explore(){
                         </div>
                     </Link>
                 ))}
-                {/* {modalIsVisible && <Post onClose={() => setModalIsVisible(false)}/>} */}
+
+                {modalIsVisible && 
+                <Post 
+                    showModal={modalIsVisible}
+                    realRoute={location.pathname} 
+                    onClose={() => setModalIsVisible(false)}
+                    pseudoRoute={`/post/${postId}`}
+                    />}
                 {/* {hasNextPage && (
                     <button onClick={() => fetchNextPage()}>
                         {isFetchingNextPage ? "Loading..." : "Load More"}

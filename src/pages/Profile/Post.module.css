@@ -29,8 +29,9 @@
 .modal{
     display: flex;
     position: fixed;
+    max-width: 1157px;
     top: 5%;
-    left: 12%;
+    left: 14%;
     z-index: 3500 !important;
     background-color: #0e0e0e;
     height: 700px;
@@ -61,10 +62,16 @@
 }
 
 .modal-pfp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 32px;
     height: 32px;
     border-radius: 50%;
     margin-left: 15px;
+    background-color: white;
+    color: black;
+    font-size: 1.4rem
 }
 
 .modal-pfp img{
@@ -119,12 +126,17 @@
     font-size: 16px;
     margin-bottom: 0px !important;
 }
-
+.modal-post-settings{
+    background: none;
+    color: white;
+    position: relative;
+    left: 25rem;
+}
 .modal-comment-like{
     background: none;
     color: white;
     position: absolute;
-    right: 10px;
+    right: 0.5rem;
 }
 
 .modal-comment-date{
@@ -206,8 +218,8 @@
 
 
 .icons-right{
-    position: absolute;
-    right: 15px;
+    position: relative;
+    left: 23rem;
 }
 
 .post-edit{

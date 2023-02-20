@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createRef, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './Post.module.css'
@@ -13,22 +12,34 @@ export default function Post(props){
 
     const [liked, setIsLiked] = useState(false)
     const [showModal, setShowModal] = useState(false)
+    const [pfp, setPfp] = useState()
 
-    const { id } = useParams()
+    useEffect(() => {
+        if(props.showModal && props.pseudoRoute){
+            window.history.pushState(null, null, props.pseudoRoute)
+        }
+    }, [props.showModal, props.pseudoRoute])
 
-    const user = useParams()
+    useEffect(() => {
+        if(!props.showModal && props.realRoute){
+            window.history.pushState(null, null, props.realRoute)
+        }
+    }, [props.showModal, props.realRoute])
+
+    const username = sessionStorage.getItem('username')
+
+    const id = props.pseudoRoute.slice(6)
 
     const heart = useRef()
+    const comment = useRef()
 
     const user_id = sessionStorage.getItem('user_id')
-
-    const comment = useRef()
 
     const queryClient = useQueryClient()
 
     const postQuery = useQuery({
         queryKey: ["posts", id],
-        queryFn: () => fetch(`/posts/${user.username}/${id}`)
+        queryFn: () => fetch(props.pseudoRoute)
         .then(res => res.json()),
     })
 
@@ -66,7 +77,7 @@ export default function Post(props){
     useEffect(() => {
         postQuery.data?.data.comments.forEach(comment => {
             comment.likes.forEach((like) => {
-                if(like.username === user.username){
+                if(like.username === username){
                     refsById[comment.id].current.style.color = 'red'
                 }
                 else{
@@ -75,6 +86,13 @@ export default function Post(props){
             })
         })
     })
+    
+    useEffect(() => {
+
+        if(postQuery.data?.data.picture === null){
+             setPfp(postQuery.data?.data.username.charAt(0))
+        }
+    }, [postQuery.data?.data.picture, postQuery.data?.data.username])
 
     function postDeleteHandler(){
         setShowModal(false)
@@ -85,7 +103,6 @@ export default function Post(props){
 
         queryClient.invalidateQueries(["posts"])
     }
-
 
     if(postQuery.isLoading) return <div className={styles.loader}></div>
     if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error)}</pre>
@@ -106,21 +123,28 @@ export default function Post(props){
                 <div className={styles['modal-details']}>
                     <div className={styles['modal-details-control']}>
                         <div className={styles['modal-pfp']}>
-                            <img alt="pfp" src={postQuery.data.data.picture}></img>
+                            {postQuery.data?.data.picture !== null 
+                            ? <img alt="pfp" src={postQuery.data?.data.picture}></img>
+                            : pfp
+                            }
+                            
                         </div>
-                        <p>{user.username}</p>
-                        <button className={styles['modal-comment-like']} onClick={() => setShowModal(true)}>
+                        <p>{postQuery.data?.data.username}</p>
+                        <button className={styles['modal-post-settings']} onClick={() => setShowModal(true)}>
                             <FontAwesomeIcon icon={faEllipsis}/>
                         </button>
                     </div>
                     <div className={styles['modal-details-comments']}>
                         <div className={styles['modal-comment']}>
                             <div className={styles['modal-pfp']}>
-                                <img alt="pfp" src={postQuery.data.data.picture}></img>
+                            {postQuery.data?.data.picture !== null 
+                            ? <img alt="pfp" src={postQuery.data?.data.picture}></img>
+                            : pfp
+                            }
                             </div>
                             <div className={styles['modal-comment-container']}>
                                 <div className={styles['modal-comment-details']}>
-                                    <p className={styles['modal-comment-user']}>{user.username}</p>
+                                    <p className={styles['modal-comment-user']}>{postQuery.data?.data.username}</p>
                                     <p className={styles['modal-comment-content']}>{postQuery.data.data.caption}</p>
                                 </div>
                                 <div className={styles['modal-comment-date']}>
@@ -197,8 +221,7 @@ export default function Post(props){
             </div>
 
 
-            {showModal && 
-            <Wrapper>
+            {showModal && <Wrapper>
                 <div className={styles['post-backdrop']}>
                     <div className={styles['modal-close']}>
                         <button onClick={() => setShowModal(false)}>

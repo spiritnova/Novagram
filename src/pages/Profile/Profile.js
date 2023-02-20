@@ -19,6 +19,8 @@ export default function Profile() {
   const [followersIsActive, setFollowersIsActive] = useState(false)
   const [followingIsActive, setFollowingIsActive] = useState(false)
 
+  // const [showPost, setShowPost] = useState(true)
+
   const picture = sessionStorage.getItem('picture')
   const username = sessionStorage.getItem('username')
   const name = sessionStorage.getItem('name')
@@ -192,14 +194,14 @@ export default function Profile() {
 
       <div className={styles.section}>
         <div className={styles.nav}>
-          <Link to={`/profile/${user.username}`} className={styles.links}>
+          <Link to={`/${user.username}`} className={styles.links}>
             <FontAwesomeIcon
               icon={faTableCells}
               className={styles.icons}
             ></FontAwesomeIcon>
             POSTS
           </Link>
-          {!differentProfile ? <Link to={`/profile/${username}/saved`} className={styles.links}>
+          {!differentProfile ? <Link to={`/${username}/saved`} className={styles.links}>
             <FontAwesomeIcon
               icon={faBookmark}
               className={styles.icons}

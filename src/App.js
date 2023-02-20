@@ -11,7 +11,6 @@ import Container from "./components/Container";
 
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
-import Messages from "./pages/Messages";
 
 import Profile from "./pages/Profile/Profile";
 import Posts from "./pages/Profile/Posts";
@@ -64,17 +63,18 @@ const App = () => {
           {isLoggedIn? <Sidebar onLogout={logoutHandler}/> : ''}
           <Container>
               <Routes>
-                <Route path="/" element={isLoggedIn ? <Home/> :<Navigate to ="/login"/>} />
-                <Route path="explore" element={isLoggedIn ? <Explore /> : <Navigate to ="/login"/>} >
-                  <Route path=":id" element={<Post/>}/>
+                <Route path="/" element={isLoggedIn ? <Home/> :<Navigate to ="/login"/>}/>
+
+                <Route path="explore" element={isLoggedIn ? <Explore /> : <Navigate to ="/login"/>}/>
+
+                <Route path="post/:id" element={<Post/>}/>
+
+                <Route path=":username" element={<Profile/>}>
+                  <Route index element={<Posts/>}/>
+                  <Route path=":id"/>
+                  <Route path="saved" element={<Saved/>}/>
                 </Route>
-                <Route path="messages" element={isLoggedIn ? <Messages /> : <Navigate to ="/login"/>} />
-                <Route path="profile" element={isLoggedIn ? <Profile/> : <Navigate to ="/"/>}>
-                  <Route path=":username" element={<Posts />} >
-                    <Route path=":id" element={<Posts/>} />
-                  </Route>
-                  <Route path=":username/saved" element={<Saved />} />
-                </Route>
+
                 <Route path="settings" element={isLoggedIn ? <Settings /> : <Navigate to ="/login"/>}>
                   <Route path="" element={<EditProfile/>} />
                   <Route path="password_change" element={<PasswordChange />} />

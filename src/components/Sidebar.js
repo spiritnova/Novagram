@@ -1,16 +1,8 @@
 import styles from './Sidebar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import {faHouse} from '@fortawesome/free-solid-svg-icons'
-import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
-import { faCompass } from '@fortawesome/free-regular-svg-icons'
-import { faComment } from '@fortawesome/free-regular-svg-icons'
-import { faHeart } from '@fortawesome/free-regular-svg-icons'
-import { faSquarePlus } from '@fortawesome/free-regular-svg-icons'
-import { faUser } from '@fortawesome/free-regular-svg-icons'
-import { faPhotoFilm } from '@fortawesome/free-solid-svg-icons'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import {faHouse, faXmark, faChevronLeft, faPhotoFilm, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faSquarePlus, faUser, faCompass } from '@fortawesome/free-regular-svg-icons'
 
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import { useContext, useEffect, useState, useRef } from 'react'
@@ -50,10 +42,11 @@ export default function Sidebar(props){
     ? document.body.style = 'background : #121212'
     : document.body.style = 'background : #f2f2f2'
 
-    if(modal.current.style.display === 'flex'){
-        document.body.style.overflow = 'hidden'
-
-    }
+    useEffect(() => {
+        if(modal.current.style.display === 'flex'){
+            document.body.style.overflow = 'hidden'
+        }
+    }, [])
 
     const handleShow = (e) => {
         setShowBackdrop(true)
@@ -199,7 +192,7 @@ export default function Sidebar(props){
                         <FontAwesomeIcon icon={faSquarePlus} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>Create</span>
                         </button>
                     </li>
-                    <ActiveLink to={`/profile/${username}`}>
+                    <ActiveLink to={`/${username}`}>
                         <FontAwesomeIcon icon={faUser} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>Profile</span>
                     </ActiveLink>
                 </ul>

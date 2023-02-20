@@ -13,6 +13,7 @@
     background: none;
     color: white;
     margin-right: 2rem;
+    border: none;
 }
 
 .followBtn:active{
