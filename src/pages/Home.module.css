@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Poppins&display=swap');
+
 .cards{
     display: flex;
     flex-direction: column;
@@ -5,6 +7,7 @@
     margin-top: 20px;
     width: 37.5%;
     overflow-x: hidden;
+    font-family: 'Nunito', sans-serif;
 }
 
 .card{
@@ -22,6 +25,17 @@
 
 .username{
     margin-left: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+}
+
+.username a{
+    text-decoration: none;
+    color: white;
+}
+
+.username a:hover{
+    color: whitesmoke;
 }
 
 .pfp{
@@ -70,12 +84,23 @@
     color: rgb(148, 148, 148);
 }
 
-.footer input{
+.post{
+    width: 30rem;
+    border-bottom: 1px solid white;
+}
+
+.post input{
     background: none;
     color: white;
     border: none;
     padding: 10px 0px;
-    border-bottom: 1px solid white;
     outline: none;
     font-size: 15px;
+    width: 26rem;
+}
+
+.post button{
+    background: none;
+    color: rgb(55, 147, 240);
+    font-weight: 500;
 }
