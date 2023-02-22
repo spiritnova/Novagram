@@ -37,6 +37,18 @@
     height: 700px;
 }
 
+.modal-light{
+    display: flex;
+    position: fixed;
+    max-width: 1157px;
+    top: 5%;
+    left: 14%;
+    z-index: 3500 !important;
+    background-color: #fff;
+    color: black;
+    height: 700px;
+}
+
 .modal::-webkit-scrollbar{
     display: none;
 }
@@ -46,6 +58,7 @@
     max-height: 712;
     aspect-ratio: 657 / 712;
     flex-basis: 657px;
+    background-color: #0e0e0e;
 }
 
 .modal-img img{
@@ -59,6 +72,13 @@
     display: flex;
     flex-direction: column;
     border-left: 1px solid rgb(39, 39, 39);
+}
+
+.modal-details-light{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #fff; 
 }
 
 .modal-pfp{
@@ -90,7 +110,20 @@
 
 .modal-details-control p{
     margin-bottom: 0px !important;
-    margin-left: 20px;
+    margin-left: 0.9rem;
+    text-align: left;
+}
+
+.modal-details-control-light{
+    border-bottom: 1px solid fff;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-details-control-light p{
+    margin-bottom: 0px !important;
+    margin-left: 0.9rem;
     text-align: left;
 }
 
@@ -99,6 +132,14 @@
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid rgb(39, 39, 39);
+    margin-top: 15px;
+}
+
+.modal-details-comments-light{
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #fff;
     margin-top: 15px;
 }
 
@@ -130,13 +171,31 @@
     background: none;
     color: white;
     position: relative;
-    left: 25rem;
+    left: 23.5rem;
+    border: none;
+}
+
+.modal-post-settings-light{
+    background: none;
+    color: black;
+    position: relative;
+    left: 23.5rem;
+    border: none;
 }
 .modal-comment-like{
     background: none;
     color: white;
     position: absolute;
     right: 0.5rem;
+    border: none;
+}
+
+.modal-comment-like-light{
+    background: none;
+    color: rgb(130, 130, 130);
+    position: absolute;
+    right: 0.5rem;
+    border: none;
 }
 
 .modal-comment-date{
@@ -150,6 +209,11 @@
     border-bottom: 1px solid rgb(39, 39, 39);
 }
 
+.modal-details-reactions-light{
+    height: 100px;
+    border-bottom: 1px solid white;
+}
+
 .modal-post-date{
     text-align: left;
     margin-left: 18px;
@@ -157,6 +221,13 @@
 }
 
 .modal-details-post{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+}
+
+.modal-details-post-light{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -174,7 +245,22 @@
     width: 440px;
 }
 
+.modal-details-post-light textarea{
+    background: none;
+    border: none;
+    margin-left: 15px;
+    color: black;
+    height: 35px;
+    padding-top: 10px;
+    resize: none;
+    width: 440px;
+}
+
 .modal-details-post textarea:focus-visible{
+    outline: none;
+}
+
+.modal-details-post-light textarea:focus-visible{
     outline: none;
 }
 
@@ -183,6 +269,15 @@
     color: rgb(160, 190, 255);
     font-weight: 600;
     margin-right: 10px;
+    border: none;
+}
+
+.modal-details-post-light button{
+    background: none;
+    color: rgb(78, 133, 253);
+    font-weight: 600;
+    margin-right: 10px;
+    border: none;
 }
 
 .icons{
@@ -196,6 +291,18 @@
     border: none;
     font-size: 24px;
     margin-left: 18px;
+}
+
+.icon-light{
+    background : none;
+    color: rgb(112, 112, 112);
+    border: none;
+    font-size: 24px;
+    margin-left: 18px;
+}
+
+.icon-light:hover{
+    animation: heartbeat 300ms ease-in-out;
 }
 
 .icon:hover{

@@ -1,3 +1,4 @@
+import { useTheme } from '../context/ThemeContext'
 import styles from './ProfileInfo.module.css'
 
 export default function ProfileInfo({
@@ -10,6 +11,9 @@ export default function ProfileInfo({
     followersLength, 
     followingLength,
 }){
+
+    const darkTheme = useTheme()
+
     return (
         <div className={styles["profile-info"]}>
         <div>
@@ -18,7 +22,7 @@ export default function ProfileInfo({
           </span>{" "}
           posts
         </div>
-        <button className={styles.followBtn} onClick={followersClick} disabled={differentProfile}>
+        <button className={`${darkTheme ? styles.followBtn : styles['followBtn-light']}`} onClick={followersClick} disabled={differentProfile}>
           <span>
             <b>{differentProfile 
                 ? userFollowersLength
@@ -28,7 +32,7 @@ export default function ProfileInfo({
           </span>{" "}
           followers
         </button>
-        <button className={styles.followBtn} onClick={followingClick} disabled={differentProfile}>
+        <button className={`${darkTheme ? styles.followBtn : styles['followBtn-light']}`} onClick={followingClick} disabled={differentProfile}>
           <span>
             <b>{differentProfile
             ? userFollowingLength

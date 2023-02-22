@@ -135,7 +135,7 @@
 }
 
 .nav-light{
-    background-color: #f5e5e5;
+    background-color: #ffffff;
     width: 250px;
     height: 100%;
     position: fixed;
@@ -144,7 +144,7 @@
     left: 0;
     overflow: hidden;
     padding-top: 35px;
-    border-right: 1px solid rgb(67, 67, 67);
+    border-right: 1px solid rgb(207, 207, 207);
 }
 
 .nav-links-light{
@@ -350,7 +350,7 @@
 }
 
 .modal-close{
-    position: absolute;
+    position: fixed;
     top: 10px;
     right: 30px;
     background: none;

@@ -1,6 +1,6 @@
 import styles from './Posts.module.css'
 import { useQuery } from '@tanstack/react-query'
-import { Link, useLocation, useOutletContext, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useOutletContext, useParams } from 'react-router-dom'
 
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 
 import Post from './Post'
 import Wrapper from '../../components/UI Kit/Wrapper'
+import Loader from '../../components/UI Kit/Loader'
 
 export default function Posts(){
     const [showModal, setShowModal] = useState(false)
@@ -16,6 +17,8 @@ export default function Posts(){
     const  setPostCount  = useOutletContext()
 
     const location = useLocation()
+
+    const navigate = useNavigate()
 
     if (showModal){
         document.body.style.overflow = "hidden"
@@ -38,10 +41,14 @@ export default function Posts(){
         setPostCount(postsQuery.data?.count) // This gets the posts count from backend and sends it to profile through context
     }, [postsQuery, setPostCount])
 
+    if (postsQuery.isError) {
+        console.log("error")
+        navigate("/404")
+        return <pre>{JSON.stringify(postsQuery.error)}</pre>
+    } 
 
-    if (postsQuery.isLoading) return <div className={styles.loader}></div>
-    if (postsQuery.isError) return <pre>{JSON.stringify(postsQuery.error)}</pre>
-
+    if(postsQuery.isLoading) return
+          
     return(
         <Wrapper>
             {postsQuery.data.count === 0 
@@ -64,6 +71,7 @@ export default function Posts(){
                         </div>
                     </Link>
                 ))}
+                {postsQuery.isLoading && <div className={styles.loader}><Loader type={'1'}/></div>}
                 {showModal && 
                 <Post 
                     onClose={() => setShowModal(false)}

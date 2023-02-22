@@ -30,7 +30,6 @@ import NotFound from "./components/NotFound";
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Post from "./pages/Profile/Post";
 
 
 const App = () => {
@@ -67,9 +66,7 @@ const App = () => {
 
                 <Route path="explore" element={isLoggedIn ? <Explore /> : <Navigate to ="/login"/>}/>
 
-                <Route path="post/:id" element={<Post/>}/>
-
-                <Route path=":username" element={<Profile/>}>
+                <Route path=":username" element={isLoggedIn ? <Profile/>: <Navigate to ="/login"/>}>
                   <Route index element={<Posts/>}/>
                   <Route path=":id"/>
                   <Route path="saved" element={<Saved/>}/>
@@ -85,7 +82,8 @@ const App = () => {
                 </Route>
                 <Route path="login" element={!isLoggedIn ? <Login onLogin={loginHandler}/> : <Navigate to ="/"/>}/>
                 <Route path="register" element={!isLoggedIn ? <Register/> : <Navigate to ="/"/>}/>
-                <Route path="*" element={<NotFound/>} />
+                <Route path="404" element={<NotFound/>}/>
+                <Route path="*" element={<Navigate to ="/404"/>} />
               </Routes>
           </Container>
         </AuthContext.Provider>

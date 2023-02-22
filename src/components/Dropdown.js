@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme, useThemeUpdate } from '../context/ThemeContext'
 
@@ -19,13 +19,34 @@ export default function Dropdown(props){
 
     const username = sessionStorage.getItem('username')
 
+    const dropdown = useRef()
+    const btn = useRef()
+
     const toggleTheme = useThemeUpdate()
 
     const darkTheme = useTheme()
 
+    useEffect(() => {
+        
+        function dropdownCloseHandler(e){
+            if(e.target && btn.current.contains(e.target))
+            {
+                setIsActive(prev => !prev)
+            }
+            if (dropdown.current && !dropdown.current.contains(e.target)) {
+                setIsActive(false)
+            }
+        }
+        document.addEventListener('click', dropdownCloseHandler)
+        
+        return () => {
+            document.removeEventListener('click', dropdownCloseHandler)
+        }
+    }, [dropdown])
+
     return (
         <Wrapper>
-            {isActive ? <div className={darkTheme ? styles['dropdown-content'] : styles['dropdown-content-light']}>
+            {isActive ? <div ref={dropdown} className={darkTheme ? styles['dropdown-content'] : styles['dropdown-content-light']}>
                 <Link to='/settings'>
                 Settings<FontAwesomeIcon icon={faGear} className={styles['dropdown-icons']}/>
                 </Link>
@@ -43,8 +64,9 @@ export default function Dropdown(props){
 
             <div className={styles['more-div']}>
                 <button 
+                ref={btn}
                 className={darkTheme ? styles.more : styles['more-light']} 
-                onClick={() => setIsActive(prev => !prev)}>
+                >
                     <FontAwesomeIcon icon={faBars} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>More</span>
                 </button>
             </div>

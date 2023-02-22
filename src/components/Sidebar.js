@@ -10,9 +10,13 @@ import { useTheme } from '../context/ThemeContext'
 
 import Dropdown from './Dropdown'
 import AuthContext from '../context/auth-context'
+import Popup from './UI Kit/Popup'
+import Search from './Search'
 
 export default function Sidebar(props){
     const [showBackdrop, setShowBackdrop] = useState(false)
+    const [showPopup, setShowPopup] = useState(false)
+    const [showSearch, setShowSearch] = useState(false)
 
     const [loading, setIsLoading] = useState(false)
 
@@ -46,7 +50,7 @@ export default function Sidebar(props){
         if(modal.current.style.display === 'flex'){
             document.body.style.overflow = 'hidden'
         }
-    }, [])
+    }, [modal.current?.style.display])
 
     const handleShow = (e) => {
         setShowBackdrop(true)
@@ -64,6 +68,8 @@ export default function Sidebar(props){
         modal.current.style.display = "none"
         modal2.current.style.display = "none"
         modal3.current.style.display = "none"
+
+        document.body.style.overflow = 'auto'
     }
 
     const modalBack = (page) => () => {
@@ -164,6 +170,16 @@ export default function Sidebar(props){
             headers : {"Content-Type": "application/json"},
             body: JSON.stringify(post)
         })
+
+        setShowPopup(true)
+
+        const popupTimer = setTimeout(() => {
+            setShowPopup(false)
+        }, 3000)
+
+        return () => {
+            clearTimeout(popupTimer)
+        }
     }
 
     return (
@@ -175,8 +191,9 @@ export default function Sidebar(props){
                         <FontAwesomeIcon icon={faHouse} className={darkTheme ? styles.icons : styles['icons-light']}/>   <span className={styles['nav-names']}>Home</span>
                     </ActiveLink>
                     <li>
-                        <button className={darkTheme ? styles.buttons : styles['buttons-light']}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} className={darkTheme ? styles.icons : styles['icons-light']}/>   <span className={styles['nav-names']}>Search</span>
+                        <button className={darkTheme ? styles.buttons : styles['buttons-light']} onClick={() => setShowSearch(prev => !prev)} >
+                            <FontAwesomeIcon icon={faMagnifyingGlass} className={darkTheme ? styles.icons : styles['icons-light']}/>
+                            <span className={styles['nav-names']}>Search</span>
                         </button>
                     </li>
                     <ActiveLink to="/explore">
@@ -199,6 +216,7 @@ export default function Sidebar(props){
 
                 <Dropdown onLogout={props.onLogout}/>
             </nav> : ''}
+            {showSearch && <Search/>}
             {showBackdrop && <div className={styles.backdrop}></div>}
             <div className={styles.modal} ref={modal}>
                 <div>
@@ -274,6 +292,8 @@ export default function Sidebar(props){
             {showBackdrop && <button onClick={handleClose} className={styles['modal-close']}>
                 <FontAwesomeIcon icon={faXmark}/> 
             </button>}
+
+            {showPopup && <Popup message="Post uploaded successfully."/>}
         </div>
     )
 }

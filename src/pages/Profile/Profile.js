@@ -11,6 +11,8 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Follower from "../../components/Follower";
 import ProfileInfo from "../../components/ProfileInfo";
+import Loader from "../../components/UI Kit/Loader";
+import { useTheme } from "../../context/ThemeContext";
 
 
 export default function Profile() {
@@ -19,14 +21,16 @@ export default function Profile() {
   const [followersIsActive, setFollowersIsActive] = useState(false)
   const [followingIsActive, setFollowingIsActive] = useState(false)
 
-  // const [showPost, setShowPost] = useState(true)
+  const [valid, setIsValid] = useState(false)
+
 
   const picture = sessionStorage.getItem('picture')
   const username = sessionStorage.getItem('username')
-  const name = sessionStorage.getItem('name')
   const bio = sessionStorage.getItem('bio')
 
   const user = useParams()
+
+  const darkTheme = useTheme()
 
   const defaultImage = user.username.charAt(0).toUpperCase()
 
@@ -57,6 +61,14 @@ export default function Profile() {
     });
   }, [user.username, userQuery.data?.data.following])
 
+  useEffect(() => {
+    if(userQuery.isLoading){
+      setIsValid(false)
+    }
+    else{
+      setIsValid(true)
+    }
+  }, [userQuery.isLoading])
 
   const [postCount, setPostCount] = useState()
 
@@ -103,7 +115,7 @@ export default function Profile() {
 
   return (
     <Wrapper>
-      <div className={styles.wrapper}>
+      {valid && <div className={styles.wrapper}>
         <div className={styles["profile-img-div"]}>
           <div className={styles["profile-img"]}>
             {differentProfile 
@@ -119,15 +131,15 @@ export default function Profile() {
 
         <div className={styles["profile-data"]}>
           <div className={styles["profile-username"]}>
-            <p>{user.username}</p>
+            <p>{userQuery.data?.data.username}</p>
             {!differentProfile ? <Wrapper>
-              <Link to="/settings" className={styles.setting}>
+              <Link to="/settings" className={`${darkTheme ?  styles.setting : styles['setting-light']}`}>
                 Edit profile
               </Link>
               <Link to="/settings">
                 <FontAwesomeIcon
                   icon={faGear}
-                  className={styles.icon}
+                  className={`${darkTheme ? styles.icon : styles['icon-light']}`}
                 ></FontAwesomeIcon>
               </Link>
             </Wrapper>:
@@ -153,13 +165,13 @@ export default function Profile() {
           {followersIsActive && 
           <Wrapper>
             <div className={styles.backdrop} onClick={() => setFollowersIsActive(false)}></div>
-            <div className={styles.modal}>
-              <div className={styles.title}>
+            <div className={`${darkTheme ? styles.modal : styles['modal-light']}`}>
+              <div className={`${darkTheme ? styles.title : styles['title-light']}`}>
                 <span>Followers</span>
                 <button><FontAwesomeIcon icon={faXmark} onClick={closeModalHandler}/></button>
               </div>
               {followers.length !== 0 ?  followers.map(follow => (
-                <Follower key={follow.username} username={follow.username} name={follow.name} picture={follow.picture} />
+                <Follower key={follow.username} username={follow.username} name={follow.name} picture={follow.picture} type='follower'/>
               )): <div className={styles.negative}><span>No Followers</span></div>}
             </div>
           </Wrapper>
@@ -167,8 +179,8 @@ export default function Profile() {
           {followingIsActive && 
           <Wrapper>
             <div className={styles.backdrop} onClick={() => setFollowingIsActive(false)}></div>
-            <div className={styles.modal}>
-              <div className={styles.title}>
+            <div className={`${darkTheme ? styles.modal : styles['modal-light']}`}>
+              <div className={`${darkTheme ? styles.title : styles['title-light']}`}>
                 <span>Following</span>
                 <button><FontAwesomeIcon icon={faXmark} onClick={closeModalHandler}/></button>
               </div>
@@ -178,30 +190,31 @@ export default function Profile() {
             </div>
           </Wrapper>
           }
-
           <div className={styles["profile-description"]}>
-            <div>{differentProfile ?  userQuery.data?.data.name : name}</div>
+            <div>{userQuery.data?.data.name}</div>
             <p className={styles.bio}>
               {differentProfile ? userQuery.data?.data.bio : bio}
             </p>
           </div>
         </div>
-      </div>
+      </div>}
 
-      <div className={styles.divider}>
-        <div className={styles.line}></div>
-      </div>
+      {userQuery.isLoading && <div className={styles.loader}><Loader type='2'/></div>}
 
-      <div className={styles.section}>
+      {valid && <div className={styles.divider}>
+        <div className={`${darkTheme ? styles.line : styles['line-light']}`}></div>
+      </div>}
+
+      {valid && <div className={styles.section}>
         <div className={styles.nav}>
-          <Link to={`/${user.username}`} className={styles.links}>
+          <Link to={`/${user.username}`} className={`${darkTheme ? styles.links : styles['links-light']}`}>
             <FontAwesomeIcon
               icon={faTableCells}
               className={styles.icons}
             ></FontAwesomeIcon>
             POSTS
           </Link>
-          {!differentProfile ? <Link to={`/${username}/saved`} className={styles.links}>
+          {!differentProfile ? <Link to={`/${username}/saved`} className={`${darkTheme ? styles.links : styles['links-light']}`}>
             <FontAwesomeIcon
               icon={faBookmark}
               className={styles.icons}
@@ -213,7 +226,7 @@ export default function Profile() {
         <div className={styles.routes}>
           <Outlet context={setPostCount}/>
         </div>
-      </div>
+      </div>}
     </Wrapper>
   );
 }

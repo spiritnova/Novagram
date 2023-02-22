@@ -2,10 +2,14 @@ import styles from "./Settings.module.css";
 import { useRef, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import axios from "axios";
+import Popup from "../../components/UI Kit/Popup";
 
 export default function EditProfile() {
   const [showBackdrop, setShowBackdrop] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const [showPopup, setShowPopup] = useState(false)
+  const [popupMessage, setPopupMessage] = useState('')
 
   const modal = useRef()
 
@@ -23,6 +27,8 @@ export default function EditProfile() {
   const [enteredBio, setEnteredBio] = useState(bio)
   const [enteredEmail, setEnteredMail] = useState(email)
 
+  const [valid, setIsValid] = useState(false)
+
 
   if (showModal){
     document.body.style.overflow = "hidden"
@@ -34,18 +40,26 @@ export default function EditProfile() {
 
   const nameChangeHandler = (e) => {
     setEnteredName(e.target.value);
+
+    setIsValid(true)
   };
 
   const usernameChangeHandler = e => {
     setEnteredUsername(e.target.value)
+
+    setIsValid(true)
   }
 
   const bioChangeHandler = e => {
     setEnteredBio(e.target.value)
+
+    setIsValid(true)
   }
 
   const emailChangeHandler = e => {
     setEnteredMail(e.target.value)
+
+    setIsValid(true)
   }
 
   const handleShow = () => {
@@ -100,6 +114,17 @@ export default function EditProfile() {
         "username": username
       })
     })
+
+    setPopupMessage('Profile picture changed successfully.')
+    setShowPopup(true)
+
+    const popupTimer = setTimeout(() => {
+      setShowPopup(false)
+    }, 2500)
+
+    return () => {
+      clearTimeout(popupTimer)
+    }
   }
 
 
@@ -118,6 +143,19 @@ export default function EditProfile() {
       sessionStorage.setItem('bio', res.data.data.bio)
       sessionStorage.setItem('email', res.data.data.email)
     })
+
+    setPopupMessage('Profile has been saved.')
+    setShowPopup(true)
+
+    setIsValid(false)
+
+    const popupTimer = setTimeout(() => {
+      setShowPopup(false)
+    }, 2500)
+
+    return () => {
+      clearTimeout(popupTimer)
+    }
   }
 
   return (
@@ -271,11 +309,13 @@ export default function EditProfile() {
         </div>
 
         <div className={styles["submit-btn-div"]}>
-          <button className={styles["submit-btn"]} type="submit" onClick={editsSubmitHandler}>
+          <button className={styles["submit-btn"]} type="submit" onClick={editsSubmitHandler} disabled={!valid}>
             Submit
           </button>
         </div>
       </form>
+
+      {showPopup && <Popup message={popupMessage}/>}
       {showBackdrop && <div className={styles.backdrop} onClick={handleBackdrop}></div>}
       {showModal && (
         <div className={styles.modal} ref={modal}>

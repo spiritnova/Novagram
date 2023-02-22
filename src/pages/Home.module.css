@@ -5,9 +5,9 @@
     flex-direction: column;
     margin-left: 200px;
     margin-top: 20px;
-    width: 37.5%;
     overflow-x: hidden;
     font-family: 'Nunito', sans-serif;
+    padding-left: 2rem;
 }
 
 .card{
@@ -45,9 +45,30 @@
     border-radius: 50%;
 }
 
+.light{
+    background-color: black;
+    color: white;
+}
+
+.light-text{
+    color: black !important;
+}
+
+.light-text a{
+    color: black !important;
+}
+
+.light-text button{
+    color: rgb(129, 129, 129) !important;
+}
+
 .date{
     margin-left: 0.5rem;
     color: rgb(180, 180, 180);
+}
+.date-light{
+    margin-left: 0.5rem;
+    color: rgb(102, 102, 102);
 }
 
 .img{
@@ -71,7 +92,27 @@
     color: white;
     font-size: 1.4rem;
     margin-right: 1rem;
+    border: none;
 }
+
+.buttons button:hover{
+    animation: heartbeat 300ms ease-in-out;
+}
+
+@keyframes heartbeat {
+    0%{
+        transform: scale(1);
+    }
+
+    50%{
+        transform: scale(1.3);
+    }
+
+    100%{
+        transform: scale(1);
+    }
+}
+
 
 .footer{
     display: flex;
@@ -82,6 +123,18 @@
     text-align: left;
     background: none;
     color: rgb(148, 148, 148);
+    border: none;
+}
+.footer-light{
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-light button{
+    text-align: left;
+    background: none;
+    color: #266bff;
+    border: none;
 }
 
 .post{
@@ -100,6 +153,27 @@
 }
 
 .post button{
+    background: none;
+    color: rgb(55, 147, 240);
+    font-weight: 500;
+}
+
+.post-light{
+    width: 30rem;
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+.post-light input{
+    background: none;
+    color: black;
+    border: none;
+    padding: 10px 0px;
+    outline: none;
+    font-size: 15px;
+    width: 26rem;
+}
+
+.post-light button{
     background: none;
     color: rgb(55, 147, 240);
     font-weight: 500;

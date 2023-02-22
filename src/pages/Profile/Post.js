@@ -8,11 +8,17 @@ import Wrapper from '../../components/UI Kit/Wrapper'
 import sendComment from '../../api/sendComment'
 import axios from 'axios'
 
+import { useTheme } from '../../context/ThemeContext'
+
 export default function Post(props){
 
     const [liked, setIsLiked] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [pfp, setPfp] = useState()
+
+    const queryClient = useQueryClient()
+
+    const darkTheme = useTheme()
 
     useEffect(() => {
         if(props.showModal && props.pseudoRoute){
@@ -34,8 +40,6 @@ export default function Post(props){
     const comment = useRef()
 
     const user_id = sessionStorage.getItem('user_id')
-
-    const queryClient = useQueryClient()
 
     const postQuery = useQuery({
         queryKey: ["posts", id],
@@ -116,12 +120,12 @@ export default function Post(props){
                     </button>
                 </div>
             </div>
-            <div className={styles.modal}>
+            <div className={`${darkTheme ? styles.modal : styles['modal-light']}`}>
                 <div className={styles['modal-img']}>
                     <img src={postQuery.data.data.image} alt="postImage"/>
                 </div>
-                <div className={styles['modal-details']}>
-                    <div className={styles['modal-details-control']}>
+                <div className={`${darkTheme ? styles['modal-details'] : styles['modal-details-light']}`}>
+                    <div className={`${darkTheme ? styles['modal-details-control'] : styles['modal-details-control-light']}`}>
                         <div className={styles['modal-pfp']}>
                             {postQuery.data?.data.picture !== null 
                             ? <img alt="pfp" src={postQuery.data?.data.picture}></img>
@@ -130,11 +134,11 @@ export default function Post(props){
                             
                         </div>
                         <p>{postQuery.data?.data.username}</p>
-                        <button className={styles['modal-post-settings']} onClick={() => setShowModal(true)}>
+                        <button className={`${darkTheme ? styles['modal-post-settings'] : styles['modal-post-settings-light']}`} onClick={() => setShowModal(true)}>
                             <FontAwesomeIcon icon={faEllipsis}/>
                         </button>
                     </div>
-                    <div className={styles['modal-details-comments']}>
+                    <div className={`${darkTheme ? styles['modal-details-comments']: styles['modal-details-comments-light']}`}>
                         <div className={styles['modal-comment']}>
                             <div className={styles['modal-pfp']}>
                             {postQuery.data?.data.picture !== null 
@@ -161,7 +165,7 @@ export default function Post(props){
                                 <div className={styles['modal-comment-details']}>
                                     <p className={styles['modal-comment-user']}>{comment.username}</p>
                                     <p className={styles['modal-comment-content']}>{comment.content}</p>
-                                    <button  className={styles['modal-comment-like']} 
+                                    <button  className={`${darkTheme ? styles['modal-comment-like'] : styles['modal-comment-like-light']}`} 
                                         onClick={() => {
                                             axios.post("/comment/like", {
                                                 id: comment.id,
@@ -182,7 +186,7 @@ export default function Post(props){
                         </div>
                         ))}
                     </div>
-                    <div className={styles['modal-details-reactions']}>
+                    <div className={`${darkTheme ? styles['modal-details-reactions'] : styles['modal-details-reactions-light']}`}>
                         <div className={styles.icons}>
                             <div className={styles['icons-left']}>
                                 <button 
@@ -192,12 +196,12 @@ export default function Post(props){
                                 >
                                     <FontAwesomeIcon icon={faHeart}/>
                                 </button>
-                                <button className={styles.icon}>
+                                <button className={`${darkTheme ? styles.icon : styles['icon-light']}`}>
                                     <FontAwesomeIcon icon={faComment}/>
                                 </button>
                             </div>
                             <div className={styles['icons-right']}>
-                                <button className={styles.icon}>
+                                <button className={`${darkTheme ? styles.icon : styles['icon-light']}`}>
                                     <FontAwesomeIcon icon={faBookmark}/>
                                 </button>
                             </div>
@@ -205,7 +209,7 @@ export default function Post(props){
                         <div></div>
                         <div className={styles['modal-post-date']}><p>{postQuery.data.data.date}</p></div>
                     </div>
-                    <div className={styles['modal-details-post']}>
+                    <div className={`${darkTheme ? styles['modal-details-post'] : styles['modal-details-post-light']}`}>
                         <div>
                             <textarea ref={comment} type="text" placeholder='Add a comment...'/>
                         </div>

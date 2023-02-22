@@ -15,15 +15,15 @@
 
 
 .container-light{
-    display: flex;
-    justify-content: center;
     position: absolute;
     top: 0;
     left: 250px;
     width: 100%;
-    max-width: 1269px;
+    max-width: 79.3125em;
     padding: 10px;
-    overflow-x: hidden;
+    margin: auto;
+    flex-grow: 0 0 auto;
+    overflow: hidden;
     color: black;
     background-color: rgb(231, 231, 231);
     z-index: 555;

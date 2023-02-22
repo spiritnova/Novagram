@@ -8,6 +8,7 @@ import Wrapper from '../components/UI Kit/Wrapper'
 import styles from './Home.module.css'
 import sendComment from '../api/sendComment'
 import Post from './Profile/Post'
+import { useTheme } from '../context/ThemeContext'
 
 export default function Home(){
     const [showPostButton, setShowPostButton] = useState(false)
@@ -22,6 +23,12 @@ export default function Home(){
     
     const comment = useRef()
     const postBtn = useRef()
+
+    const darkTheme = useTheme()
+
+    showModal
+    ? document.body.style.overflow = 'hidden'
+    : document.body.style.overflow = 'auto'
 
     const homeQuery = useQuery({
         queryKey: ["home", username],
@@ -40,7 +47,6 @@ export default function Home(){
         setShowPostButton(false)
       }
     }
-
     return(
         <Wrapper>
           <Outlet/>
@@ -48,13 +54,13 @@ export default function Home(){
               {homeQuery.data?.data.map(post => (
                 <div key={post.id} className={styles.card}>
                   <div className={styles.info}>
-                    <div className={styles.pfp}></div>
-                    <div className={styles.username}>
-                      <Link to={`profile/${post.user}`}>
+                    <div className={`${styles.pfp} ${!darkTheme && styles.light}`}></div>
+                    <div className={`${styles.username} ${!darkTheme && styles['light-text']}`}>
+                      <Link to={`/${post.user}`}>
                         {post.user}
                       </Link>
                     </div>
-                    <div className={styles.date}>1 week ago</div>
+                    <div className={`${darkTheme ? styles.date : styles['date-light']}`}>1 week ago</div>
                   </div>
 
                   <div className={styles.img}>
@@ -64,7 +70,7 @@ export default function Home(){
                     }}/>
                   </div>
 
-                  <div className={styles.buttons}>
+                  <div className={`${styles.buttons} ${!darkTheme && styles['light-text']}`}>
                     <button>
                       <FontAwesomeIcon icon={faHeart} className={styles.button}></FontAwesomeIcon>
                     </button>
@@ -73,11 +79,17 @@ export default function Home(){
                     </button>
                   </div>
 
-                  <div className={styles.footer}>
+                  <div className={`${darkTheme ? styles.footer : styles['footer-light']}`}>
                     <div>245 likes</div>
-                    <div>Comment</div>
-                    <button>View all 42 comments</button>
-                    <div className={styles.post}>
+                    <div>{post.comment ? <div><b>{post.comment.username}</b> {post.comment.content}</div> : ''}</div>
+                      {post.commentLength === 0 
+                        ? '' 
+                        : <button 
+                        onClick={() => {
+                          setShowModal(true)
+                          setPostId(post.id)
+                        }}>View all {post.commentLength} comment(s)</button>}
+                    <div className={`${darkTheme ? styles.post : styles['post-light']}`}>
                       <input 
                       type="text" 
                       ref={comment} 

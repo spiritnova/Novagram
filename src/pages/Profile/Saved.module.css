@@ -11,6 +11,12 @@
     background-color: white;
 }
 
+.card-light{
+    width: 298px;
+    height: 298px;
+    background-color: black;
+}
+
 .buttonDiv{
     display: flex;
     justify-content: flex-end;
@@ -23,6 +29,7 @@
     background-color: transparent;
     font-size: 16px;
     cursor: pointer;
+    border: none;
 }
 
 .button:hover{
@@ -30,5 +37,22 @@
 }
 
 .button:active{
+    color: grey;
+}
+
+.button-light{
+    color: rgb(28, 125, 251);
+    outline: none;
+    background-color: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+}
+
+.button-light:hover{
+    color: black;
+}
+
+.button-light:active{
     color: grey;
 }

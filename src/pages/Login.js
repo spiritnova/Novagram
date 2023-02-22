@@ -48,10 +48,10 @@ export default function Login(props) {
         sessionStorage.setItem('picture', data.picture)
       }
 
-      if(data.bio){
+      if(data.bio !== null){
         sessionStorage.setItem('bio', data.bio)
       }
-      if(data.email){
+      if(data.email !== null){
         sessionStorage.setItem('email', data.email)
       }
       if(data.success){

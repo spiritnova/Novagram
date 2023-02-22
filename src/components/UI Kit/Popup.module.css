@@ -1,0 +1,14 @@
+.popup{
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(42, 113, 255);
+    color: white;
+    padding: 1rem;
+}
+.popup p{
+    margin-bottom: 0 !important;
+}
