@@ -33,9 +33,9 @@ const Search = forwardRef((props, ref) => {
 
             <div className={styles.results}>
                 {searchQuery.data?.data.map(user => (
-                    <div className={styles.result}>
+                    <div key={user.username} className={styles.result}>
                         <div className={styles.picture}>
-                            <img src={user.picture}/>
+                            <img alt={`${user.username}'s pfp`} src={user.picture}/>
                         </div>
                         <div className={styles.name}>
                             <div>{user.username}</div>
