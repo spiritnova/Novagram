@@ -370,3 +370,53 @@
 .post-buttons button:nth-child(1){
     color: rgb(250, 77, 77);
 }
+
+@media (max-width: 1240px){
+    .modal{
+        display: flex;
+        position: fixed;
+        max-width: 530px;
+        left: 4rem;
+        transform: scale(0.8);
+    }
+    
+    .modal-img{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-height: 700px;
+    }
+
+    .modal-details{
+        background-color: #121212;
+    }
+}
+
+@media (max-width: 768px){
+    .modal{
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        max-width: 530px;
+        top: 0;
+        left: auto;
+        transform: scale(0.8);
+    }
+    
+    .modal-img{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-height: 300px;
+    }
+
+    .modal-img img{
+        width: 50%;
+    }
+
+    .modal-details-comments{
+        height: 10rem;
+        overflow-y: scroll;
+    }
+    
+}

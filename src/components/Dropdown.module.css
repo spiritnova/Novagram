@@ -184,3 +184,17 @@
         background-color: transparent;
     }
 }
+
+
+@media (max-width : 768px){
+    .more{
+        margin: 0;
+        margin-right: 1rem;
+    }
+
+    .dropdown-content{
+        left: auto;
+        right: 0;
+        bottom: 3rem;
+    }
+}

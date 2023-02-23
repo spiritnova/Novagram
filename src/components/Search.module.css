@@ -100,3 +100,48 @@
         left: 15rem;
     }
 }
+
+@media (max-width: 1240px){
+    .container{
+        position: fixed;
+        top: 0;
+        left: 5rem;
+        height: 50rem;
+        width: 24rem;
+        background-color: #121212;
+        z-index: 988;
+        animation: slide 300ms ease-in-out;
+        color: white;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+}
+
+
+@media (max-width: 768px){
+    .container{
+        position: fixed;
+        top: 0;
+        left: auto;
+        height: 50rem;
+        width: 100%;
+        background-color: #121212;
+        z-index: 988;
+        animation: slide 300ms ease-in-out;
+        color: white;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .picture{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 70px;
+        height: 70px;
+        background-color: white;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+    }
+}

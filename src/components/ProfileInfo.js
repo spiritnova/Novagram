@@ -16,7 +16,7 @@ export default function ProfileInfo({
 
     return (
         <div className={styles["profile-info"]}>
-        <div>
+        <div className={styles.followDiv}>
           <span>
             <b>{postCount ?? 0}</b>
           </span>{" "}

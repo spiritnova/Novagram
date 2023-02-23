@@ -10,7 +10,6 @@
     overflow: hidden;
     color: white;
     background-color: #121212;
-    z-index: 555;
 }
 
 
@@ -26,7 +25,6 @@
     overflow: hidden;
     color: black;
     background-color: rgb(231, 231, 231);
-    z-index: 555;
 }
 
 
@@ -37,5 +35,15 @@
 
     .container-light{
         left: 75px;
+    }
+}
+
+@media (max-width: 768px){
+    .container{
+        position: static;
+    }
+
+    .container-light{
+        position: static;
     }
 }

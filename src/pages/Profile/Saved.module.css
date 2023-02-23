@@ -56,3 +56,13 @@
 .button-light:active{
     color: grey;
 }
+
+@media (max-width : 768px){
+    .cards{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 28px;
+        margin-top: 10px;
+    }
+}

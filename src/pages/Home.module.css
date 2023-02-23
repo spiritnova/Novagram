@@ -178,3 +178,16 @@
     color: rgb(55, 147, 240);
     font-weight: 500;
 }
+
+
+@media (max-width: 768px){
+    .cards{
+        display: flex;
+        flex-direction: column;
+        margin-left: 84px;
+        margin-top: 20px;
+        overflow-x: hidden;
+        font-family: 'Nunito', sans-serif;
+        padding-left: 2rem;
+    }
+}

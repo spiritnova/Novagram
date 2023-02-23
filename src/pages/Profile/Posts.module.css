@@ -61,3 +61,14 @@
     top: 0rem;
     left: 40rem;
 }
+
+@media (max-width : 768px){
+    .cards{
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 28px;
+        column-gap: 28px;
+        overflow-x: hidden;
+        justify-content: center;
+    }
+}

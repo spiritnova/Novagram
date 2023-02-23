@@ -466,3 +466,30 @@
 .help-buttons-light button:hover{
     color: #0176c5;
 }
+
+
+@media (max-width: 768px){
+    .wrapper{
+        margin-left: 0px;
+        transform: scale(0.9);
+    }
+
+    .form{
+        flex-direction: column;
+    }
+
+    .form-container{
+        margin-left: 2rem;
+    }
+
+    .form-label{
+        text-align: left;
+        padding-left: 1rem;
+        padding-right: 0;
+        margin-bottom: 1rem;
+    }
+
+    .form-label label{
+        text-align: left;
+    }
+}

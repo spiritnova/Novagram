@@ -12,11 +12,14 @@ import Dropdown from './Dropdown'
 import AuthContext from '../context/auth-context'
 import Popup from './UI Kit/Popup'
 import Search from './Search'
+import Notifications from './Notifications'
 
 export default function Sidebar(props){
     const [showBackdrop, setShowBackdrop] = useState(false)
     const [showPopup, setShowPopup] = useState(false)
+
     const [showSearch, setShowSearch] = useState(false)
+    const [showNotifications, setShowNotifications] = useState(false)
 
     const [loading, setIsLoading] = useState(false)
 
@@ -25,7 +28,10 @@ export default function Sidebar(props){
     const modal3 = useRef()
 
     const search = createRef()
+    const notification = createRef()
+
     const btn = useRef()
+    const btn2 = useRef()
 
     showBackdrop // Used to hide the scrollbar when Modal is opened
         ? document.body.style.overflow = "hidden"
@@ -66,6 +72,24 @@ export default function Sidebar(props){
             document.removeEventListener('click', searchCloseHandleer)
         }
     }, [search])
+
+    useEffect(() => {
+        
+        function notificationCloseHandler(e){
+            if(e.target && btn2.current.contains(e.target))
+            {
+                setShowNotifications(prev => !prev)
+            }
+            if (notification.current && !notification.current.contains(e.target)) {
+                setShowNotifications(false)
+            }
+        }
+        document.addEventListener('click', notificationCloseHandler)
+        
+        return () => {
+            document.removeEventListener('click', notificationCloseHandler)
+        }
+    }, [notification])
 
 
     useEffect(() => {
@@ -216,7 +240,7 @@ export default function Sidebar(props){
                         <FontAwesomeIcon icon={faCompass} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>Explore</span>
                     </ActiveLink>
                     <li>
-                        <button className={darkTheme ? styles.buttons : styles['buttons-light']}>
+                        <button className={darkTheme ? styles.buttons : styles['buttons-light']} ref={btn2}>
                         <FontAwesomeIcon icon={faHeart} className={darkTheme ? styles.icons : styles['icons-light']}/> <span className={styles['nav-names']}>Notifications</span>
                         </button>
                     </li>
@@ -232,6 +256,7 @@ export default function Sidebar(props){
 
                 <Dropdown onLogout={props.onLogout}/>
             </nav> : ''}
+            {showNotifications && <Notifications ref={notification}/>}
             {showSearch && <Search ref={search}/>}
             {showBackdrop && <div className={styles.backdrop}></div>}
             <div className={styles.modal} ref={modal}>
