@@ -5,7 +5,7 @@ import {faHouse, faXmark, faChevronLeft, faPhotoFilm, faMagnifyingGlass} from '@
 import { faHeart, faSquarePlus, faUser, faCompass } from '@fortawesome/free-regular-svg-icons'
 
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
-import { useContext, useEffect, useState, useRef } from 'react'
+import React, { useContext, useEffect, useState, useRef, createRef } from 'react'
 import { useTheme } from '../context/ThemeContext'
 
 import Dropdown from './Dropdown'
@@ -23,6 +23,9 @@ export default function Sidebar(props){
     const modal = useRef()
     const modal2 = useRef()
     const modal3 = useRef()
+
+    const search = createRef()
+    const btn = useRef()
 
     showBackdrop // Used to hide the scrollbar when Modal is opened
         ? document.body.style.overflow = "hidden"
@@ -45,6 +48,25 @@ export default function Sidebar(props){
     darkTheme // Used to match the Body and Wrapper's color depending on the theme
     ? document.body.style = 'background : #121212'
     : document.body.style = 'background : #f2f2f2'
+
+    useEffect(() => {
+        
+        function searchCloseHandleer(e){
+            if(e.target && btn.current.contains(e.target))
+            {
+                setShowSearch(prev => !prev)
+            }
+            if (search.current && !search.current.contains(e.target)) {
+                setShowSearch(false)
+            }
+        }
+        document.addEventListener('click', searchCloseHandleer)
+        
+        return () => {
+            document.removeEventListener('click', searchCloseHandleer)
+        }
+    }, [search])
+
 
     useEffect(() => {
         if(modal.current.style.display === 'flex'){
@@ -145,13 +167,7 @@ export default function Sidebar(props){
             },
             body: data
         })
-        // data.append('file', files[0])
-        // data.append('upload_preset', 'novagram')
-        
-        // const res = await fetch("https://api.cloudinary.com/v1_1/dj3sulxro/image/upload", {
-        //     method: "POST",
-        //     body: data
-        // })
+
         const file = await res.json()
 
         setIsLoading(false)
@@ -191,7 +207,7 @@ export default function Sidebar(props){
                         <FontAwesomeIcon icon={faHouse} className={darkTheme ? styles.icons : styles['icons-light']}/>   <span className={styles['nav-names']}>Home</span>
                     </ActiveLink>
                     <li>
-                        <button className={darkTheme ? styles.buttons : styles['buttons-light']} onClick={() => setShowSearch(prev => !prev)} >
+                        <button className={darkTheme ? styles.buttons : styles['buttons-light']} ref={btn}>
                             <FontAwesomeIcon icon={faMagnifyingGlass} className={darkTheme ? styles.icons : styles['icons-light']}/>
                             <span className={styles['nav-names']}>Search</span>
                         </button>
@@ -216,7 +232,7 @@ export default function Sidebar(props){
 
                 <Dropdown onLogout={props.onLogout}/>
             </nav> : ''}
-            {showSearch && <Search/>}
+            {showSearch && <Search ref={search}/>}
             {showBackdrop && <div className={styles.backdrop}></div>}
             <div className={styles.modal} ref={modal}>
                 <div>
