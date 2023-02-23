@@ -133,3 +133,10 @@
 .title{
     margin: 15px 0px;
 }
+
+@media (max-width: 768px){
+    .wrapper{
+        position: fixed;
+        left: 6rem;
+    }
+}
