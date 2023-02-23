@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createRef, useEffect, useMemo, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+
 import styles from './Post.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faComment, faEllipsis, faHeart, faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -133,7 +135,9 @@ export default function Post(props){
                             }
                             
                         </div>
-                        <p>{postQuery.data?.data.username}</p>
+                        <Link to={`/${postQuery.data?.data.username}`}>
+                            <p>{postQuery.data?.data.username}</p>
+                        </Link>
                         <button className={`${darkTheme ? styles['modal-post-settings'] : styles['modal-post-settings-light']}`} onClick={() => setShowModal(true)}>
                             <FontAwesomeIcon icon={faEllipsis}/>
                         </button>
@@ -148,7 +152,9 @@ export default function Post(props){
                             </div>
                             <div className={styles['modal-comment-container']}>
                                 <div className={styles['modal-comment-details']}>
-                                    <p className={styles['modal-comment-user']}>{postQuery.data?.data.username}</p>
+                                    <Link to={`${postQuery.data?.data.username}`}>
+                                        <p className={styles['modal-comment-user']}>{postQuery.data?.data.username}</p>
+                                    </Link>
                                     <p className={styles['modal-comment-content']}>{postQuery.data.data.caption}</p>
                                 </div>
                                 <div className={styles['modal-comment-date']}>

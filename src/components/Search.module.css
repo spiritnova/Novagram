@@ -87,6 +87,15 @@
     border-radius: 50%;
 }
 
+.name a{
+    color: white;
+    text-decoration: none;
+}
+
+.name a:hover{
+    color: white;
+}
+
 .name div:nth-child(2){
     color: #5e5e5e;
 }

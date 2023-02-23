@@ -4,6 +4,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { forwardRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const Search = forwardRef((props, ref) => {
     const [enteredSearch, setEnteredSearch] = useState('')
@@ -38,7 +39,9 @@ const Search = forwardRef((props, ref) => {
                             <img alt={`${user.username}'s pfp`} src={user.picture}/>
                         </div>
                         <div className={styles.name}>
-                            <div>{user.username}</div>
+                            <Link to={`/${user.username}`}>
+                                <div>{user.username}</div>
+                            </Link>
                             <div>{user.name}</div>
                         </div>
                     </div>

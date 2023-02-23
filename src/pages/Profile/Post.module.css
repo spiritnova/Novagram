@@ -108,6 +108,15 @@
     align-items: center;
 }
 
+.modal-details-control a{
+    color: white;
+    text-decoration: none;
+}
+
+.modal-details-control a:hover{
+    color: white;
+}
+
 .modal-details-control p{
     margin-bottom: 0px !important;
     margin-left: 0.9rem;
@@ -154,6 +163,15 @@
 
 .modal-comment-details{
     display: flex;
+}
+
+.modal-comment-details a{
+    color: white;
+    text-decoration: none;
+}
+
+.modal-comment-details a:hover{
+    color: white;
 }
 
 .modal-comment-user{
