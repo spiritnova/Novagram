@@ -47,11 +47,18 @@ export default function Home(){
         setShowPostButton(false)
       }
     }
+
+    console.log(homeQuery.data?.data)
     return(
         <Wrapper>
           <Outlet/>
             <div className={styles.cards}>
-              {homeQuery.data?.data.map(post => (
+              {homeQuery.data?.data.length === 0 ? 
+              <div className={styles.empty}>
+                <h2>NO POSTS FOUND</h2>
+                <p>start by following some users or visit the <Link to={'/explore'}>Explore tab</Link></p>
+              </div>
+               : homeQuery.data?.data.map(post => (
                 <div key={post.id} className={styles.card}>
                   <div className={styles.info}>
                     <div className={`${styles.pfp} ${!darkTheme && styles.light}`}></div>

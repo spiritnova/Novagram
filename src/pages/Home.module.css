@@ -179,6 +179,19 @@
     font-weight: 500;
 }
 
+.empty{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: fixed;
+    top: 15rem;
+    left: 6rem;
+
+}
+
 
 @media (max-width: 768px){
     .cards{
@@ -189,5 +202,9 @@
         overflow-x: hidden;
         font-family: 'Nunito', sans-serif;
         padding-left: 2rem;
+    }
+
+    .empty{
+        left: 0;
     }
 }

@@ -172,7 +172,7 @@ export default function Profile() {
               </div>
               {followers.length !== 0 ?  followers.map(follow => (
                 <Follower key={follow.username} username={follow.username} name={follow.name} picture={follow.picture} type='follower'/>
-              )): <div className={styles.negative}><span>No Followers</span></div>}
+              )): <div className={styles.negative}><span>You don't have any followers</span></div>}
             </div>
           </Wrapper>
           }
@@ -186,7 +186,7 @@ export default function Profile() {
               </div>
               {following.length !== 0 ?  following.map(follow => (
                 <Follower key={follow.username} username={follow.username} name={follow.name} picture={follow.picture} />
-              )): <div className={styles.negative}><span>Not following anyone</span></div>}
+              )): <div className={styles.negative}><span>You are not following anyone</span></div>}
             </div>
           </Wrapper>
           }
