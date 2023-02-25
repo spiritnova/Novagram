@@ -31,9 +31,11 @@ export default function Posts(){
 
     const user = useParams()
 
+    let api = 'https://novagram-api.onrender.com/'
+
     const postsQuery = useQuery({
         queryKey: ["posts", user.username],
-        queryFn:() => fetch(`/${user.username}`)
+        queryFn:() => fetch(`${api}/${user.username}`)
         .then(res => res.json()),
     })
 

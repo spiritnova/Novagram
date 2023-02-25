@@ -70,8 +70,9 @@ export default function Register() {
       "confirmPassword": enteredConfirmPassword
     }
 
+    let api = 'https://novagram-api.onrender.com/'
 
-    fetch("/register", {
+    fetch(`${api}/register`, {
       method : "POST",
       headers : {"Content-Type": "application/json"},
       body : JSON.stringify(data),
