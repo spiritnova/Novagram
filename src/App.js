@@ -55,10 +55,6 @@ const App = () => {
     localStorage.removeItem('user')
     setIsLoggedIn(false);
   }
-  
-  let login = 'https://novagram-api.onrender.com/login'
-  let home = 'https://novagram-api.onrender.com'
-  let notFound = 'https://novagram-api.onrender.com/404'
 
   return (
       <ThemeProvider>
@@ -66,17 +62,17 @@ const App = () => {
           {isLoggedIn? <Sidebar onLogout={logoutHandler}/> : ''}
           <Container>
               <Routes>
-                <Route path="/" element={isLoggedIn ? <Home/> :<Navigate to = {login}/>}/>
+                <Route path="/" element={isLoggedIn ? <Home/> :<Navigate to ="/login"/>}/>
 
-                <Route path="explore" element={isLoggedIn ? <Explore /> : <Navigate to = {login}/>}/>
+                <Route path="explore" element={isLoggedIn ? <Explore /> : <Navigate to = {`/login`}/>}/>
 
-                <Route path=":username" element={isLoggedIn ? <Profile/>: <Navigate to = { login }/>}>
+                <Route path=":username" element={isLoggedIn ? <Profile/>: <Navigate to = { `/login` }/>}>
                   <Route index element={<Posts/>}/>
                   <Route path=":id"/>
                   <Route path="saved" element={<Saved/>}/>
                 </Route>
 
-                <Route path="settings" element={isLoggedIn ? <Settings /> : <Navigate to = { login }/>}>
+                <Route path="settings" element={isLoggedIn ? <Settings /> : <Navigate to = { `/login` }/>}>
                   <Route path="" element={<EditProfile/>} />
                   <Route path="password_change" element={<PasswordChange />} />
                   <Route path="emails/notifications" element={<EmailNotifications />} />
@@ -84,10 +80,10 @@ const App = () => {
                   <Route path="login_activity" element={<LoginActivity />} />
                   <Route path="help" element={<Help />} />
                 </Route>
-                <Route path="login" element={!isLoggedIn ? <Login onLogin={loginHandler}/> : <Navigate to = { home }/>}/>
-                <Route path="register" element={!isLoggedIn ? <Register/> : <Navigate to = { home }/>}/>
+                <Route path="login" element={!isLoggedIn ? <Login onLogin={loginHandler}/> : <Navigate to = "/"/>}/>
+                <Route path="register" element={!isLoggedIn ? <Register/> : <Navigate to ="/"/>}/>
                 <Route path="404" element={<NotFound/>}/>
-                <Route path="*" element={<Navigate to = {notFound}/>} />
+                <Route path="*" element={<Navigate to = "/404"/>} />
               </Routes>
           </Container>
         </AuthContext.Provider>

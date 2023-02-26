@@ -78,7 +78,7 @@ export default function Posts(){
                     onClose={() => setShowModal(false)}
                     showModal={showModal}
                     realRoute={location.pathname}
-                    pseudoRoute={`${api}/post/${postId}`}
+                    pseudoRoute={`/post/${postId}`}
                 />}
             </div>}
         </Wrapper>
