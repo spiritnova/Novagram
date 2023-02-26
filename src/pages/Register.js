@@ -1,6 +1,7 @@
 import styles from "./Login.module.css";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Register() {
   const [enteredPassword, setEnteredPassword] = useState("");
@@ -18,6 +19,8 @@ export default function Register() {
 
 
   const [data, setData] = useState([{}])
+
+  const darkTheme = useTheme()
 
   useEffect(() => {
     setFormIsValid(
@@ -89,7 +92,7 @@ export default function Register() {
   return (
     <div className={styles.wrapper}>
       <form onSubmit={formSubmissionHandler}>
-        <div className={styles.cover}>
+        <div className={`${styles.cover} ${darkTheme ? '' : styles['cover-light']}`}>
           <h1 className={styles.title}>Register</h1>
           <input
             className={styles.inputs}

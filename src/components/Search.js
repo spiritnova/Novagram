@@ -20,6 +20,7 @@ const Search = forwardRef((props, ref) => {
         enabled: enteredSearch ? true : false
     })
 
+    console.log(`Search result: ${searchQuery.data?.data}`)
     return(
         <div className={`${darkTheme ? styles.container : styles['container-light']}`} ref={ref}>
             <h3>Search</h3>
@@ -51,7 +52,7 @@ const Search = forwardRef((props, ref) => {
                         </div>
                     </div>
                 ))}
-                {searchQuery.data?.error && <p>No search results found</p>}
+                {searchQuery.data?.data.error && <p>No search results found</p>}
             </div>
         </div>
     )

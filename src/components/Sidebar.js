@@ -175,7 +175,6 @@ export default function Sidebar(props){
         setPreview(undefined)
         setSelectedFile(undefined)
 
-        caption.current.value = ''
 
         const files = fileInput.current.files
 
@@ -212,6 +211,8 @@ export default function Sidebar(props){
             headers : {"Content-Type": "application/json"},
             body: JSON.stringify(post)
         })
+
+        caption.current.value = ''
 
         setShowPopup(true)
 

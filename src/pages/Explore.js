@@ -67,7 +67,7 @@ export default function Explore(){
                     showModal={modalIsVisible}
                     realRoute={location.pathname} 
                     onClose={() => setModalIsVisible(false)}
-                    pseudoRoute={`${api}/post/${postId}`}
+                    pseudoRoute={`/post/${postId}`}
                     />}
                 {/* {hasNextPage && (
                     <button onClick={() => fetchNextPage()}>

@@ -94,7 +94,7 @@ export default function Profile() {
   const followHandler = () => {
     setFollowed(prev => !prev)
 
-    axios.post("/follow", {
+    axios.post(`${api}/follow`, {
       "state": !followed,
       "follower": username,
       "followed": user.username

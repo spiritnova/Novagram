@@ -8,6 +8,7 @@
     background-color: rgb(42, 113, 255);
     color: white;
     padding: 1rem;
+    z-index: 14124141 !important;
 }
 .popup p{
     margin-bottom: 0 !important;
