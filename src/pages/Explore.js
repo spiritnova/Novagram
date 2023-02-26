@@ -14,9 +14,11 @@ export default function Explore(){
     const [modalIsVisible, setModalIsVisible] = useState()
     const [postId, setPostId] = useState()
 
+    let api = 'https://novagram-api.onrender.com'
+
     function getAllPosts(page) {
         return axios
-        .get("/explore", {
+        .get(`${api}/explore`, {
             params : {_page: page}
         })
         .then(res => {
@@ -63,7 +65,7 @@ export default function Explore(){
                     showModal={modalIsVisible}
                     realRoute={location.pathname} 
                     onClose={() => setModalIsVisible(false)}
-                    pseudoRoute={`/post/${postId}`}
+                    pseudoRoute={`${api}/post/${postId}`}
                     />}
                 {/* {hasNextPage && (
                     <button onClick={() => fetchNextPage()}>

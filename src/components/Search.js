@@ -9,9 +9,11 @@ import { Link } from 'react-router-dom'
 const Search = forwardRef((props, ref) => {
     const [enteredSearch, setEnteredSearch] = useState('')
 
+    let api = 'https://novagram-api.onrender.com'
+
     const searchQuery = useQuery({
         queryKey: ["search", enteredSearch],
-        queryFn: () => axios.get(`/search/${enteredSearch}`),
+        queryFn: () => axios.get(`${api}/search/${enteredSearch}`),
         enabled: enteredSearch ? true : false
     })
 

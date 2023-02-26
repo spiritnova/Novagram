@@ -7,7 +7,9 @@ export default function createComment({ comment, user_id, id }){
         "id": id
     }
 
-    fetch("/comment", {
+    let api = 'https://novagram-api.onrender.com'
+
+    fetch(`${api}/comment`, {
         method: "POST",
         headers : {"Content-Type": "application/json"},
         body: JSON.stringify(post)

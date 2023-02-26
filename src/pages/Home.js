@@ -30,9 +30,11 @@ export default function Home(){
     ? document.body.style.overflow = 'hidden'
     : document.body.style.overflow = 'auto'
 
+    let api = 'https://novagram-api.onrender.com'
+
     const homeQuery = useQuery({
         queryKey: ["home", username],
-        queryFn : () => axios.post("/", {
+        queryFn : () => axios.post(`${api}/`, {
           "username": username
         }),
       })
