@@ -48,6 +48,7 @@ const Search = forwardRef((props, ref) => {
                         </div>
                     </div>
                 ))}
+                {searchQuery.data?.error && <p>No search results found</p>}
             </div>
         </div>
     )
