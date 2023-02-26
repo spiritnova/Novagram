@@ -205,9 +205,7 @@ export default function Sidebar(props){
             "caption" : caption.current.value
         }
 
-        let api = 'https://novagram-api.onrender.com/'
-
-        fetch(`${api}/profile`, {
+        fetch('/profile', {
             method: "POST",
             headers : {"Content-Type": "application/json"},
             body: JSON.stringify(post)
