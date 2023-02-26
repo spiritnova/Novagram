@@ -5,9 +5,12 @@ import { forwardRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { useTheme } from '../context/ThemeContext'
 
 const Search = forwardRef((props, ref) => {
     const [enteredSearch, setEnteredSearch] = useState('')
+
+    const darkTheme = useTheme()
 
     let api = 'https://novagram-api.onrender.com'
 
@@ -18,16 +21,16 @@ const Search = forwardRef((props, ref) => {
     })
 
     return(
-        <div className={styles.container} ref={ref}>
+        <div className={`${darkTheme ? styles.container : styles['container-light']}`} ref={ref}>
             <h3>Search</h3>
 
-            <div className={styles.search}>
+            <div className={`${darkTheme ? styles.search : styles['search-light']}`}>
                 <input 
                 type="text" 
                 placeholder="Search" 
                 onChange={(e) => setEnteredSearch(e.target.value)} 
                 value={enteredSearch}/>
-                <div className={styles.button}>
+                <div className={`${darkTheme ? styles.button : styles['button-light']}`}>
                     <button onClick={() => setEnteredSearch('')}><FontAwesomeIcon icon={faXmark}/></button>
                 </div>
             </div>
@@ -37,10 +40,10 @@ const Search = forwardRef((props, ref) => {
             <div className={styles.results}>
                 {searchQuery.data?.data.map(user => (
                     <div key={user.username} className={styles.result}>
-                        <div className={styles.picture}>
+                        <div className={`${darkTheme ? styles.picture : styles['picture-light']}`}>
                             <img alt={`${user.username}'s pfp`} src={user.picture}/>
                         </div>
-                        <div className={styles.name}>
+                        <div className={`${darkTheme ? styles.name : styles['name-light']}`}>
                             <Link to={`/${user.username}`}>
                                 <div>{user.username}</div>
                             </Link>
