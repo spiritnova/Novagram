@@ -44,9 +44,11 @@ export default function Profile() {
     }
   }, [user.username, username])
 
+  let api = 'https://novagram-api.onrender.com'
+
   const userQuery = useQuery({
     queryKey: ["userData", user.username],
-    queryFn : () => axios.post(`/user/${user.username}`, {
+    queryFn : () => axios.post(`${api}/user/${user.username}`, {
       "username": username
     }),
   })
