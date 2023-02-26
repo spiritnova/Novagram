@@ -28,8 +28,10 @@ export default function Login(props) {
       "username" : usernameRef.current.value,
       "password" : passwordRef.current.value,
     }
-    
-    fetch('/login', {
+
+    let api = 'https://novagram-api.onrender.com'
+
+    fetch(`${api}/login`, {
       method : "POST",
       headers : {"Content-Type": "application/json"},
       body : JSON.stringify(data),
