@@ -20,6 +20,8 @@ export default function Posts(){
 
     const navigate = useNavigate()
 
+    let api = 'https://novagram-api.onrender.com'
+
     if (showModal){
         document.body.style.overflow = "hidden"
     }
@@ -28,10 +30,7 @@ export default function Posts(){
         document.body.style.overflow ="auto"
     }
 
-
     const user = useParams()
-
-    let api = 'https://novagram-api.onrender.com'
 
     const postsQuery = useQuery({
         queryKey: ["posts", user.username],
@@ -79,7 +78,7 @@ export default function Posts(){
                     onClose={() => setShowModal(false)}
                     showModal={showModal}
                     realRoute={location.pathname}
-                    pseudoRoute={`/post/${postId}`}
+                    pseudoRoute={`${api}/post/${postId}`}
                 />}
             </div>}
         </Wrapper>

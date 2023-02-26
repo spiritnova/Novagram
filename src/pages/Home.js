@@ -49,8 +49,6 @@ export default function Home(){
         setShowPostButton(false)
       }
     }
-
-    console.log(homeQuery.data?.data)
     return(
         <Wrapper>
           <Outlet/>

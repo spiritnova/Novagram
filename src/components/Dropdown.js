@@ -56,7 +56,7 @@ export default function Dropdown(props){
                 <button className={darkTheme ? styles.buttons : styles['buttons-light']} onClick={toggleTheme}>
                     Switch appearance <FontAwesomeIcon icon={faMoon} className={styles['dropdown-icons']}/>
                 </button>
-                <Link to='/report'>
+                <Link to='#'>
                     Report a problem <FontAwesomeIcon icon={faTriangleExclamation} className={styles['dropdown-icons']}/>
                 </Link>
                 <button className={darkTheme ? styles.buttons : styles['buttons-light']} onClick={props.onLogout}>Log out</button>

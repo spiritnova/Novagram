@@ -85,6 +85,8 @@ export default function EditProfile() {
 
   const pfpInput = useRef()
 
+  let api = 'https://novagram-api.onrender.com'
+
   const uploadImage = async () => {
 
     setShowBackdrop(false)
@@ -94,23 +96,25 @@ export default function EditProfile() {
     
     const data = new FormData()
 
-    data.append('file', files[0])
-    data.append('upload_preset', 'novagram')
+    data.append('profile-picture', files[0])
 
-    const res = await fetch("https://api.cloudinary.com/v1_1/dj3sulxro/image/upload", {
+    const res = await fetch("https://api.imgur.com/3/image", {
         method: "POST",
+        headers : {
+          "Authorization": "Client-ID 6997d124420fdc3"
+        },
         body: data
     })
     const file = await res.json()
 
 
-    sessionStorage.setItem('picture', file.eager[0].secure_url)
+    sessionStorage.setItem('picture', file.data.link)
 
-    fetch("/profile/picture", {
+    fetch(`${api}/profile/picture`, {
       method: "POST",
       headers : {"Content-Type": "application/json"},
       body: JSON.stringify({
-        "image": file.eager[0].secure_url,
+        "image": file.data.link,
         "username": username
       })
     })
@@ -127,11 +131,10 @@ export default function EditProfile() {
     }
   }
 
-
   // Editing the profile Submit function
 
   function editsSubmitHandler(){
-    axios.post("/profile/edit", {
+    axios.post(`${api}/profile/edit`, {
       "user": username,
       "name": enteredName,
       "username": enteredUsername,

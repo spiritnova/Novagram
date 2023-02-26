@@ -132,11 +132,12 @@
     background-color: #e4e5f1	;
     color: black;
     border-radius: 6px;
-    position: absolute;
+    position: fixed;
     top: 455px;
     left: 10px;
     width: 238px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+    z-index: 999 !important;
 }
 
 .dropdown-content-light a{

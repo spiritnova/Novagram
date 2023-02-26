@@ -43,6 +43,8 @@ export default function Post(props){
 
     const user_id = sessionStorage.getItem('user_id')
 
+    let api = 'https://novagram-api.onrender.com'
+
     const postQuery = useQuery({
         queryKey: ["posts", id],
         queryFn: () => fetch(props.pseudoRoute)
