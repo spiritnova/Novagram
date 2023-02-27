@@ -140,9 +140,9 @@ export default function Post(props){
                         <Link to={`/${postQuery.data?.data.username}`}>
                             <p>{postQuery.data?.data.username}</p>
                         </Link>
-                        <button className={`${darkTheme ? styles['modal-post-settings'] : styles['modal-post-settings-light']}`} onClick={() => setShowModal(true)}>
+                        {username === postQuery.data?.data.username && <button className={`${darkTheme ? styles['modal-post-settings'] : styles['modal-post-settings-light']}`} onClick={() => setShowModal(true)}>
                             <FontAwesomeIcon icon={faEllipsis}/>
-                        </button>
+                        </button>}
                     </div>
                     <div className={`${darkTheme ? styles['modal-details-comments']: styles['modal-details-comments-light']}`}>
                         <div className={styles['modal-comment']}>
