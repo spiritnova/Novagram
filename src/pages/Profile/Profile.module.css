@@ -192,7 +192,7 @@ icon-light:hover{
     text-align: center;
     justify-content: flex-start;
     display: flex;
-    padding: 0 149px;
+    padding: 0 165px;
 }
 
 .nav{
@@ -207,121 +207,6 @@ icon-light:hover{
 }
 
 
-/** Modalssss */
-
-
-.backdrop{
-    width: 100%;
-    height: 200vh;
-    background-color: rgba(0, 0, 0, 0.7);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999 !important;
-    overflow: hidden;
-}
-
-.modal{
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 30%;
-    left: 35%;
-    z-index: 3500 !important;
-
-    background-color: #2f2f2f;
-    border-radius: 16px;
-
-    width: 100%;
-    max-width: 30rem;
-}
-
-.modal-light{
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 30%;
-    left: 38%;
-    z-index: 3500 !important;
-
-    background-color: #ffffff;
-    border-radius: 16px;
-
-    width: 100%;
-    max-width: 28rem;
-}
-
-.title{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid rgb(66, 66, 66);
-    padding: 2px;
-}
-
-.title span{
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.title button{
-    position: relative;
-
-    left: 10rem;
-    
-    background: none;
-    border: none;
-    color: white;
-    text-align: right;
-
-    font-size: 1.5rem;
-}
-
-.title-light{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid rgb(66, 66, 66);
-    padding: 2px;
-}
-
-.title-light span{
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.title-light button{
-    position: relative;
-
-    left: 10rem;
-    
-    background: none;
-    border: none;
-    color: #2f2f2f;
-    text-align: right;
-
-    font-size: 1.5rem;
-}
-
-.negative{
-    display: flex;
-    justify-content: center;
-    font-size: 1.5rem;
-    padding: 10px;
-}
-
-
-.follow{
-    padding: 4px 16px !important;
-    border-radius: 8px;
-    background-color: rgb(82, 121, 249);
-    color: white;
-    margin-left: 2rem;
-}
 
 .loader{
     display: flex;
@@ -329,11 +214,19 @@ icon-light:hover{
     justify-content: center;
 }
 
-@media (max-width : 768px){
+@media (min-width: 1041px) and (max-width: 1260px){
+    .routes{
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 1040px){
     .routes{
         padding: 0;
     }
+}
 
+@media (max-width : 768px){
     .profile-img-div{
         justify-content: center;
         text-align: right;

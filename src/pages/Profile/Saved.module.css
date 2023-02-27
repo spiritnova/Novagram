@@ -1,19 +1,21 @@
+.wrapper{
+    width: 100%;
+    overflow-x: hidden;
+}
 .cards{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 28px;
-    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2%;
+    overflow: hidden;
 }
 
 .card{
-    width: 298px;
-    height: 298px;
+    aspect-ratio: 1/1;
     background-color: white;
 }
 
 .card-light{
-    width: 298px;
-    height: 298px;
+    aspect-ratio: 1/1;
     background-color: black;
 }
 
@@ -55,14 +57,4 @@
 
 .button-light:active{
     color: grey;
-}
-
-@media (max-width : 768px){
-    .cards{
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 28px;
-        margin-top: 10px;
-    }
 }

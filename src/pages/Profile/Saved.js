@@ -5,7 +5,7 @@ export default function Saved(){
     const darkTheme = useTheme()
 
     return(
-        <div>
+        <div className={styles.wrapper}>
             <div className={styles.buttonDiv}>
                 <button className={`${darkTheme ? styles.button: styles['button-light']}`}>+ New Collection</button>
             </div>
