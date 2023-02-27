@@ -123,3 +123,9 @@
 .title{
     margin: 15px 0px;
 }
+
+@media (max-width: 768px){
+    .cover{
+        transform: scale(0.9);
+    }
+}

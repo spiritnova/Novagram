@@ -44,6 +44,7 @@ const Search = forwardRef((props, ref) => {
                 ))}
                 {searchQuery.data?.data.error && <p>No search results found</p>}
             </div>
+            <div className={styles.close}><button onClick={props.close}>Close</button></div>
         </div>
     )
 })

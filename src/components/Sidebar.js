@@ -95,6 +95,14 @@ export default function Sidebar(props){
         }
     }, [notification])
 
+    const searchHideHandler = () => {
+        setShowSearch(false)
+    }
+
+    const notificationHideHandler = () => {
+        setShowNotifications(false)
+    }
+
 
     useEffect(() => {
         if(modal.current.style.display === 'flex'){
@@ -265,8 +273,8 @@ export default function Sidebar(props){
 
                 <Dropdown onLogout={props.onLogout}/>
             </nav> : ''}
-            {showNotifications && <Notifications ref={notification}/>}
-            {showSearch && <Search ref={search}/>}
+            {showNotifications && <Notifications close={notificationHideHandler} ref={notification}/>}
+            {showSearch && <Search close={searchHideHandler} ref={search}/>}
             {showBackdrop && <div className={styles.backdrop}></div>}
             <div className={styles.modal} ref={modal}>
                 <div>

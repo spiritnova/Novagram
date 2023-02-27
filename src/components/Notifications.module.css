@@ -129,6 +129,22 @@
     background-color: black;
 }
 
+.close{
+    visibility: hidden;
+    position: relative;
+}
+
+.close button{
+    padding: 0.7rem;
+    background-color: rgb(36, 105, 255);
+    color: white;
+    width: 100%;
+    position: fixed;
+    border: none;
+    left: 0;
+    bottom: 0;
+}
+
 @keyframes slide {
     0%{
         left: 0;
@@ -139,14 +155,30 @@
     }
 }
 
+@keyframes emerge {
+    0%{
+        transform: scale(0.8);
+    }
+
+    100%{
+        transform: scale(1);
+    }
+}
+
 @media (max-width: 768px){
     .container{
         left: 0;
         width: 100%;
+        animation: emerge 300ms ease-in-out;
     }
 
     .container-light{
         left: 0;
         width: 100%;
+        animation: emerge 300ms ease-in-out;
+    }
+
+    .close{
+        visibility: visible;
     }
 }
