@@ -61,6 +61,10 @@
 
 
 @media (max-width: 768px){
+
+    .cards{
+        grid-template-columns: repeat(3, 1fr);
+    }
     .buttons svg{
         font-size: 1rem;
     }

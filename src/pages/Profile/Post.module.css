@@ -171,6 +171,7 @@
 }
 
 .modal-comment-details{
+    position: relative;
     display: flex;
 }
 
@@ -213,7 +214,7 @@
     background: none;
     color: white;
     position: absolute;
-    right: 0.5rem;
+    left: 25rem;
     border: none;
 }
 
