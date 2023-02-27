@@ -130,7 +130,7 @@
     margin-left: 15px;
 }
 
-icon-light:hover{
+.icon-light:hover{
     color: #3d3d3d;
 }
 
@@ -212,6 +212,14 @@ icon-light:hover{
     display: flex;
     width: 100%;
     justify-content: center;
+}
+
+.follow{
+    padding: 4px 16px !important;
+    border-radius: 8px;
+    background-color: rgb(82, 121, 249);
+    color: white;
+    margin-left: 2rem;
 }
 
 @media (min-width: 1041px) and (max-width: 1260px){

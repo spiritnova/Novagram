@@ -4,9 +4,9 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import Wrapper from "../components/UI Kit/Wrapper"
 import styles from './Explore.module.css'
 import Post from "./Profile/Post"
+import Loader from '../components/UI Kit/Loader'
 
 export default function Explore(){
 
@@ -37,11 +37,11 @@ export default function Explore(){
         queryFn: ({ pageParam = 1}) => getAllPosts(pageParam)
     })
 
-    if (status === "loading") return <h1>Loading...</h1>
+    if (status === "loading") return <div className={styles.loader}><Loader type={'2'}/></div>
     if (status === "error") return <h1>{JSON.stringify(error)}</h1>
 
     return(
-        <Wrapper>
+        <div className={styles.wrapper}>
             <div className={styles.cards}>
                 {data.pages
                 .flatMap(data => data.posts)
@@ -73,6 +73,6 @@ export default function Explore(){
                     </button>
                 )} */}
             </div>
-        </Wrapper>
+        </div>
     )
 }
