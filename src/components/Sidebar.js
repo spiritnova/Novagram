@@ -14,6 +14,7 @@ import Popup from './UI Kit/Popup'
 import Search from './Search'
 import Notifications from './Notifications'
 import Wrapper from './UI Kit/Wrapper'
+import { useQueryClient } from '@tanstack/react-query'
 
 export default function Sidebar(props){
     const [showBackdrop, setShowBackdrop] = useState(false)
@@ -49,6 +50,8 @@ export default function Sidebar(props){
     const darkTheme = useTheme()
     
     const username = sessionStorage.getItem('username')
+
+    const queryClient = useQueryClient()
 
     const ctx = useContext(AuthContext)
 
@@ -191,6 +194,8 @@ export default function Sidebar(props){
             },
             body: data
         })
+
+        queryClient.invalidateQueries(["posts"], { exact : true} )
 
         const file = await res.json()
 

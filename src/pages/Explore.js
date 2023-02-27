@@ -37,8 +37,6 @@ export default function Explore(){
         queryFn: ({ pageParam = 1}) => getAllPosts(pageParam)
     })
 
-    console.log(`Explore data test: ${data}`)
-
     if (status === "loading") return <h1>Loading...</h1>
     if (status === "error") return <h1>{JSON.stringify(error)}</h1>
 
