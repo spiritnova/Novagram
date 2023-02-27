@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useRef, useState } from 'react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Wrapper from '../components/UI Kit/Wrapper'
 import styles from './Home.module.css'
 import sendComment from '../api/sendComment'
@@ -51,7 +51,7 @@ export default function Home(){
     }
     return(
         <Wrapper>
-          <Outlet/>
+          <div className={styles.wrapper}>
             <div className={styles.cards}>
               {homeQuery.data?.data.length === 0 ? 
               <div className={styles.empty}>
@@ -116,6 +116,7 @@ export default function Home(){
                   </div>
                 </div>
               ))}
+            </div>
             </div>
           {showModal &&
             <Post 

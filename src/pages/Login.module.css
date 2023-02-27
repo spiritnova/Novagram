@@ -1,6 +1,6 @@
 .wrapper{
-    height: 98vh;
     width: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +18,6 @@
     align-items: center;
     justify-content: space-around;
     color: white;
-    margin-right: 260px;
 }
 
 .cover-light{
@@ -32,15 +31,6 @@
     text-align: center;
 }
 
-
-@media only screen and (max-width : 600px)
-{
-    .cover{
-        margin-right: 14em;
-        margin-top: 2em;
-        width: 23em;
-    }
-}
 
 .media{
     height: 3em;
@@ -132,11 +122,4 @@
 
 .title{
     margin: 15px 0px;
-}
-
-@media (max-width: 768px){
-    .wrapper{
-        position: fixed;
-        left: 6rem;
-    }
 }

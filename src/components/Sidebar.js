@@ -13,6 +13,7 @@ import AuthContext from '../context/auth-context'
 import Popup from './UI Kit/Popup'
 import Search from './Search'
 import Notifications from './Notifications'
+import Wrapper from './UI Kit/Wrapper'
 
 export default function Sidebar(props){
     const [showBackdrop, setShowBackdrop] = useState(false)
@@ -226,7 +227,7 @@ export default function Sidebar(props){
     }
 
     return (
-        <div>
+        <Wrapper>
             {ctx.isLoggedIn ? <nav className={darkTheme ? styles.nav : styles['nav-light']}>
                 <Link to="/" className={darkTheme ? styles['site-title'] : styles['site-title-light']}><span className={styles['nav-names']}>Novagram</span></Link>
                 <ul className={darkTheme ? styles['nav-links'] : styles['nav-links-light']}>
@@ -338,7 +339,7 @@ export default function Sidebar(props){
             </button>}
 
             {showPopup && <Popup message="Post uploaded successfully."/>}
-        </div>
+        </Wrapper>
     )
 }
 

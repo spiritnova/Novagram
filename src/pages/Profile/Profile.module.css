@@ -226,14 +226,14 @@ icon-light:hover{
     flex-direction: column;
     position: fixed;
     top: 30%;
-    left: 38%;
+    left: 35%;
     z-index: 3500 !important;
 
     background-color: #2f2f2f;
     border-radius: 16px;
 
     width: 100%;
-    max-width: 28rem;
+    max-width: 30rem;
 }
 
 .modal-light{
@@ -332,7 +332,6 @@ icon-light:hover{
 @media (max-width : 768px){
     .routes{
         padding: 0;
-        justify-content: center;
     }
 
     .profile-img-div{

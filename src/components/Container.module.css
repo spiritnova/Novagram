@@ -1,49 +1,18 @@
 .container{
-    position: absolute;
-    top: 0;
-    left: 250px;
     width: 100%;
-    padding: 10px;
-    max-width: 79.3125em;
-    margin: auto;
-    flex-grow: 0 0 auto;
-    overflow: hidden;
+    height: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
     color: white;
     background-color: #121212;
 }
 
 
 .container-light{
-    position: absolute;
-    top: 0;
-    left: 250px;
     width: 100%;
-    max-width: 79.3125em;
-    padding: 10px;
-    margin: auto;
-    flex-grow: 0 0 auto;
-    overflow: hidden;
+    height: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
     color: black;
     background-color: white;
-}
-
-
-@media (max-width: 1240px){
-    .container{
-        left: 75px;
-    }
-
-    .container-light{
-        left: 75px;
-    }
-}
-
-@media (max-width: 768px){
-    .container{
-        position: static;
-    }
-
-    .container-light{
-        position: static;
-    }
 }

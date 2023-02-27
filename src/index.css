@@ -4,6 +4,10 @@
   margin: 0;
 }
 
+#root{
+  height: 100%;
+}
+
 html {
   font-family: 'Poppins', sans-serif;
   height: 100%;
@@ -11,7 +15,6 @@ html {
 
 body {
   height: 100%;
-  margin-left: 250px;
   color: white;
   background-color: #121212;
   overflow-x: hidden;
