@@ -40,6 +40,7 @@ export default function Explore(){
     if (status === "loading") return <div className={styles.loader}><Loader type={'2'}/></div>
     if (status === "error") return <h1>{JSON.stringify(error)}</h1>
 
+
     return(
         <div className={styles.wrapper}>
             <div className={styles.cards}>
