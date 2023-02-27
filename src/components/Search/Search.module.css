@@ -136,6 +136,9 @@
     background-color: white;
     border-radius: 50%;
     margin-right: 0.5rem;
+    
+    color: black;
+    font-size: 1.6rem;
 }
 
 .picture img{

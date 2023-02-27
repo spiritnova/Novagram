@@ -10,6 +10,7 @@
 
 .card{
     aspect-ratio: 1/1;
+    position: relative;
 }
 
 .card img{
@@ -19,30 +20,36 @@
 }
 
 .card img:hover{
-    opacity: 0.5;
+    filter: brightness(50%);
 }
+
+.wrap{
+    width: 100%;
+    height: 100%;
+}
+
 
 .buttons{
-    position: relative;
-    bottom: 55%;
-    width: 131px;
-    margin-left: 90px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
+
+    display: flex;
+    justify-content: center;
 }
 
-.buttons:hover .test{
-    opacity: 0.5;
+.card:hover .buttons{
+    visibility: visible;
 }
 
-.card:hover .button{
-    opacity: 1;
-}
 
-.button{
-    font-size: 25px;
-    margin-right: 20px;
-    margin-left: 20px;
+.buttons svg{
+    font-size: 2rem;
+    margin-left: 11px;
     color: white;
-    opacity: 0;
+    z-index: 150;
 }
 
 .loader{
@@ -50,4 +57,11 @@
     width: 100%;
     justify-content: center;
     align-items: center;
+}
+
+
+@media (max-width: 768px){
+    .buttons svg{
+        font-size: 1rem;
+    }
 }

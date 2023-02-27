@@ -54,8 +54,8 @@ export default function Explore(){
                         <div className={styles.card}>
                             <img alt="posts" src={post.image}/>
                             <div className={styles.buttons}>
-                                <FontAwesomeIcon icon={faHeart} className={styles.button}></FontAwesomeIcon>
-                                <FontAwesomeIcon icon={faComment} className={styles.button}></FontAwesomeIcon>
+                                <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
+                                <FontAwesomeIcon icon={faComment}></FontAwesomeIcon>
                             </div>
                         </div>
                     </Link>

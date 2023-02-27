@@ -4,8 +4,8 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { forwardRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
-import { useTheme } from '../context/ThemeContext'
+import { useTheme } from '../../context/ThemeContext'
+import SearchResult from './SearchResult'
 
 const Search = forwardRef((props, ref) => {
     const [enteredSearch, setEnteredSearch] = useState('')
@@ -40,17 +40,7 @@ const Search = forwardRef((props, ref) => {
 
             <div className={styles.results}>
                 {searchQuery.data?.data.map(user => (
-                    <div key={user.username} className={styles.result}>
-                        <div className={`${darkTheme ? styles.picture : styles['picture-light']}`}>
-                            <img alt={`${user.username}'s pfp`} src={user.picture}/>
-                        </div>
-                        <div className={`${darkTheme ? styles.name : styles['name-light']}`}>
-                            <Link to={`/${user.username}`}>
-                                <div>{user.username}</div>
-                            </Link>
-                            <div>{user.name}</div>
-                        </div>
-                    </div>
+                    <SearchResult user={user}/>
                 ))}
                 {searchQuery.data?.data.error && <p>No search results found</p>}
             </div>
