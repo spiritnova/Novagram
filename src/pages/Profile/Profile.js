@@ -161,8 +161,8 @@ export default function Profile() {
           userQuery={userQuery}
           />
 
-          {followersIsActive && <FollowModal follows={followers} close={closeModalHandler}/>}
-          {followingIsActive && <FollowModal follows={following} close={closeModalHandler}/>}
+          {followersIsActive && <FollowModal follows={followers} close={closeModalHandler} name={'Followers'}/>}
+          {followingIsActive && <FollowModal follows={following} close={closeModalHandler} name={'Following'}/>}
 
           <div className={styles["profile-description"]}>
             <div>{userQuery.data?.data.name}</div>
