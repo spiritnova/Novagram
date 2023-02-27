@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import styles from './Follower.module.css'
 
-export default function Follower({username, name, picture, type}){
+export default function Follower({username, name, picture, type, close}){
 
     const defaultImage = username.charAt(0).toUpperCase()
 
@@ -14,7 +14,7 @@ export default function Follower({username, name, picture, type}){
                 {picture ?  <img alt="follower" src={picture ? picture : defaultImage}></img> : <span>{defaultImage}</span>}
                 </div>
                 <div className={`${darkTheme ? styles.userInfo : styles['userInfo-light']}`}>
-                    <Link to={`/${username}`}>
+                    <Link to={`/${username}`} onClick={close}>
                         <div>{username}</div>
                         <div>{name}</div>
                     </Link>
