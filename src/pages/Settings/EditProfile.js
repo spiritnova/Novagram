@@ -93,10 +93,14 @@ export default function EditProfile() {
     setShowModal(false)
     
     const files = pfpInput.current.files
+
     
     const data = new FormData()
+    
+    
+    data.append("image", files[0])
 
-    data.append('profile-picture', files[0])
+    console.log(data)
 
     const res = await fetch("https://api.imgur.com/3/image", {
         method: "POST",
@@ -106,6 +110,8 @@ export default function EditProfile() {
         body: data
     })
     const file = await res.json()
+
+    console.log(file)
 
 
     sessionStorage.setItem('picture', file.data.link)

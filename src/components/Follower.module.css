@@ -40,6 +40,15 @@
     flex-direction: column;
 }
 
+.userInfo a{
+    color: white;
+    text-decoration: none;
+}
+
+.userInfo a:hover{
+    color: white;
+}
+
 .userInfo div:nth-child(1){
     font-size: 14px;
 }

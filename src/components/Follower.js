@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import styles from './Follower.module.css'
 
@@ -13,8 +14,10 @@ export default function Follower({username, name, picture, type}){
                 {picture ?  <img alt="follower" src={picture ? picture : defaultImage}></img> : <span>{defaultImage}</span>}
                 </div>
                 <div className={`${darkTheme ? styles.userInfo : styles['userInfo-light']}`}>
-                    <div>{username}</div>
-                    <div>{name}</div>
+                    <Link to={`/${username}`}>
+                        <div>{username}</div>
+                        <div>{name}</div>
+                    </Link>
                 </div>
             </div>
             <div className={`${darkTheme ? styles.remove : styles['remove-light']}`}>
