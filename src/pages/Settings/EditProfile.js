@@ -100,8 +100,6 @@ export default function EditProfile() {
     
     data.append("image", files[0])
 
-    console.log(data)
-
     const res = await fetch("https://api.imgur.com/3/image", {
         method: "POST",
         headers : {
