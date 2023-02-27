@@ -205,7 +205,9 @@ export default function Post(props){
                                         <FontAwesomeIcon icon={faHeart}/>
                                     </button>
                                     <button className={`${darkTheme ? styles.icon : styles['icon-light']}`}>
-                                        <FontAwesomeIcon icon={faComment}/>
+                                        <label for="commentInput">
+                                            <FontAwesomeIcon icon={faComment}/>
+                                        </label>
                                     </button>
                                 </div>
                                 <div className={styles['icons-right']}>
@@ -219,7 +221,7 @@ export default function Post(props){
                         </div>
                         <div className={`${darkTheme ? styles['modal-details-post'] : styles['modal-details-post-light']}`}>
                             <div>
-                                <textarea ref={comment} type="text" placeholder='Add a comment...'/>
+                                <textarea ref={comment} id="commentInput" type="text" placeholder='Add a comment...'/>
                             </div>
                             <div>
                                 <button disabled={postQuery.isLoading} onClick={() => newCommentMutation.mutate({
