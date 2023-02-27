@@ -6,10 +6,7 @@ export default function ProfileInfo({
     followingClick,
     differentProfile,
     postCount,
-    userFollowersLength,
-    userFollowingLength,
-    followersLength, 
-    followingLength,
+    userQuery
 }){
 
     const darkTheme = useTheme()
@@ -25,8 +22,8 @@ export default function ProfileInfo({
         <button className={`${darkTheme ? styles.followBtn : styles['followBtn-light']}`} onClick={followersClick} disabled={differentProfile}>
           <span>
             <b>{differentProfile 
-                ? userFollowersLength
-                : followersLength
+                ? userQuery.data?.data.user_followers.length
+                : userQuery.data?.data.followers.length
               }
             </b>
           </span>{" "}
@@ -35,8 +32,8 @@ export default function ProfileInfo({
         <button className={`${darkTheme ? styles.followBtn : styles['followBtn-light']}`} onClick={followingClick} disabled={differentProfile}>
           <span>
             <b>{differentProfile
-            ? userFollowingLength
-            : followingLength
+            ? userQuery.data?.data.user_following.length
+            : userQuery.data?.data.following.length
             }
           </b>
           </span>{" "}
