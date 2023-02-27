@@ -117,121 +117,121 @@ export default function Post(props){
 
     return(
         <Wrapper>
-            <div className={styles.backdrop}>
+            <div className={styles.backdrop}></div>
+            <div className={styles.wrapper}>
                 <div className={styles['modal-close']}>
                     <button onClick={props.onClose}>
                         <FontAwesomeIcon icon={faXmark}/>
                     </button>
                 </div>
-            </div>
-            <div className={`${darkTheme ? styles.modal : styles['modal-light']}`}>
-                <div className={styles['modal-img']}>
-                    <img src={postQuery.data.data.image} alt="postImage"/>
-                </div>
-                <div className={`${darkTheme ? styles['modal-details'] : styles['modal-details-light']}`}>
-                    <div className={`${darkTheme ? styles['modal-details-control'] : styles['modal-details-control-light']}`}>
-                        <div className={styles['modal-pfp']}>
-                            {postQuery.data?.data.picture !== null 
-                            ? <img alt="pfp" src={postQuery.data?.data.picture}></img>
-                            : pfp
-                            }
-                            
-                        </div>
-                        <Link to={`/${postQuery.data?.data.username}`}>
-                            <p>{postQuery.data?.data.username}</p>
-                        </Link>
-                        {username === postQuery.data?.data.username && <button className={`${darkTheme ? styles['modal-post-settings'] : styles['modal-post-settings-light']}`} onClick={() => setShowModal(true)}>
-                            <FontAwesomeIcon icon={faEllipsis}/>
-                        </button>}
+                <div className={`${darkTheme ? styles.modal : styles['modal-light']}`}>
+                    <div className={styles['modal-img']}>
+                        <img src={postQuery.data.data.image} alt="postImage"/>
                     </div>
-                    <div className={`${darkTheme ? styles['modal-details-comments']: styles['modal-details-comments-light']}`}>
-                        <div className={styles['modal-comment']}>
+                    <div className={`${darkTheme ? styles['modal-details'] : styles['modal-details-light']}`}>
+                        <div className={`${darkTheme ? styles['modal-details-control'] : styles['modal-details-control-light']}`}>
                             <div className={styles['modal-pfp']}>
-                            {postQuery.data?.data.picture !== null 
-                            ? <img alt="pfp" src={postQuery.data?.data.picture}></img>
-                            : pfp
-                            }
+                                {postQuery.data?.data.picture !== null 
+                                ? <img alt="pfp" src={postQuery.data?.data.picture}></img>
+                                : pfp
+                                }
+                                
                             </div>
-                            <div className={styles['modal-comment-container']}>
-                                <div className={styles['modal-comment-details']}>
-                                    <Link to={`${postQuery.data?.data.username}`}>
-                                        <p className={styles['modal-comment-user']}>{postQuery.data?.data.username}</p>
-                                    </Link>
-                                    <p className={styles['modal-comment-content']}>{postQuery.data.data.caption}</p>
-                                </div>
-                                <div className={styles['modal-comment-date']}>
-                                    {postQuery.data.data.date}
-                                </div>
-                            </div>
+                            <Link to={`/${postQuery.data?.data.username}`}>
+                                <p>{postQuery.data?.data.username}</p>
+                            </Link>
+                            {username === postQuery.data?.data.username && <button className={`${darkTheme ? styles['modal-post-settings'] : styles['modal-post-settings-light']}`} onClick={() => setShowModal(true)}>
+                                <FontAwesomeIcon icon={faEllipsis}/>
+                            </button>}
                         </div>
-                        {postQuery.data.data.comments.map((comment, i) => (
-                        <div key={comment.id} className={styles['modal-comment']}>
-                            <div className={styles['modal-pfp']}>
-                                <img alt="pfp" src={comment.picture}></img>
+                        <div className={`${darkTheme ? styles['modal-details-comments']: styles['modal-details-comments-light']}`}>
+                            <div className={styles['modal-comment']}>
+                                <div className={styles['modal-pfp']}>
+                                {postQuery.data?.data.picture !== null 
+                                ? <img alt="pfp" src={postQuery.data?.data.picture}></img>
+                                : pfp
+                                }
+                                </div>
+                                <div className={styles['modal-comment-container']}>
+                                    <div className={styles['modal-comment-details']}>
+                                        <Link to={`${postQuery.data?.data.username}`}>
+                                            <p className={styles['modal-comment-user']}>{postQuery.data?.data.username}</p>
+                                        </Link>
+                                        <p className={styles['modal-comment-content']}>{postQuery.data.data.caption}</p>
+                                    </div>
+                                    <div className={styles['modal-comment-date']}>
+                                        {postQuery.data.data.date}
+                                    </div>
+                                </div>
                             </div>
-                            <div className={styles['modal-comment-container']}>
-                                <div className={styles['modal-comment-details']}>
-                                    <p className={styles['modal-comment-user']}>{comment.username}</p>
-                                    <p className={styles['modal-comment-content']}>{comment.content}</p>
-                                    <button  className={`${darkTheme ? styles['modal-comment-like'] : styles['modal-comment-like-light']}`} 
-                                        onClick={() => {
-                                            axios.post("/comment/like", {
-                                                id: comment.id,
-                                                post_id: postQuery.data.data.id,
-                                                user_id : user_id,
-                                            })
-                                        }}
-                                        data-key={comment.id}
-                                        ref={refsById[comment.id]}
-                                        >
+                            {postQuery.data.data.comments.map(comment => (
+                            <div key={comment.id} className={styles['modal-comment']}>
+                                <div className={styles['modal-pfp']}>
+                                    <img alt="pfp" src={comment.picture}></img>
+                                </div>
+                                <div className={styles['modal-comment-container']}>
+                                    <div className={styles['modal-comment-details']}>
+                                        <p className={styles['modal-comment-user']}>{comment.username}</p>
+                                        <p className={styles['modal-comment-content']}>{comment.content}</p>
+                                        <button  className={`${darkTheme ? styles['modal-comment-like'] : styles['modal-comment-like-light']}`} 
+                                            onClick={() => {
+                                                axios.post("/comment/like", {
+                                                    id: comment.id,
+                                                    post_id: postQuery.data.data.id,
+                                                    user_id : user_id,
+                                                })
+                                            }}
+                                            data-key={comment.id}
+                                            ref={refsById[comment.id]}
+                                            >
+                                            <FontAwesomeIcon icon={faHeart}/>
+                                        </button>
+                                    </div>
+                                    <div className={styles['modal-comment-date']}>
+                                        2 days ago
+                                    </div>
+                                </div>
+                            </div>
+                            ))}
+                        </div>
+                        <div className={`${darkTheme ? styles['modal-details-reactions'] : styles['modal-details-reactions-light']}`}>
+                            <div className={styles.icons}>
+                                <div className={styles['icons-left']}>
+                                    <button 
+                                        className={styles.icon} 
+                                        ref={heart} onClick={onLikeHandler}
+                                        style={postQuery.data.data.likes.length ? {color : 'red'} : {color : 'white'}}
+                                    >
                                         <FontAwesomeIcon icon={faHeart}/>
                                     </button>
+                                    <button className={`${darkTheme ? styles.icon : styles['icon-light']}`}>
+                                        <FontAwesomeIcon icon={faComment}/>
+                                    </button>
                                 </div>
-                                <div className={styles['modal-comment-date']}>
-                                    2 days ago
+                                <div className={styles['icons-right']}>
+                                    <button className={`${darkTheme ? styles.icon : styles['icon-light']}`}>
+                                        <FontAwesomeIcon icon={faBookmark}/>
+                                    </button>
                                 </div>
                             </div>
+                            <div></div>
+                            <div className={styles['modal-post-date']}><p>{postQuery.data.data.date}</p></div>
                         </div>
-                        ))}
-                    </div>
-                    <div className={`${darkTheme ? styles['modal-details-reactions'] : styles['modal-details-reactions-light']}`}>
-                        <div className={styles.icons}>
-                            <div className={styles['icons-left']}>
-                                <button 
-                                    className={styles.icon} 
-                                    ref={heart} onClick={onLikeHandler}
-                                    style={postQuery.data.data.likes.length ? {color : 'red'} : {color : 'white'}}
-                                >
-                                    <FontAwesomeIcon icon={faHeart}/>
-                                </button>
-                                <button className={`${darkTheme ? styles.icon : styles['icon-light']}`}>
-                                    <FontAwesomeIcon icon={faComment}/>
-                                </button>
+                        <div className={`${darkTheme ? styles['modal-details-post'] : styles['modal-details-post-light']}`}>
+                            <div>
+                                <textarea ref={comment} type="text" placeholder='Add a comment...'/>
                             </div>
-                            <div className={styles['icons-right']}>
-                                <button className={`${darkTheme ? styles.icon : styles['icon-light']}`}>
-                                    <FontAwesomeIcon icon={faBookmark}/>
-                                </button>
+                            <div>
+                                <button disabled={postQuery.isLoading} onClick={() => newCommentMutation.mutate({
+                                    comment: comment.current.value,
+                                    user_id : user_id,
+                                    id: id
+                                })}>Post</button>
                             </div>
-                        </div>
-                        <div></div>
-                        <div className={styles['modal-post-date']}><p>{postQuery.data.data.date}</p></div>
-                    </div>
-                    <div className={`${darkTheme ? styles['modal-details-post'] : styles['modal-details-post-light']}`}>
-                        <div>
-                            <textarea ref={comment} type="text" placeholder='Add a comment...'/>
-                        </div>
-                        <div>
-                            <button disabled={postQuery.isLoading} onClick={() => newCommentMutation.mutate({
-                                comment: comment.current.value,
-                                user_id : user_id,
-                                id: id
-                            })}>Post</button>
                         </div>
                     </div>
                 </div>
             </div>
-
 
             {showModal && <Wrapper>
                 <div className={styles['post-backdrop']}>
