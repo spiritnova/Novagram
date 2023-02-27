@@ -196,7 +196,16 @@
         padding: 0;
     }
 
+    .more-light{
+        margin: 0;
+        padding: 0;
+    }
+
     .more-div{
+        align-items: center;
+    }
+
+    .more-div-light{
         align-items: center;
     }
 
@@ -204,5 +213,11 @@
         left: auto;
         right: 0;
         bottom: 3rem;
+    }
+
+    .dropdown-content-light{
+        left: auto;
+        right: 0;
+        bottom: 3rem; 
     }
 }

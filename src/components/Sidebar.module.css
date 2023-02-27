@@ -38,6 +38,22 @@
     border-right: 1px solid rgb(67, 67, 67);
 }
 
+.nav-light{
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 15rem;
+    height: 100%;
+    max-height: 100vh;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    padding-top: 35px;
+    border-right: 1px solid rgb(207, 207, 207);
+}
+
 
 .nav-links{
     list-style-type: none;
@@ -135,19 +151,6 @@
     margin-left: 20px;
     font-family: 'Poppins', sans-serif;
     font-size: 25px;
-}
-
-.nav-light{
-    background-color: #ffffff;
-    width: 250px;
-    height: 100%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    padding-top: 35px;
-    border-right: 1px solid rgb(207, 207, 207);
 }
 
 .nav-links-light{
@@ -551,7 +554,40 @@
         display: flex;
     }
 
+    .nav-light{
+        height: 3rem;
+        width: 100%;
+        max-width:none;
+        min-height: auto;
+        padding: 2rem 0;
+
+        background-color: white;
+        color: black;
+        bottom: 0;
+        left: 0;
+
+        z-index: 2;
+        border-top: 1px solid rgb(56, 56, 56);
+        display: flex;
+    }
+
+    
+
     .nav-links{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        list-style-type: none;
+
+        padding: 0;
+
+        margin: 0;
+
+        height: 100%;
+        width: 100%;
+    }
+
+    .nav-links-light{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -573,7 +609,23 @@
         width: 5rem;
     }
 
+    .nav-links-light li{
+        width: 5rem;
+    }
+
     .nav-links li a {
+        padding: inherit;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        border-radius: 24px;
+        margin: 0;
+        transition: 0.2s all;
+    }
+
+    .nav-links-light li a {
         padding: inherit;
         align-items: center;
         text-decoration: none;
@@ -590,6 +642,13 @@
     }
 
     .buttons{
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        margin: 0;
+        padding:0;
+    }
+
+    .buttons-light{
         font-family: 'Poppins', sans-serif;
         font-size: 16px;
         margin: 0;

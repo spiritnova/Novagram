@@ -49,14 +49,10 @@
 
 .modal-light{
     display: flex;
-    position: fixed;
     max-width: 1157px;
-    top: 5%;
-    left: 14%;
     z-index: 3500 !important;
     background-color: #fff;
     color: black;
-    height: 700px;
 }
 
 .modal::-webkit-scrollbar{
@@ -422,9 +418,15 @@
 
 @media (max-width: 768px){
     .modal{
-        display: flex;
         flex-direction: column;
-        position: fixed;
+        max-width: 530px;
+        top: 0;
+        left: auto;
+        transform: scale(0.8);
+    }
+
+    .modal-light{
+        flex-direction: column;
         max-width: 530px;
         top: 0;
         left: auto;
@@ -438,11 +440,26 @@
         max-height: 300px;
     }
 
+    .modal-img-light{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-height: 300px;
+    }
+
     .modal-img img{
+        width: 50%;
+    }
+    .modal-img-light img{
         width: 50%;
     }
 
     .modal-details-comments{
+        height: 10rem;
+        overflow-y: scroll;
+    }
+
+    .modal-details-comments-light{
         height: 10rem;
         overflow-y: scroll;
     }
