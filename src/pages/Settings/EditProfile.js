@@ -325,6 +325,7 @@ export default function EditProfile() {
       {showPopup && <Popup message={popupMessage}/>}
       {showBackdrop && <div className={styles.backdrop} onClick={handleBackdrop}></div>}
       {showModal && (
+        <div className={styles.modalWrapper}>
         <div className={styles.modal} ref={modal}>
           <p>Change Profile Photo</p>
           <label>
@@ -333,6 +334,7 @@ export default function EditProfile() {
           </label>
           <button>Remove Current Photo</button>
           <button onClick={handleClose}>Cancel</button>
+        </div>
         </div>
       )}
     </div>

@@ -13,6 +13,19 @@
     display: none;
 }
 
+.modalWrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .wrapper{
     display: flex;
     flex-direction: row;
@@ -361,9 +374,8 @@
     border-radius: 16px;
     background-color: rgb(47, 47, 47);
     z-index: 99999 !important;
-    position: absolute;
-    left: 25%;
-    top: 35%;
+
+    position: fixed;
 
     display:flex;
     flex-direction: column;
@@ -471,7 +483,6 @@
 @media (max-width: 768px){
     .wrapper{
         margin-left: 0px;
-        transform: scale(0.9);
     }
 
     .form{

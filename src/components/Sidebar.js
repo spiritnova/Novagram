@@ -29,6 +29,8 @@ export default function Sidebar(props){
     const modal2 = useRef()
     const modal3 = useRef()
 
+    const wrapper = useRef()
+
     const search = createRef()
     const notification = createRef()
 
@@ -104,6 +106,7 @@ export default function Sidebar(props){
 
     const handleShow = (e) => {
         setShowBackdrop(true)
+        wrapper.current.style.display = "flex"
         modal.current.style.display = "flex"
     }
 
@@ -118,6 +121,7 @@ export default function Sidebar(props){
         modal.current.style.display = "none"
         modal2.current.style.display = "none"
         modal3.current.style.display = "none"
+        wrapper.current.style.display = "none"
 
         document.body.style.overflow = 'auto'
     }
@@ -125,6 +129,7 @@ export default function Sidebar(props){
     const modalBack = (page) => () => {
         if (page === "page"){
             modal.current.style.display = "none"
+            wrapper.current.style.display = "none"
             setShowBackdrop(false)
         }
 
@@ -176,6 +181,7 @@ export default function Sidebar(props){
         setShowBackdrop(false)
         modal.current.style.display = "none"
         modal3.current.style.display = "none"
+        wrapper.current.style.display = "none"
         setPreview(undefined)
         setSelectedFile(undefined)
 
@@ -268,32 +274,35 @@ export default function Sidebar(props){
             {showNotifications && <Notifications ref={notification}/>}
             {showSearch && <Search ref={search}/>}
             {showBackdrop && <div className={styles.backdrop}></div>}
-            <div className={styles.modal} ref={modal}>
-                <div>
-                    <p>Create new post</p>
-                </div>
 
-                <div>
-                    <FontAwesomeIcon icon={faPhotoFilm} className={styles['modal-icon']}></FontAwesomeIcon>
-                </div>
+            <div className={styles.modalWrapper} ref={wrapper}>
+                <div className={styles.modal} ref={modal}>
+                    <div>
+                        <p>Create new post</p>
+                    </div>
 
-                <p>Drag photos and videos here</p>
+                    <div>
+                        <FontAwesomeIcon icon={faPhotoFilm} className={styles['modal-icon']}></FontAwesomeIcon>
+                    </div>
 
-                <div>
-                    <label className={styles['modal-label']}>
-                        Select from computer
-                        <input ref={fileInput} type="file" accept='image/' onChange={inputChangeHandler}/>
-                    </label>
-                </div>
+                    <p>Drag photos and videos here</p>
 
-                <div>
-                    <button className={styles['modal-previous']} onClick={modalBack("page")}>
-                        <FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>
-                    </button>
-                </div>
-            
-                <div className={styles['modal-preview']}>
-                    {selectedFile && <img ref={pic} alt="imgpreview" src={preview}/>}
+                    <div>
+                        <label className={styles['modal-label']}>
+                            Select from computer
+                            <input ref={fileInput} type="file" accept='image/' onChange={inputChangeHandler}/>
+                        </label>
+                    </div>
+
+                    <div>
+                        <button className={styles['modal-previous']} onClick={modalBack("page")}>
+                            <FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>
+                        </button>
+                    </div>
+                
+                    <div className={styles['modal-preview']}>
+                        {selectedFile && <img ref={pic} alt="imgpreview" src={preview}/>}
+                    </div>
                 </div>
             </div>
 

@@ -14,6 +14,19 @@
     display: none;
 }
 
+.modalWrapper{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
 .site-title{
     text-decoration: none;
     color: white;
@@ -278,10 +291,6 @@
     width: 100%;
     max-width: 34.375em;
 
-    position: fixed;
-    top: 11%;
-    left: 33%;
-
     background-color: rgb(44, 44, 44);
     border-radius: 14px;
 
@@ -291,6 +300,8 @@
     align-items: center;
     font-family: Helvetica, sans-serif !important;
     animation: grow 1s ease-in-out;
+
+    position: relative;
 }
 
 @keyframes grow {
@@ -657,18 +668,18 @@
 
 @media (max-width : 768px) {
     .modal{
-        position: fixed;
-        top: 10%;
-        left: 3%;
         transform: scale(0.9);
     }
     .modal2{
-        top: 10%;
-        left: 3%;
         transform: scale(0.9);
     }
     .modal3{
-        left: 0%;
         transform: scale(0.9);
+    }
+}
+
+@media(max-width: 400px){
+    .nav-links li{
+        margin:0 4%;
     }
 }
