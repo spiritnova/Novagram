@@ -95,14 +95,6 @@ export default function Sidebar(props){
         }
     }, [notification])
 
-    const searchHideHandler = () => {
-        setShowSearch(false)
-    }
-
-    const notificationHideHandler = () => {
-        setShowNotifications(false)
-    }
-
 
     useEffect(() => {
         if(modal.current.style.display === 'flex'){
@@ -273,8 +265,8 @@ export default function Sidebar(props){
 
                 <Dropdown onLogout={props.onLogout}/>
             </nav> : ''}
-            {showNotifications && <Notifications close={notificationHideHandler} ref={notification}/>}
-            {showSearch && <Search close={searchHideHandler} ref={search}/>}
+            {showNotifications && <Notifications ref={notification}/>}
+            {showSearch && <Search ref={search}/>}
             {showBackdrop && <div className={styles.backdrop}></div>}
             <div className={styles.modal} ref={modal}>
                 <div>
@@ -290,7 +282,7 @@ export default function Sidebar(props){
                 <div>
                     <label className={styles['modal-label']}>
                         Select from computer
-                        <input ref={fileInput} type="file" onChange={inputChangeHandler}/>
+                        <input ref={fileInput} type="file" accept='image/' onChange={inputChangeHandler}/>
                     </label>
                 </div>
 

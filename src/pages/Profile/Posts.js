@@ -42,11 +42,12 @@ export default function Posts(){
         setPostCount(postsQuery.data?.count) // This gets the posts count from backend and sends it to profile through context
     }, [postsQuery, setPostCount])
 
-    if (postsQuery.isError) {
-        console.log("error")
-        navigate("/404")
-        return <pre>{JSON.stringify(postsQuery.error)}</pre>
-    } 
+    useEffect(() => {
+        if(postsQuery.isError){
+            navigate("/404")
+            console.log(postsQuery.error)
+        }
+    }, [postsQuery.isError, postsQuery.error, navigate])
 
     if(postsQuery.isLoading) return
           

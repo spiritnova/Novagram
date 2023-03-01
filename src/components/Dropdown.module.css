@@ -192,32 +192,18 @@
 
 @media (max-width : 768px){
     .more{
-        margin: 0;
-        padding: 0;
-    }
-
-    .more-light{
-        margin: 0;
-        padding: 0;
+        display: none;
     }
 
     .more-div{
-        align-items: center;
+        display: none;
+    }
+
+    .more-light{
+        display: none;
     }
 
     .more-div-light{
-        align-items: center;
-    }
-
-    .dropdown-content{
-        left: auto;
-        right: 0;
-        bottom: 3rem;
-    }
-
-    .dropdown-content-light{
-        left: auto;
-        right: 0;
-        bottom: 3rem; 
+        display: none;
     }
 }

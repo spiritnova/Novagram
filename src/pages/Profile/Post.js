@@ -113,7 +113,7 @@ export default function Post(props){
     }
 
     if(postQuery.isLoading) return <div className={styles.loader}></div>
-    if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error)}</pre>
+    if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error.message)}</pre>
 
     return(
         <Wrapper>

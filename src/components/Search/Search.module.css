@@ -5,11 +5,11 @@
     height: 50rem;
     width: 24rem;
     background-color: #121212;
-    z-index: 988;
     animation: slide 300ms ease-in-out;
     color: white;
     padding-left: 1rem;
     padding-right: 1rem;
+    z-index: 2;
 }
 
 
@@ -20,11 +20,11 @@
     height: 50rem;
     width: 24rem;
     background-color: white;
-    z-index: 988;
     animation: slide 300ms ease-in-out;
     color: black;
     padding-left: 1rem;
-    padding-right: 1rem; 
+    padding-right: 1rem;
+    z-index: 1;
 }
 
 .container-light h3{
@@ -248,6 +248,11 @@
 
 @media (max-width: 768px){
     .container{
+        left: auto;
+        width: 100%;
+        animation: emerge 300ms ease-in-out;
+    }
+    .container-light{
         left: auto;
         width: 100%;
         animation: emerge 300ms ease-in-out;

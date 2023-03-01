@@ -37,8 +37,6 @@ const Notifications = forwardRef((props, ref) => {
                     </div>
                 </div>
             </div>
-
-            <div className={styles.close}><button onClick={props.close}>Close</button></div>
         </div>
     )
 })

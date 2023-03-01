@@ -30,6 +30,7 @@ import NotFound from "./components/NotFound";
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MobileNavbar from "./components/MobileNavbar";
 
 
 const App = () => {
@@ -87,6 +88,7 @@ const App = () => {
                   <Route path="*" element={<Navigate to = "/404"/>} />
                 </Routes>
             </Container>
+            {isLoggedIn && <MobileNavbar logout={logoutHandler}/>}
           </div>
         </AuthContext.Provider>
       </ThemeProvider>
