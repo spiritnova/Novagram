@@ -60,3 +60,9 @@
     top: 0rem;
     left: 40rem;
 }
+
+@media (max-width: 300px){
+    .cards{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
