@@ -51,6 +51,7 @@ export default function Login(props) {
 
       if(data.bio !== null){
         sessionStorage.setItem('bio', data.bio)
+        console.log(data.bio)
       }
       if(data.email !== null){
         sessionStorage.setItem('email', data.email)

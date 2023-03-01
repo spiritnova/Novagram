@@ -52,6 +52,7 @@ const App = () => {
     sessionStorage.removeItem('picture')
     sessionStorage.removeItem('email')
     sessionStorage.removeItem('name')
+    sessionStorage.removeItem('bio')
     sessionStorage.removeItem('user_id')
     localStorage.removeItem('user')
     setIsLoggedIn(false);
