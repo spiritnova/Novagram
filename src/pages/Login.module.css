@@ -129,3 +129,9 @@
         transform: scale(0.9);
     }
 }
+
+@media (max-width: 450px){
+    .cover{
+        transform: scale(0.7);
+    }
+}

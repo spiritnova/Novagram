@@ -19,8 +19,6 @@ const Search = forwardRef((props, ref) => {
         queryFn: () => axios.get(`${api}/search/${enteredSearch}`),
         enabled: enteredSearch ? true : false
     })
-
-    console.log(`Search result: ${searchQuery.data?.data}`)
     return(
         <div className={`${darkTheme ? styles.container : styles['container-light']}`} ref={ref}>
             <h3>Search</h3>

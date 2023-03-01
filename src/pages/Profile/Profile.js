@@ -12,6 +12,7 @@ import axios from "axios";
 import Loader from "../../components/UI Kit/Loader";
 import ProfileInfo from "../../components/ProfileInfo";
 import FollowModal from "../../components/FollowModal";
+import ProfileInfoMobile from "../../components/ProfileInfoMobile";
 
 
 export default function Profile() {
@@ -172,6 +173,24 @@ export default function Profile() {
           </div>
         </div>
       </div>}
+
+      {valid &&
+      <div className={styles["profile-description-mobile"]}>
+        <div>{userQuery.data?.data.name}</div>
+        <p className={styles.bio}>
+          {differentProfile ? userQuery.data?.data.bio : bio}
+        </p>
+      </div>
+      }
+
+      {valid && 
+      <ProfileInfoMobile
+        followersClick={followersClickHandler}
+        followingClick={followingClickHandler}
+        differentProfile={differentProfile}
+        postCount={postCount}
+        userQuery={userQuery}
+      />}
 
       {userQuery.isLoading && <div className={styles.loader}><Loader type='2'/></div>}
 

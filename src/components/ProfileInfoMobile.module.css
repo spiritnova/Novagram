@@ -1,18 +1,20 @@
 .profile-info{
-    display: flex;
-    align-items: center;
-    margin-top: 25px;
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
     font-size: 16px;
+    width: 100%;
 }
 
-.profile-info div{
-    margin-right: 40px;
+.box{
+    padding: 1rem;
+    border-right: 1px solid rgb(49, 49, 49);
+    border-top: 1px solid rgb(49, 49, 49);
+    text-align: center;
 }
 
 .followBtn{
     background: none;
     color: white;
-    margin-right: 2rem;
     border: none;
 }
 
@@ -27,7 +29,6 @@
 .followBtn-light{
     background: none;
     color: rgb(30, 30, 30);
-    margin-right: 2rem;
     border: none;
 }
 
@@ -40,6 +41,10 @@
 }
 
 @media (max-width : 768px){
+
+    .profile-info{
+        display: grid;
+    }
     .followDiv{
         display: flex;
         flex-direction: column;
@@ -51,9 +56,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-    }
-
-    .profile-info{
-        display: none;
+        width: 100%;
     }
 }
