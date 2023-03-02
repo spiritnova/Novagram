@@ -244,11 +244,13 @@ export default function Post(props){
                     </div>
                 </div>
 
-                <div className={styles['post-edit']}>
-                    <div className={styles['post-buttons']}>
-                        <button onClick={postDeleteHandler}>Delete</button>
-                        <button>Edit</button>
-                        <button onClick={() => setShowModal(false)}>Cancel</button>
+                <div className={styles['post-wrapper']}>
+                    <div className={styles['post-edit']}>
+                        <div className={styles['post-buttons']}>
+                            <button onClick={postDeleteHandler}>Delete</button>
+                            <button>Edit</button>
+                            <button onClick={() => setShowModal(false)}>Cancel</button>
+                        </div>
                     </div>
                 </div>
             </Wrapper>}
