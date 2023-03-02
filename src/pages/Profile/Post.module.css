@@ -180,6 +180,20 @@
     color: white;
 }
 
+.modal-comment-details-light{
+    position: relative;
+    display: flex;
+}
+
+.modal-comment-details-light a{
+    color: black;
+    text-decoration: none;
+}
+
+.modal-comment-details-light a:hover{
+    color: black;
+}
+
 .modal-comment-user{
     margin-right: 10px;
     font-weight: 600;

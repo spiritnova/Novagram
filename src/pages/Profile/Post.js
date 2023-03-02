@@ -170,7 +170,7 @@ export default function Post(props){
                                     <img alt="pfp" src={comment.picture}></img>
                                 </div>
                                 <div className={styles['modal-comment-container']}>
-                                    <div className={styles['modal-comment-details']}>
+                                    <div className={`${darkTheme ? styles['modal-comment-details'] : styles['modal-comment-details-light']}`}>
                                         <p className={styles['modal-comment-user']}>{comment.username}</p>
                                         <p className={styles['modal-comment-content']}>{comment.content}</p>
                                         <button  className={`${darkTheme ? styles['modal-comment-like'] : styles['modal-comment-like-light']}`} 
