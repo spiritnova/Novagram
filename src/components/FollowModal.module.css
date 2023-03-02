@@ -9,13 +9,25 @@
     overflow: hidden;
 }
 
+.wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
 .modal{
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: 30%;
-    left: 35%;
-    z-index: 3500 !important;
+
+    z-index: 1001 !important;
 
     background-color: #2f2f2f;
     border-radius: 16px;
@@ -27,16 +39,14 @@
 .modal-light{
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: 30%;
-    left: 38%;
-    z-index: 3500 !important;
+
+    z-index: 1001 !important;
 
     background-color: #ffffff;
     border-radius: 16px;
 
     width: 100%;
-    max-width: 28rem;
+    max-width: 30rem;
 }
 
 .title{

@@ -63,6 +63,14 @@
     flex-direction: column;
 }
 
+.userInfo-light a{
+    color: black;
+    text-decoration: none;
+}
+
+.userInfo-light a:hover{
+    color: black;
+}
 .userInfo-light div:nth-child(1){
     font-size: 14px;
 }
