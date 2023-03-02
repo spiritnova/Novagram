@@ -22,8 +22,8 @@ export default function Settings(){
             </div>
 
             <div className={styles.mobileNavbar}>
-                <button onClick={() => setShowDropdown(prev => !prev)} className={styles.dropbtn}>More settings</button>
-                {showDropdown && <div className={styles.dropdownContent}>
+                <button onClick={() => setShowDropdown(prev => !prev)} className={`${darkTheme ? styles.dropbtn : styles['dropbtn-light']}`}>More settings</button>
+                {showDropdown && <div className={`${darkTheme ? styles.dropdownContent : styles['dropdownContent-light']}`}>
                     <Link onClick={() => setShowDropdown(false)} to="/settings">Edit profile</Link>
                     <Link onClick={() => setShowDropdown(false)} to="/settings/password_change">Change password</Link>
                     <Link onClick={() => setShowDropdown(false)} to="/settings/emails/notifications">Email notifications</Link>
