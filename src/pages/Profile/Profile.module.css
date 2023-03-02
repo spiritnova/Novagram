@@ -258,7 +258,7 @@
 
 }
 
-@media(max-width : 450px){
+@media (max-width : 450px){
     .wrapper{
         height: 10rem;
         align-items: start;
@@ -295,4 +295,10 @@
         display: none;
     }
 
+}
+
+@media (min-width : 1200px){
+    .profile-img{
+        margin-left: 10rem;
+    }
 }
