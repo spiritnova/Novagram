@@ -260,7 +260,6 @@
 
 @media(max-width : 450px){
     .wrapper{
-        transform: scale(0.8);
         height: 10rem;
         align-items: start;
     }
@@ -277,6 +276,11 @@
         width: 80px;
         height: 80px;
         border-radius: 50%;
+    }
+
+    .profile-img-div{
+        margin-right: 0;
+        align-items: center;
     }
 
     .profile-username{
