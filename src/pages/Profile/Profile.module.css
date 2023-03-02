@@ -302,3 +302,9 @@
         margin-left: 10rem;
     }
 }
+
+@media (min-width: 1600px){
+    .profile-img{
+        margin-left: 20rem;
+    }
+}
