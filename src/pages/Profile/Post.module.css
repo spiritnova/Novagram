@@ -141,6 +141,15 @@
     text-align: left;
 }
 
+.modal-details-control-light a{
+    color: black;
+    text-decoration: none;
+}
+
+.modal-details-control-light a:hover{
+    color: black;
+}
+
 .modal-details-comments{
     height: 480px;
     display: flex;

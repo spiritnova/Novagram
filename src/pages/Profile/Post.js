@@ -153,7 +153,7 @@ export default function Post(props){
                                 }
                                 </div>
                                 <div className={styles['modal-comment-container']}>
-                                    <div className={styles['modal-comment-details']}>
+                                    <div className={`${darkTheme ? styles['modal-comment-details'] : styles['modal-comment-details-light']}`}>
                                         <Link to={`${postQuery.data?.data.username}`}>
                                             <p className={styles['modal-comment-user']}>{postQuery.data?.data.username}</p>
                                         </Link>
