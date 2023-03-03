@@ -13,7 +13,6 @@ import axios from 'axios'
 import { useTheme } from '../../context/ThemeContext'
 
 export default function Post(props){
-
     const [liked, setIsLiked] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [pfp, setPfp] = useState()
@@ -205,7 +204,7 @@ export default function Post(props){
                                         <FontAwesomeIcon icon={faHeart}/>
                                     </button>
                                     <button className={`${darkTheme ? styles.icon : styles['icon-light']}`}>
-                                        <label for="commentInput">
+                                        <label htmlFor="commentInput">
                                             <FontAwesomeIcon icon={faComment}/>
                                         </label>
                                     </button>
