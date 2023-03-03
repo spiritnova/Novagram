@@ -144,7 +144,7 @@ export default function Post(props){
                             </button>}
                         </div>
                         <div className={`${darkTheme ? styles['modal-details-comments']: styles['modal-details-comments-light']}`}>
-                            <div className={styles['modal-comment']}>
+                            {postQuery.data?.data.caption  && <div className={styles['modal-comment']}>
                                 <div className={styles['modal-pfp']}>
                                 {postQuery.data?.data.picture !== null 
                                 ? <img alt="pfp" src={postQuery.data?.data.picture}></img>
@@ -162,7 +162,7 @@ export default function Post(props){
                                         {postQuery.data.data.date}
                                     </div>
                                 </div>
-                            </div>
+                            </div>}
                             {postQuery.data.data.comments.map(comment => (
                             <div key={comment.id} className={styles['modal-comment']}>
                                 <div className={styles['modal-pfp']}>
