@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import axios from "axios";
 import Popup from "../../components/UI Kit/Popup";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function EditProfile() {
   const [showBackdrop, setShowBackdrop] = useState(false);
@@ -12,6 +13,8 @@ export default function EditProfile() {
   const [popupMessage, setPopupMessage] = useState('')
 
   const modal = useRef()
+
+  const queryClient = useQueryClient()
 
   const username = sessionStorage.getItem('username')
   const name = sessionStorage.getItem('name')
@@ -151,6 +154,7 @@ export default function EditProfile() {
       sessionStorage.setItem('email', res.data.data.email)
     })
 
+    queryClient.invalidateQueries(["posts"])
     setPopupMessage('Profile has been saved.')
     setShowPopup(true)
 
