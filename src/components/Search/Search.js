@@ -38,7 +38,7 @@ const Search = forwardRef((props, ref) => {
 
             <div className={styles.results}>
                 {searchQuery.data?.data.map(user => (
-                    <SearchResult user={user}/>
+                    <SearchResult key={user.username} user={user}/>
                 ))}
                 {searchQuery.data?.data.error && <p>No search results found</p>}
             </div>

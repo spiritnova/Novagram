@@ -10,8 +10,6 @@ export default function SearchResult({user}){
 
     const defaultImage = username.charAt(0).toUpperCase()
 
-    console.log(defaultImage)
-
     return (
         <div key={user.username} className={styles.result}>
             <div className={`${darkTheme ? styles.picture : styles['picture-light']}`}>
