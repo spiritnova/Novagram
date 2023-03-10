@@ -19,6 +19,7 @@ export default function Register() {
 
 
   const [data, setData] = useState([{}])
+  const [isLoading, setIsLoading] = useState(false)
 
   const darkTheme = useTheme()
 
@@ -75,6 +76,7 @@ export default function Register() {
 
     let api = 'https://novagram-api.onrender.com'
 
+    setIsLoading(true)
     fetch(`${api}/register`, {
       method : "POST",
       headers : {"Content-Type": "application/json"},
@@ -82,10 +84,11 @@ export default function Register() {
     })
     .then(res => res.json())
     .then(data => {
-      setData(data)
       if(data.success){
         navigate("/login")
+        setIsLoading(false)
       }
+      setData(data)
     })
   }
 
