@@ -72,12 +72,14 @@
     list-style-type: none;
     margin-top: 40px;
     padding: 0;
+    margin-bottom: 0 !important;
 }
 
 .nav-links-light{
     list-style-type: none;
     margin-top: 40px;
     padding: 0;
+    margin-bottom: 0 !important;
 }
 
 .active{
@@ -252,19 +254,19 @@
     }
 
     .nav{
-        width: 75px;
+        width: auto;
     }
 
     .nav-light{
-        width: 75px;
+        width: auto;
     }
 
     .nav-links{
-        width: 56px;
+        padding: 10px 16px;
     }
 
     .nav-links-light{
-        width: 56px;
+        padding: 10px 16px;
     }
 
     .buttons{
@@ -281,6 +283,14 @@
 
     .buttons:hover{
         background-color: transparent;
+    }
+
+    .icons{
+        margin: 0;
+    }
+
+    .icons-light{
+        margin: 0;
     }
 }
 

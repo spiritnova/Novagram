@@ -217,6 +217,15 @@
         left: 15rem;
     }
 }
+@keyframes slide2 {
+    0%{
+        left: 0;
+    }
+
+    100%{
+        left: 5rem;
+    }
+}
 
 @keyframes emerge {
     0%{
@@ -230,16 +239,12 @@
 
 @media (max-width: 1240px){
     .container{
-        position: fixed;
-        top: 0;
         left: 5rem;
-        height: 50rem;
-        width: 24rem;
-        background-color: #121212;
-        animation: slide 300ms ease-in-out;
-        color: white;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        animation: slide2 300ms ease-in-out;
+    }
+    .container-light{
+        left: 5rem;
+        animation: slide2 300ms ease-in-out;
     }
 
 }
