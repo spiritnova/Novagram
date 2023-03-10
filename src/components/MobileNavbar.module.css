@@ -9,6 +9,10 @@
     overflow: hidden;
 }
 .nav{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 0;
     width: 100%;
     display: flex;
     background-color: #121212;
@@ -46,7 +50,7 @@
 }
 .content{
     position: fixed;
-    bottom: 0;
+    bottom: 5rem;
     left: 0;
     z-index: 944;
     
@@ -139,11 +143,11 @@
 
 @keyframes emerge{
     0%{
-        bottom: -20rem;
+        bottom: -15rem;
     }
 
     100%{
-        bottom: 0;
+        bottom: 5rem;
     }
 }
 
