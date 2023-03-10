@@ -13,20 +13,30 @@
 
 .more{
     background-color: #121212;
-    display: block;
     color: white;
     outline: none;
     padding: 10px 16px;
     font-family: 'Poppins', sans-serif;
     margin-top: 175px;
-    width: 230px;
+    width: 100%;
     font-size: 16px;
     text-align: left;
-    border-radius: 24px;
     border: none;
 
-    position: fixed;
-    bottom: 1rem;
+    position: relative;
+}
+
+.more-light{
+    background-color: white;
+    color: black;
+    outline: none;
+    padding: 10px 16px;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 175px;
+    width: 100%;
+    font-size: 16px;
+    text-align: left;
+    border: none;
 }
 
 .more:hover{
@@ -47,11 +57,10 @@
     background-color: #333333;
     border-radius: 6px;
     position: fixed;
-    top: 455px;
-    left: 10px;
-    width: 238px;
+    bottom: 4.5rem;
+    left: 45px;
+    width: 240px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-    z-index: 999 !important;
 }
 
 .dropdown-content a{
@@ -101,20 +110,6 @@
     font-size: 22px;
 }
 
-.more-light{
-    background-color: white;
-    display: block;
-    color: black;
-    outline: none;
-    padding: 10px 16px;
-    font-family: 'Poppins', sans-serif;
-    margin-top: 175px;
-    width: 230px;
-    font-size: 16px;
-    text-align: left;
-    border-radius: 24px;
-    border: none;
-}
 
 .more-light:hover{
     background-color: #e4e4e4;
@@ -136,11 +131,10 @@
     color: black;
     border-radius: 6px;
     position: fixed;
-    top: 455px;
-    left: 10px;
-    width: 238px;
+    bottom: 4.5rem;
+    left: 45px;
+    width: 240px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-    z-index: 999 !important;
 }
 
 .dropdown-content-light a{

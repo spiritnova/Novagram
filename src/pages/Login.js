@@ -50,6 +50,9 @@ export default function Login(props) {
         setisLoading(false)
       }
 
+      if(data.username || data.password){
+        setisLoading(false)
+      }
 
       setData(data)
       sessionStorage.setItem('user_id', data.user_id)
@@ -96,7 +99,7 @@ export default function Login(props) {
           {data.password && <p className={styles.error}>{data.password}</p>}
           <button className={styles.loginBtn}>{isLoading ? <Loader type={'2'}/> : 'Login'}</button>
 
-          <p>
+          <p style={{marginBottom: 0}}>
             Don't have an account?{" "}
             <Link to="/register" className={styles.links}>
               Sign up

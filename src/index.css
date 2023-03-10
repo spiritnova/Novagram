@@ -21,6 +21,10 @@ body {
   overflow-x: hidden;
 }
 
+p{
+  /* margin-bottom: 0 !important; */
+}
+
 .dark{
   background-color: #121212;
   color: white;
