@@ -2,6 +2,7 @@ import styles from "./Login.module.css";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
+import Loader from '../components/UI Kit/Loader'
 
 export default function Register() {
   const [enteredPassword, setEnteredPassword] = useState("");
@@ -161,7 +162,7 @@ export default function Register() {
             }
             disabled={!formIsValid}
           >
-            Register
+            {isLoading ? <Loader type={'1'}/> : 'Register'}
           </button>
 
           <p>
