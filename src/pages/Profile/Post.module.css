@@ -173,6 +173,7 @@
 
 .modal-comment-container{
     margin-left: 15px;
+    width: 90%;
 }
 
 .modal-comment-details{
@@ -204,15 +205,19 @@
 }
 
 .modal-comment-user{
-    margin-right: 10px;
+    margin-right: 24px;
     font-weight: 600;
     font-size: 16px;
     margin-bottom: 0px !important;
+    width: 3rem;
+    overflow-x: hidden;
 }
 
 .modal-comment-content{
     font-size: 16px;
     margin-bottom: 0px !important;
+    text-align: left;
+    width: 20rem;
 }
 .modal-post-settings{
     background: none;

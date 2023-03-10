@@ -1,6 +1,4 @@
 export default function createComment({ comment, user_id, id }){
-
-    console.log(comment)
     const post = {
         "comment": comment,
         "user_id": user_id,
