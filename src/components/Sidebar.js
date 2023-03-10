@@ -273,9 +273,9 @@ export default function Sidebar(props){
             </nav> : ''}
             {showNotifications && <Notifications ref={notification}/>}
             {showSearch && <Search ref={search}/>}
-            {showBackdrop && <div className={styles.backdrop}></div>}
+            {showBackdrop && <div className={styles.backdrop} onClick={handleClose}></div>}
 
-            <div className={styles.modalWrapper} ref={wrapper}>
+            <div className={styles.modalWrapper} ref={wrapper} onClick={handleClose}>
                 <div className={styles.modal} ref={modal}>
                     <div>
                         <p>Create new post</p>
