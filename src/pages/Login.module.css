@@ -101,6 +101,10 @@
     transform: scale(1);
 }
 
+.loginBtn div{
+    position: static;
+}
+
 .links{
     color: rgb(32, 177, 255);
     text-decoration: none;

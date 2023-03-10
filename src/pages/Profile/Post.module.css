@@ -426,15 +426,7 @@
     color: rgb(250, 77, 77);
 }
 
-@media (max-width: 1240px){
-    .modal{
-        display: flex;
-        position: fixed;
-        max-width: 530px;
-        left: 4rem;
-        transform: scale(0.8);
-    }
-    
+@media (max-width: 1240px){    
     .modal-img{
         display: flex;
         justify-content: center;

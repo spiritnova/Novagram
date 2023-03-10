@@ -2,6 +2,7 @@ import styles from "./Login.module.css";
 import { useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from '../components/UI Kit/Loader'
 
 export default function Login(props) {
   const passwordRef = useRef();
@@ -12,6 +13,7 @@ export default function Login(props) {
   const navigate = useNavigate()
 
   const [data, setData] = useState([{}]);
+  const [isLoading, setisLoading] = useState(false)
 
   const formSubmissionHandler = (e) => {
     e.preventDefault();
@@ -31,6 +33,8 @@ export default function Login(props) {
 
     let api = 'https://novagram-api.onrender.com'
 
+    setisLoading(true)
+
     fetch(`${api}/login`, {
       method : "POST",
       headers : {"Content-Type": "application/json"},
@@ -40,6 +44,13 @@ export default function Login(props) {
       res => res.json()
     )
     .then(data => {
+      if(data.success){
+        props.onLogin();
+        navigate("/")
+        setisLoading(false)
+      }
+
+
       setData(data)
       sessionStorage.setItem('user_id', data.user_id)
       sessionStorage.setItem('username', data.username)
@@ -51,14 +62,9 @@ export default function Login(props) {
 
       if(data.bio !== null){
         sessionStorage.setItem('bio', data.bio)
-        console.log(data.bio)
       }
       if(data.email !== null){
         sessionStorage.setItem('email', data.email)
-      }
-      if(data.success){
-        props.onLogin();
-        navigate("/")
       }
     })
   };
@@ -88,7 +94,7 @@ export default function Login(props) {
             ref={passwordRef}
           />
           {data.password && <p className={styles.error}>{data.password}</p>}
-          <button className={styles.loginBtn}>Login</button>
+          <button className={styles.loginBtn}>{isLoading ? <Loader type={'2'}/> : 'Login'}</button>
 
           <p>
             Don't have an account?{" "}
