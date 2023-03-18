@@ -61,18 +61,21 @@ export default function Post(props){
         }
     })
 
-    const onLikeHandler = () => {
-        setIsLiked(current => !current)
+    const newLikeMutation = useMutation({
+        mutationFn: () => {
+            axios.post(`${route}/post/like`, {
+                post_id: postQuery.data.data.id,
+                user_id : user_id,
+                status : liked,
+            })
+        },
 
-        axios.post(`${route}/post/like`, {
-            post_id: postQuery.data.data.id,
-            user_id : user_id,
-            status : liked,
-        })
-
-        // => This prevents the query from sticking to it's prevState
-        queryClient.invalidateQueries(["posts", id], { exact : true} )
-    }
+        onSuccess: () => {
+            setIsLiked(current => !current)
+            // => This prevents the query from sticking to it's prevState
+            queryClient.invalidateQueries(["posts", id], { exact : true} )
+        }
+    })
 
     const refsById = useMemo(() => {
         const refs = {}
@@ -202,7 +205,7 @@ export default function Post(props){
                                 <div className={styles['icons-left']}>
                                     <button 
                                         className={styles.icon} 
-                                        ref={heart} onClick={onLikeHandler}
+                                        ref={heart} onClick={() => newLikeMutation.mutate()}
                                         style={postQuery.data.data.likes.length ? {color : 'red'} : {color : 'white'}}
                                     >
                                         <FontAwesomeIcon icon={faHeart}/>
