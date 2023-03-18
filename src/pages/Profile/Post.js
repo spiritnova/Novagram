@@ -244,7 +244,10 @@ export default function Post(props){
             {showModal && <Wrapper>
                 <div className={styles['post-backdrop']}>
                     <div className={styles['modal-close']}>
-                        <button onClick={() => setShowModal(false)}>
+                        <button onClick={() => {
+                                    setShowModal(false)
+                                    navigate(-2)
+                                }}>
                             <FontAwesomeIcon icon={faXmark}/>
                         </button>
                     </div>
