@@ -21,6 +21,7 @@ export default function Post(props){
 
     const darkTheme = useTheme()
 
+    const route = 'https://novagram-api.onrender.com/'
     let api = `https://novagram-api.onrender.com/${props.pseudoRoute}`
 
     useEffect(() => {
@@ -61,7 +62,7 @@ export default function Post(props){
     const onLikeHandler = () => {
         setIsLiked(current => !current)
 
-        axios.post('/post/like', {
+        axios.post(`${route}/post/like`, {
             post_id: postQuery.data.data.id,
             user_id : user_id,
             status : liked,
@@ -104,7 +105,7 @@ export default function Post(props){
     function postDeleteHandler(){
         setShowModal(false)
 
-        axios.post("/post/delete", {
+        axios.post(`${route}/post/delete`, {
             "id": postQuery.data?.data.id
         })
 

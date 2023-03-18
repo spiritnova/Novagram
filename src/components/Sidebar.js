@@ -153,7 +153,7 @@ export default function Sidebar(props){
     }
 
     const inputChangeHandler = (e) => {
-        modal.current.style.display = "none"
+        // modal.current.style.display = "none"
         modal2.current.style.display = "flex"
 
         if(!e.target.files || e.target.files.length === 0){
