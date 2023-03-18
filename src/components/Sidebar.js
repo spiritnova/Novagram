@@ -190,9 +190,9 @@ export default function Sidebar(props){
 
         const data = new FormData()
         data.append("image", files[0])
-        
-        setIsLoading(true)
 
+        setIsLoading(true)
+        
         const res = await fetch("https://api.imgur.com/3/image", {
             method: "POST",
             headers : {

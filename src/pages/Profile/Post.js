@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createRef, useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import styles from './Post.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,9 +19,11 @@ export default function Post(props){
 
     const queryClient = useQueryClient()
 
+    const navigate = useNavigate()
+
     const darkTheme = useTheme()
 
-    const route = 'https://novagram-api.onrender.com/'
+    const route = 'https://novagram-api.onrender.com'
     let api = `https://novagram-api.onrender.com/${props.pseudoRoute}`
 
     useEffect(() => {
@@ -93,24 +95,25 @@ export default function Post(props){
                 }
             })
         })
-    })
+    }, [postQuery.data?.data.comments, refsById, username])
     
     useEffect(() => {
-
         if(postQuery.data?.data.picture === null){
              setPfp(postQuery.data?.data.username.charAt(0))
         }
     }, [postQuery.data?.data.picture, postQuery.data?.data.username])
 
-    function postDeleteHandler(){
-        setShowModal(false)
-
-        axios.post(`${route}/post/delete`, {
+    const deletePostMutation = useMutation({
+        mutationFn: () =>  axios.post(`${route}/post/delete`, {
             "id": postQuery.data?.data.id
-        })
+        }),
 
-        queryClient.invalidateQueries(["posts"])
-    }
+        onSuccess: () => {
+            queryClient.invalidateQueries(["posts"])
+            setShowModal(false)
+            navigate(-2)
+        }
+    })
 
     if(postQuery.isLoading) return <div className={styles.loader}></div>
     if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error.message)}</pre>
@@ -247,7 +250,7 @@ export default function Post(props){
                 <div className={styles['post-wrapper']}>
                     <div className={styles['post-edit']}>
                         <div className={styles['post-buttons']}>
-                            <button onClick={postDeleteHandler}>Delete</button>
+                            <button onClick={() => deletePostMutation.mutate()}>Delete</button>
                             <button>Edit</button>
                             <button onClick={() => setShowModal(false)}>Cancel</button>
                         </div>
