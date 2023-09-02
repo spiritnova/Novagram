@@ -196,6 +196,12 @@
 }
 
 
+@media (max-width: 1240px){
+    .empty{
+        left: 2rem;
+    }
+}
+
 @media (max-width: 768px){
     .empty{
         left: 0;

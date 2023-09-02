@@ -91,9 +91,8 @@
     transform: scale(1.1);
 } 
 
-
-.loginBtn:hover{
-    transform: scale(1.1);
+.loginBtn div{
+    top: -1.4rem !important;
 }
 
 .loginBtn:disabled{
@@ -104,15 +103,10 @@
     transform: scale(1);
 }
 
-.loginBtn div{
-    top: -1.4rem !important;
-}
-
 .links{
     color: rgb(32, 177, 255);
     text-decoration: none;
 }
-
 
 
 .password-error{
