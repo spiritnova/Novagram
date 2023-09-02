@@ -9,6 +9,8 @@
 .more-div{
     display: flex;
     justify-content: center;
+    align-items: flex-end;
+    height: 26rem;
 }
 
 .more{
@@ -17,7 +19,6 @@
     outline: none;
     padding: 10px 16px;
     font-family: 'Poppins', sans-serif;
-    margin-top: 175px;
     width: 100%;
     font-size: 16px;
     text-align: left;
@@ -26,17 +27,22 @@
     position: relative;
 }
 
+.more svg{
+    bottom: 1rem;
+}
+
 .more-light{
     background-color: white;
     color: black;
     outline: none;
     padding: 10px 16px;
     font-family: 'Poppins', sans-serif;
-    margin-top: 175px;
     width: 100%;
     font-size: 16px;
     text-align: left;
     border: none;
+
+    position: relative;
 }
 
 .more:hover{
@@ -57,7 +63,7 @@
     background-color: #333333;
     border-radius: 6px;
     position: fixed;
-    bottom: 4.5rem;
+    bottom: 5rem;
     left: 45px;
     width: 240px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
@@ -131,7 +137,7 @@
     color: black;
     border-radius: 6px;
     position: fixed;
-    bottom: 4.5rem;
+    bottom: 5rem;
     left: 45px;
     width: 240px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);

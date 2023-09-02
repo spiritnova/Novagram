@@ -1,4 +1,5 @@
 import styles from "./Login.module.css";
+import styless from "./Register.module.css"
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
@@ -158,7 +159,7 @@ export default function Register() {
             }
           <button
             className={
-              styles.loginBtn
+              styless.regBtn
             }
             disabled={!formIsValid}
           >

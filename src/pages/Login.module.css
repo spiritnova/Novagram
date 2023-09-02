@@ -87,7 +87,10 @@
     border-radius: 0.25em;
     cursor: pointer;
     border: none;
+    position: relative;
+    transform: scale(1.1);
 } 
+
 
 .loginBtn:hover{
     transform: scale(1.1);
@@ -102,7 +105,7 @@
 }
 
 .loginBtn div{
-    position: static;
+    top: -1.4rem !important;
 }
 
 .links{
@@ -114,13 +117,13 @@
 
 .password-error{
     color: red;
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 10px;
 }
 
 .password-warning{
     color: #56a4ff;
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 10px;
 }
 
