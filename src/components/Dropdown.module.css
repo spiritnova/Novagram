@@ -2,15 +2,13 @@
 
 .icons{
     color: white;
-    margin-right: 15px;
     font-size: 22px;
 }
 
 .more-div{
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    height: 26rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .more{
@@ -112,7 +110,6 @@
 
 .icons-light{
     color: black;
-    margin-right: 15px;
     font-size: 22px;
 }
 
