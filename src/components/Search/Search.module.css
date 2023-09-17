@@ -254,11 +254,13 @@
     .container{
         left: auto;
         width: 100%;
+        height: 100%;
         animation: emerge 300ms ease-in-out;
     }
     .container-light{
         left: auto;
         width: 100%;
+        height: 100%;
         animation: emerge 300ms ease-in-out;
     }
 
