@@ -2,7 +2,7 @@ import styles from "./Login.module.css";
 import { useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { Link, useNavigate } from "react-router-dom";
-import Loader from '../components/UI Kit/Loader'
+import Loader from "../components/UI Kit/Loader";
 
 export default function Login(props) {
   const passwordRef = useRef();
@@ -10,10 +10,10 @@ export default function Login(props) {
 
   const darkTheme = useTheme();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [data, setData] = useState([{}]);
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setisLoading] = useState(false);
 
   const formSubmissionHandler = (e) => {
     e.preventDefault();
@@ -27,65 +27,70 @@ export default function Login(props) {
     }
 
     const data = {
-      "username" : usernameRef.current.value,
-      "password" : passwordRef.current.value,
-    }
+      username: usernameRef.current.value,
+      password: passwordRef.current.value,
+    };
 
-    let api = 'https://novagram-api.onrender.com'
+    let api = "https://novagram-api.onrender.com";
 
-    setisLoading(true)
+    setisLoading(true);
 
     fetch(`${api}/login`, {
-      method : "POST",
-      headers : {"Content-Type": "application/json"},
-      body : JSON.stringify(data),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     })
-    .then(
-      res => res.json()
-    )
-    .then(data => {
-      if(data.success){
-        props.onLogin();
-        navigate("/")
-        setisLoading(false)
-      }
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          props.onLogin();
+          navigate("/");
+          setisLoading(false);
+        }
 
-      if(data.username || data.password){
-        setisLoading(false)
-      }
+        if (data.username || data.password) {
+          setisLoading(false);
+        }
 
-      setData(data)
-      sessionStorage.setItem('user_id', data.user_id)
-      sessionStorage.setItem('username', data.username)
-      sessionStorage.setItem('name', data.name)
+        setData(data);
+        sessionStorage.setItem("user_id", data.user_id);
+        sessionStorage.setItem("username", data.username);
+        sessionStorage.setItem("name", data.name);
 
-      if(data.picture !== null){
-        sessionStorage.setItem('picture', data.picture)
-      }
+        if (data.picture !== null) {
+          sessionStorage.setItem("picture", data.picture);
+        }
 
-      if(data.bio !== null){
-        sessionStorage.setItem('bio', data.bio)
-      }
-      if(data.email !== null){
-        sessionStorage.setItem('email', data.email)
-      }
-    })
+        if (data.bio !== null) {
+          sessionStorage.setItem("bio", data.bio);
+        }
+        if (data.email !== null) {
+          sessionStorage.setItem("email", data.email);
+        }
+      });
   };
   return (
     <div className={styles.wrapper}>
       <form onSubmit={formSubmissionHandler}>
         <div
-          style={{height: 570}}
           className={`${styles.cover} ${
             darkTheme ? "" : styles["cover-light"]
           } `}
         >
-          <h1>Login</h1>
+          <div className={styles.logo}>
+            <img
+              src="https://via.placeholder.com/150"
+              alt="App Logo"
+              className={styles.logoImage}
+            />
+          </div>
+          <h1 className={styles.title}>Welcome Back</h1>
+          <p className={styles.subtitle}>Log in to continue</p>
           <input
             className={styles.inputs}
             type="text"
             name="username"
-            placeholder="username"
+            placeholder="Username"
             ref={usernameRef}
           />
           {data.username && <p className={styles.error}>{data.username}</p>}
@@ -93,26 +98,38 @@ export default function Login(props) {
             className={styles.inputs}
             type="password"
             name="password"
-            placeholder="password"
+            placeholder="Password"
             ref={passwordRef}
           />
           {data.password && <p className={styles.error}>{data.password}</p>}
-          <button className={styles.loginBtn}>{isLoading ? <Loader type={'2'}/> : 'Login'}</button>
+          <button className={styles.loginBtn}>
+            {isLoading ? <Loader type={"2"} /> : "Login"}
+          </button>
 
-          <p style={{marginBottom: 0}}>
+          <p className={styles.registerText}>
             Don't have an account?{" "}
             <Link to="/register" className={styles.links}>
               Sign up
             </Link>
           </p>
-          <p>Or</p>
-          <div className={styles.media}>
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/1384/1384053.png"
-              className={styles.facebook}
-              alt="facebook"
-            ></img>
-            Login with Facebook
+          <p className={styles.orText}>Or</p>
+          <div className={styles.socialMedia}>
+            <button className={styles.socialBtn}>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/281/281764.png"
+                alt="Google"
+                className={styles.socialIcon}
+              />
+              Login with Google
+            </button>
+            <button className={styles.socialBtn}>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1384/1384053.png"
+                alt="Facebook"
+                className={styles.socialIcon}
+              />
+              Login with Facebook
+            </button>
           </div>
         </div>
       </form>
