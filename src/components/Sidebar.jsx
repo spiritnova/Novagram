@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import styles from './Sidebar.module.css'
 import CreatePost from './CreatePost'
+import Logo from './Logo'
 import MoreMenu from './MoreMenu'
 import Notifications from './Notifications'
 import Search from './Search/Search'
@@ -72,8 +73,7 @@ export default function Sidebar({ onLogout }) {
         <>
             <nav className={styles.nav} ref={nav} aria-label="Main">
                 <Link to="/" className={styles.logo} aria-label="Novagram home">
-                    <span className={styles.wordmark}>Novagram</span>
-                    <span className={styles.glyph} aria-hidden="true">N</span>
+                    <Logo size={34} nameClassName={styles.wordmark} />
                 </Link>
 
                 <ul className={styles.list}>

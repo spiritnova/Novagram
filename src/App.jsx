@@ -73,11 +73,6 @@ const App = () => {
 
   usePrefetchPages(isLoggedIn)
 
-  // the login screen doesn't scroll; every other page does
-  useEffect(() => {
-    document.body.style.overflowY = isLoggedIn ? '' : 'hidden'
-  }, [isLoggedIn])
-
   function loginHandler(){
     sessionStorage.setItem('isLoggedIn', '1')
     setIsLoggedIn(true);

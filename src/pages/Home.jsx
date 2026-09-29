@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Wrapper from '../components/UI Kit/Wrapper'
 import { FeedSkeleton } from '../components/UI Kit/Skeleton'
@@ -26,10 +26,6 @@ export default function Home(){
 
     const queryClient = useQueryClient()
     const feedKey = ["home", username]
-
-    useEffect(() => {
-      document.body.style.overflow = showModal ? 'hidden' : 'auto'
-    }, [showModal])
 
     const feedQuery = useInfiniteQuery({
         queryKey: feedKey,

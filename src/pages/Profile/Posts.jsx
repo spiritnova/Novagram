@@ -20,14 +20,6 @@ export default function Posts(){
 
     const navigate = useNavigate()
 
-    if (showModal){
-        document.body.style.overflow = "hidden"
-    }
-
-    else{
-        document.body.style.overflow ="auto"
-    }
-
     const user = useParams()
 
     const postsQuery = useQuery({

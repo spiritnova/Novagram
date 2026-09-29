@@ -1,127 +1,136 @@
-import { Camera as CameraIcon, UserRound as UserRoundIcon } from 'lucide-react'
-import styles from "./Login.module.css";
-import { useRef, useState } from "react";
-import { useTheme } from "../context/ThemeContext";
-import { Link, useNavigate } from "react-router-dom";
-import Loader from "../components/UI Kit/Loader";
-import { login, demoLogin } from "../mock/api";
+import { UserRound } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-export default function Login(props) {
-  const passwordRef = useRef();
-  const usernameRef = useRef();
+import styles from './Auth/Auth.module.css'
+import AuthField from './Auth/AuthField'
+import AuthLayout from './Auth/AuthLayout'
+import Button from '../components/UI Kit/Button'
+import { demoLogin, login } from '../mock/api'
 
-  const darkTheme = useTheme();
+export default function Login({ onLogin }) {
+  const location = useLocation()
+  const navigate = useNavigate()
 
-  const navigate = useNavigate();
+  // arriving from the sign-up page: say so, and start with the username filled in
+  const created = location.state?.created === true
+  const [username, setUsername] = useState(location.state?.username ?? '')
+  const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
 
-  const [data, setData] = useState([{}]);
-  const [isLoading, setisLoading] = useState(false);
+  const usernameRef = useRef()
+  const passwordRef = useRef()
 
   const applySession = (data) => {
-    props.onLogin();
-    navigate("/");
+    sessionStorage.setItem('user_id', data.user_id)
+    sessionStorage.setItem('username', data.username)
+    sessionStorage.setItem('name', data.name)
 
-    sessionStorage.setItem("user_id", data.user_id);
-    sessionStorage.setItem("username", data.username);
-    sessionStorage.setItem("name", data.name);
+    if (data.picture !== null) sessionStorage.setItem('picture', data.picture)
+    if (data.bio !== null) sessionStorage.setItem('bio', data.bio)
+    if (data.email !== null) sessionStorage.setItem('email', data.email)
 
-    if (data.picture !== null) {
-      sessionStorage.setItem("picture", data.picture);
+    onLogin()
+    navigate('/', { replace: true })
+  }
+
+  const submit = (e) => {
+    e.preventDefault()
+
+    const found = {}
+    if (!username.trim()) found.username = 'Enter your username.'
+    if (!password) found.password = 'Enter your password.'
+
+    if (found.username || found.password) {
+      setErrors(found)
+      ;(found.username ? usernameRef : passwordRef).current.focus()
+      return
     }
 
-    if (data.bio !== null) {
-      sessionStorage.setItem("bio", data.bio);
-    }
-    if (data.email !== null) {
-      sessionStorage.setItem("email", data.email);
-    }
-  };
+    setErrors({})
+    setIsLoading(true)
 
-  const formSubmissionHandler = (e) => {
-    e.preventDefault();
+    login(username, password)
+      .then((data) => {
+        if (data.success) {
+          applySession(data)
+          return
+        }
+        setIsLoading(false)
+        setErrors({ form: data.username || data.password || "Couldn't log you in. Please try again." })
+      })
+      .catch(() => {
+        setIsLoading(false)
+        setErrors({ form: "Couldn't log you in. Please try again." })
+      })
+  }
 
-    if (usernameRef.current.value === "") {
-      return;
-    }
-
-    if (passwordRef.current.value === "") {
-      return;
-    }
-
-    setisLoading(true);
-
-    login(usernameRef.current.value, passwordRef.current.value).then((data) => {
-      setisLoading(false);
-      setData(data);
-
-      if (data.success) {
-        applySession(data);
-      }
-    });
-  };
-
-  const demoLoginHandler = () => {
-    setisLoading(true);
-    demoLogin().then((data) => {
-      setisLoading(false);
-      applySession(data);
-    });
-  };
+  const demo = () => {
+    setErrors({})
+    setIsLoading(true)
+    demoLogin()
+      .then(applySession)
+      .catch(() => {
+        setIsLoading(false)
+        setErrors({ form: "Couldn't start the demo. Please try again." })
+      })
+  }
 
   return (
-    <div className={styles.wrapper}>
-      <form onSubmit={formSubmissionHandler}>
-        <div
-          className={`${styles.cover} ${
-            darkTheme ? "" : styles["cover-light"]
-          } `}
-        >
-          <div className={styles.logo}>
-            <CameraIcon size="1em" aria-hidden="true" className={styles.logoIcon} />
-            <span className={styles.logoWordmark}>Novagram</span>
-          </div>
-          <h1 className={styles.title}>Welcome Back</h1>
-          <p className={styles.subtitle}>Log in to continue</p>
-          <input
-            className={styles.inputs}
-            type="text"
-            name="username"
-            placeholder="Username"
-            ref={usernameRef}
-          />
-          {data.username && <p className={styles.error}>{data.username}</p>}
-          <input
-            className={styles.inputs}
-            type="password"
-            name="password"
-            placeholder="Password"
-            ref={passwordRef}
-          />
-          {data.password && <p className={styles.error}>{data.password}</p>}
-          <button className={styles.loginBtn}>
-            {isLoading ? <Loader type={"2"} /> : "Login"}
-          </button>
+    <AuthLayout title="Welcome back" subtitle="Log in to see what your friends have been sharing.">
+      {created && (
+        <p className={`${styles.notice} ${styles.success}`} role="status">
+          Your account is ready. Log in to get started.
+        </p>
+      )}
+      {errors.form && (
+        <p className={`${styles.notice} ${styles.failure}`} role="alert">{errors.form}</p>
+      )}
 
-          <p className={styles.registerText}>
-            Don't have an account?{" "}
-            <Link to="/register" className={styles.links}>
-              Sign up
-            </Link>
-          </p>
-          <p className={styles.orText}>Or</p>
-          <div className={styles.socialMedia}>
-            <button
-              type="button"
-              className={styles.socialBtn}
-              onClick={demoLoginHandler}
-              disabled={isLoading}
-            >
-              <UserRoundIcon size="1em" aria-hidden="true" className={styles.socialIcon} />
-              Continue as demo user
-            </button>
-          </div>
-        </div>
+      <form className={styles.form} onSubmit={submit} noValidate>
+        <AuthField
+          label="Username"
+          name="username"
+          autoComplete="username"
+          autoCapitalize="none"
+          spellCheck="false"
+          autoFocus={!created}
+          inputRef={usernameRef}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          error={errors.username}
+        />
+        <AuthField
+          label="Password"
+          name="password"
+          type="password"
+          autoComplete="current-password"
+          autoFocus={created}
+          inputRef={passwordRef}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          error={errors.password}
+        />
+        <Button variant="primary" className={styles.full} disabled={isLoading}>
+          {isLoading && <span className={styles.spinner} aria-hidden="true" />}
+          {isLoading ? 'Logging in...' : 'Log in'}
+        </Button>
       </form>
-    </div>
-  );
+
+      <div className={styles.divider}>or</div>
+
+      <Button type="button" className={styles.full} onClick={demo} disabled={isLoading}>
+        <UserRound size={18} aria-hidden="true" />
+        Continue as demo user
+      </Button>
+      <p className={styles.demoNote}>
+        This is a portfolio demo with no server, so any username and password will get you in.
+      </p>
+
+      <p className={styles.switch}>
+        Don't have an account? <Link to="/register">Sign up</Link>
+      </p>
+    </AuthLayout>
+  )
 }

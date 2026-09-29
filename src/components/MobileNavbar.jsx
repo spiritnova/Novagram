@@ -1,13 +1,14 @@
 import { Menu } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import styles from './MobileNavbar.module.css'
+import Logo from './Logo'
 import MoreMenu from './MoreMenu'
 
 // The top bar on phones: the logo and the same menu that the sidebar's "More" button opens
 export default function MobileNavbar({ logout }){
     return(
         <header className={styles.nav}>
-            <Link to="/" className={styles.logo}>Novagram</Link>
+            <Link to="/" className={styles.logo} aria-label="Novagram home"><Logo size={30} /></Link>
             <MoreMenu
                 onLogout={logout}
                 placement="below"
