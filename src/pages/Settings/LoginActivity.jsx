@@ -1,68 +1,34 @@
-import styles from './LoginActivity.module.css'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Laptop, Smartphone } from 'lucide-react'
+import styles from './Settings.module.css'
 
+const SESSIONS = [
+    { device: 'Windows PC - Chrome', location: 'New York, United States', status: 'Active now', icon: Laptop, current: true },
+    { device: 'iPhone - Novagram app', location: 'New York, United States', status: '2 days ago', icon: Smartphone },
+    { device: 'MacBook - Safari', location: 'Boston, United States', status: '1 week ago', icon: Laptop },
+]
 
 export default function LoginActivity(){
-
-    const [location, setLocation] = useState('')
-    const [ip, setIp] = useState('')
-
-
-    useEffect(() => {
-        axios.get(`https://api.ipgeolocation.io/getip`)
-        .then(res => setIp(res.data.ip))
-
-
-        const options = {
-            method: 'GET',
-            url: 'https://ip-geolocation-ipwhois-io.p.rapidapi.com/json/',
-            params: {ip: ip},
-            headers: {
-              'X-RapidAPI-Key': 'f57112e585msh933b361a319e13cp161a9fjsnb2f2889df663',
-              'X-RapidAPI-Host': 'ip-geolocation-ipwhois-io.p.rapidapi.com'
-            }
-          };
-          
-          setTimeout(() => {
-            axios.request(options).then(function (response) {
-                const location = {
-                 city : response.data.city,
-                 country: response.data.country,
-                }
-                setLocation(location)
-             }).catch(function (error) {
-                 console.error(error);
-             });
-          }, 1000)
-    })
-
-
     return(
-        <div className={styles.wrapper}>
-            <div className={styles['activity-wrapper']}>
-                <p className={styles.para}>Login activity</p>
-                <p className={styles.para2}>Where You're Logged in</p>
-                <div className={styles['location-wrapper']}>
-                    <div className={styles['location-icon']}>
-                        <FontAwesomeIcon icon={faLocationDot} className={styles.icon}/>
-                    </div>
-                    <div className={styles.location}>
-                        <div>
-                            {location.city}, {location.country}
-                        </div>
+        <section className={styles.section}>
+            <h2 className={styles.title}>Login activity</h2>
+            <p className={styles.lead}>Where you're logged in. If you don't recognise a device, change your password.</p>
 
-                        <div className={styles.status}>
-                            Active now
+            <ul className={`${styles.card} ${styles.sessions}`}>
+                {SESSIONS.map(({ device, location, status, icon: Icon, current }) => (
+                    <li key={device} className={styles.session}>
+                        <span className={styles.sessionIcon}><Icon size={20} aria-hidden="true" /></span>
+                        <div className={styles.rowText}>
+                            <div className={styles.rowTitle}>
+                                {device}
+                                {current && <span className={styles.badge}>This device</span>}
+                            </div>
+                            <p className={styles.rowDesc}>{location} · {status}</p>
                         </div>
-                    </div>
-                </div>
-                <div className={styles.line}></div>
-            </div>
-        </div>
+                    </li>
+                ))}
+            </ul>
+
+            <p className={styles.hint}>Sample data for the demo.</p>
+        </section>
     )
 }
-
-

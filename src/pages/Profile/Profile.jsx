@@ -1,225 +1,200 @@
-import Wrapper from "../../components/UI Kit/Wrapper";
+import { Settings as SettingsIcon, Grid3x3 as Grid3x3Icon, Bookmark as BookmarkIcon } from 'lucide-react'
+
+import { Link, NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "../../context/ToastContext";
+
 import styles from "./Profile.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark, faGear, faTableCells } from "@fortawesome/free-solid-svg-icons";
-
-import { Link, Outlet, useParams } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useTheme } from "../../context/ThemeContext";
-
-import axios from "axios";
-import Loader from "../../components/UI Kit/Loader";
+import Button from "../../components/UI Kit/Button";
+import { Skeleton } from "../../components/UI Kit/Skeleton";
 import ProfileInfo from "../../components/ProfileInfo";
 import FollowModal from "../../components/FollowModal";
-import ProfileInfoMobile from "../../components/ProfileInfoMobile";
+import Highlights from "../../components/Highlights";
+import RichText from "../../components/RichText";
+import { followUser, getUserProfile, unfollowUser } from "../../mock/api";
 
 
 export default function Profile() {
 
-  const [differentProfile, setDifferentProfile] = useState(false)
   const [followersIsActive, setFollowersIsActive] = useState(false)
   const [followingIsActive, setFollowingIsActive] = useState(false)
-
-  const [valid, setIsValid] = useState(false)
-
+  const [postCount, setPostCount] = useState()
 
   const picture = sessionStorage.getItem('picture')
   const username = sessionStorage.getItem('username')
   const bio = sessionStorage.getItem('bio')
 
   const user = useParams()
+  const navigate = useNavigate()
 
-  const darkTheme = useTheme()
+  const queryClient = useQueryClient()
+  const showToast = useToast()
 
+  const isOwn = user.username === username
   const defaultImage = user.username.charAt(0).toUpperCase()
-
-
-  useMemo(() => { // This hook is to check whenever we visit other profiles
-    if (user.username !== username){
-      setDifferentProfile(true)
-    }
-    else{
-      setDifferentProfile(false)
-    }
-  }, [user.username, username])
-
-  let api = 'https://novagram-api.onrender.com'
 
   const userQuery = useQuery({
     queryKey: ["userData", user.username],
-    queryFn : () => axios.post(`${api}/user/${user.username}`, {
-      "username": username
-    }),
+    queryFn : () => getUserProfile(user.username, username),
+    retry: false,
   })
 
-  const [followed, setFollowed] = useState(false)
-
   useEffect(() => {
-    userQuery.data?.data.following.forEach(follow => {
-      if(follow.username === user.username){
-        setFollowed(true)
-      }
-    });
-  }, [user.username, userQuery.data?.data.following])
-
-  useEffect(() => {
-    if(userQuery.isLoading){
-      setIsValid(false)
+    if(userQuery.isError){
+      navigate("/404")
     }
-    else{
-      setIsValid(true)
-    }
-  }, [userQuery.isLoading])
+  }, [userQuery.isError, navigate])
 
-  const [postCount, setPostCount] = useState()
+  const followMutation = useMutation({
+    mutationFn: (nextFollowed) => nextFollowed
+      ? followUser(username, user.username)
+      : unfollowUser(username, user.username),
+    onMutate: async (nextFollowed) => {
+      const key = ["userData", user.username]
+      await queryClient.cancelQueries({ queryKey: key })
+      const previous = queryClient.getQueryData(key)
+      const me = { username, name: sessionStorage.getItem('name') ?? username, picture: picture ?? null }
 
-  let followers
+      queryClient.setQueryData(key, (data) => data && ({
+        ...data,
+        isFollowedByViewer: nextFollowed,
+        followers: nextFollowed
+          ? [...data.followers, me]
+          : data.followers.filter(f => f.username !== username),
+      }))
+      return { previous }
+    },
+    onError: (_error, _next, context) => {
+      queryClient.setQueryData(["userData", user.username], context.previous)
+      showToast('Something went wrong. Please try again.')
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["userData", user.username] })
+      queryClient.invalidateQueries({ queryKey: ["home", username] })
+      queryClient.invalidateQueries({ queryKey: ["stories", username] })
+      queryClient.invalidateQueries({ queryKey: ["suggestions", username] })
+    },
+  })
 
-  if(differentProfile){
-    followers = userQuery.data?.data.user_followers
-  }
-  else{
-    followers = userQuery.data?.data.followers
-  }
-
-  let following
-  if(differentProfile){
-    following = userQuery.data?.data.user_following
-  }
-  else{
-    following = userQuery.data?.data.following
-  }
-
-  const followHandler = () => {
-    setFollowed(prev => !prev)
-
-    axios.post(`${api}/follow`, {
-      "state": !followed,
-      "follower": username,
-      "followed": user.username
-    })
-  }
-
-
-
-  const followersClickHandler = () => {
-    setFollowersIsActive(true)
-  }
-
-  const followingClickHandler = () => {
-    setFollowingIsActive(true)
-  }
+  const followed = userQuery.data?.isFollowedByViewer ?? false
 
   const closeModalHandler = () => {
     setFollowersIsActive(false)
     setFollowingIsActive(false)
   }
 
-  return (
-    <Wrapper>
-      {valid && <div className={styles.wrapper}>
-        <div className={styles["profile-img-div"]}>
-          <div className={styles["profile-img"]}>
-            {differentProfile 
-            ? (userQuery.data?.data.picture 
-              ? <img src={userQuery.data?.data.picture} alt="profile"></img> 
-              : <div className={styles.defaultImg}><span>{defaultImage}</span></div>) 
-            : !picture 
-              ? <div className={styles.defaultImg}><span>{defaultImage}</span></div> 
-              : <img src={userQuery.data?.data.picture} alt="profile"></img>}
-          
+  const refreshProfile = () => queryClient.invalidateQueries({ queryKey: ["userData", user.username] })
+
+  if (userQuery.isPending) {
+    return (
+      <div className={styles.page} role="status" aria-label="Loading profile">
+        <div className={styles.header}>
+          <Skeleton className={styles.avatar} style={{ borderRadius: '50%' }} />
+          <div className={styles.skeletonLines}>
+            <Skeleton style={{ width: '10rem', height: '1.25rem' }} />
+            <Skeleton style={{ width: '16rem', height: '1rem' }} />
+            <Skeleton style={{ width: '12rem', height: '1rem' }} />
           </div>
         </div>
-
-        <div className={styles["profile-data"]}>
-          <div className={styles["profile-username"]}>
-            <p>{userQuery.data?.data.username}</p>
-            {!differentProfile ? <Wrapper>
-              <Link to="/settings" className={`${darkTheme ?  styles.setting : styles['setting-light']}`}>
-                Edit profile
-              </Link>
-              <Link to="/settings">
-                <FontAwesomeIcon
-                  icon={faGear}
-                  className={`${darkTheme ? styles.icon : styles['icon-light']}`}
-                ></FontAwesomeIcon>
-              </Link>
-            </Wrapper>:
-             <button 
-             className={styles.follow}
-             onClick={followHandler}
-             >
-              {followed ? 'Unfollow' : 'Follow'}
-            </button>}
-          </div>
-
-          <ProfileInfo 
-          followersClick={followersClickHandler}
-          followingClick={followingClickHandler}
-          differentProfile={differentProfile}
-          postCount={postCount}
-          userQuery={userQuery}
-          />
-
-          {followersIsActive && <FollowModal follows={followers} close={closeModalHandler} name={'Followers'}/>}
-          {followingIsActive && <FollowModal follows={following} close={closeModalHandler} name={'Following'}/>}
-
-          <div className={styles["profile-description"]}>
-            <div>{userQuery.data?.data.name}</div>
-            <p className={styles.bio}>
-              {differentProfile ? userQuery.data?.data.bio : bio}
-            </p>
-          </div>
-        </div>
-      </div>}
-
-      {valid &&
-      <div className={styles["profile-description-mobile"]}>
-        <div>{userQuery.data?.data.name}</div>
-        <p className={styles.bio}>
-          {differentProfile ? userQuery.data?.data.bio : bio}
-        </p>
       </div>
-      }
+    )
+  }
 
-      {valid && 
-      <ProfileInfoMobile
-        followersClick={followersClickHandler}
-        followingClick={followingClickHandler}
-        differentProfile={differentProfile}
-        postCount={postCount}
-        userQuery={userQuery}
+  if (!userQuery.isSuccess) return null
+
+  const profile = userQuery.data
+  const avatar = isOwn ? (picture || profile.picture) : profile.picture
+  const bioText = isOwn ? (bio ?? profile.bio) : profile.bio
+
+  return (
+    <div className={styles.page}>
+      <header className={styles.header}>
+        <div className={styles.avatar}>
+          {avatar
+            ? <img src={avatar} alt={`${profile.username}'s profile`} />
+            : <span>{defaultImage}</span>}
+        </div>
+
+        <div className={styles.top}>
+          <h1 className={styles.username}>{profile.username}</h1>
+
+          <div className={styles.actions}>
+            {isOwn ? (
+              <>
+                <Button as={Link} to="/settings">Edit profile</Button>
+                <Button as={Link} to="/settings" variant="ghost" aria-label="Settings" className={styles.iconButton}>
+                  <SettingsIcon size="1em" aria-hidden="true" />
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant={followed ? 'secondary' : 'primary'}
+                  onClick={() => followMutation.mutate(!followed)}
+                  disabled={followMutation.isPending}
+                  aria-pressed={followed}
+                  className={styles.followButton}
+                >
+                  {followed
+                    ? <span className={styles.swap}><span className={styles.idle}>Following</span><span className={styles.hover}>Unfollow</span></span>
+                    : 'Follow'}
+                </Button>
+                <Button as={Link} to={`/messages/${profile.username}`}>Message</Button>
+              </>
+            )}
+          </div>
+        </div>
+
+        <ProfileInfo
+          postCount={postCount}
+          followers={profile.followers.length}
+          following={profile.following.length}
+          onFollowers={() => setFollowersIsActive(true)}
+          onFollowing={() => setFollowingIsActive(true)}
+        />
+
+        <div className={styles.about}>
+          <div className={styles.name}>{profile.name}</div>
+          {bioText && <p className={styles.bio}><RichText text={bioText} /></p>}
+        </div>
+      </header>
+
+      {followersIsActive && <FollowModal
+        follows={profile.followers}
+        close={closeModalHandler}
+        name={'Followers'}
+        profileUsername={user.username}
+        viewerUsername={username}
+        onChanged={refreshProfile}
+      />}
+      {followingIsActive && <FollowModal
+        follows={profile.following}
+        close={closeModalHandler}
+        name={'Following'}
+        profileUsername={user.username}
+        viewerUsername={username}
+        onChanged={refreshProfile}
       />}
 
-      {userQuery.isLoading && <div className={styles.loader}><Loader type='2'/></div>}
+      <Highlights username={profile.username} picture={avatar} isOwn={isOwn} />
 
-      {valid && <div className={styles.divider}>
-        <div className={`${darkTheme ? styles.line : styles['line-light']}`}></div>
-      </div>}
+      <nav className={styles.tabs} aria-label="Profile sections">
+        <NavLink to={`/${user.username}`} end className={({ isActive }) => `${styles.tab} ${isActive ? styles.tabActive : ''}`}>
+          <Grid3x3Icon size="1em" aria-hidden="true" />
+          <span>Posts</span>
+        </NavLink>
+        {isOwn && (
+          <NavLink to={`/${username}/saved`} className={({ isActive }) => `${styles.tab} ${isActive ? styles.tabActive : ''}`}>
+            <BookmarkIcon size="1em" aria-hidden="true" />
+            <span>Saved</span>
+          </NavLink>
+        )}
+      </nav>
 
-      {valid && <div className={styles.section}>
-        <div className={styles.nav}>
-          <Link to={`/${user.username}`} className={`${darkTheme ? styles.links : styles['links-light']}`}>
-            <FontAwesomeIcon
-              icon={faTableCells}
-              className={styles.icons}
-            ></FontAwesomeIcon>
-            POSTS
-          </Link>
-          {!differentProfile ? <Link to={`/${username}/saved`} className={`${darkTheme ? styles.links : styles['links-light']}`}>
-            <FontAwesomeIcon
-              icon={faBookmark}
-              className={styles.icons}
-            ></FontAwesomeIcon>
-            SAVED
-          </Link>: ''}
-        </div>
-
-        <div className={styles.routes}>
-          <Outlet context={setPostCount}/>
-        </div>
-      </div>}
-    </Wrapper>
+      <div className={styles.routes}>
+        <Outlet context={setPostCount}/>
+      </div>
+    </div>
   );
 }

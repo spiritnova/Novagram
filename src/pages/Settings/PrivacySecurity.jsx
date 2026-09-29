@@ -1,55 +1,68 @@
-import styles from './PrivacySecurity.module.css'
+import styles from './Settings.module.css'
+import Button from '../../components/UI Kit/Button'
+import Switch from '../../components/UI Kit/Switch'
+import { Skeleton } from '../../components/UI Kit/Skeleton'
+import useSettings from './useSettings'
 
 export default function PrivacySecurity(){
+    const { settings, isPending, isError, refetch, save } = useSettings()
+
     return(
-        <div className={styles['profile-wrapper']}>
-           <div className={styles['privacy-wrapper']}>
-                <div className={styles['privacy-container']}>
-                    <p>Account privacy</p>
-                    <div className={styles['privacy-input']}>
-                        <input type="checkbox"/>
-                        <label>Private account</label>
+        <section className={styles.section}>
+            <h2 className={styles.title}>Privacy</h2>
+            <p className={styles.lead}>Control who sees your account and what they can see about it.</p>
+
+            {isError && (
+                <div className={styles.card}>
+                    <div className={styles.row}>
+                        <span>Couldn't load your settings.</span>
+                        <Button size="sm" onClick={() => refetch()}>Try again</Button>
                     </div>
-                    <p className={styles.para3}>When your account is private, only people you approve can see your photos and videos on Novagram.
-                    Your existing followers won't be affected.</p>
-                    <div className={styles.line}></div>
                 </div>
+            )}
 
+            {isPending && !isError && (
+                <div className={styles.card} role="status" aria-label="Loading settings">
+                    <div className={styles.row}><Skeleton style={{ height: '3rem', flex: 1 }} /></div>
+                    <div className={styles.row}><Skeleton style={{ height: '3rem', flex: 1 }} /></div>
+                </div>
+            )}
 
-                <div className={styles['privacy-container']}>
-                    <p>Account Status</p>
-                    <div className={styles['privacy-input']}>
-                        <input type="checkbox"/>
-                        <label>Show Activity Status</label>
+            {settings && (
+                <div className={styles.card}>
+                    <div className={styles.row}>
+                        <div className={styles.rowText}>
+                            <div id="setting-private" className={styles.rowTitle}>Private account</div>
+                            <p className={styles.rowDesc}>
+                                When your account is private, only people you approve can see your posts.
+                                Your existing followers won't be affected.
+                            </p>
+                        </div>
+                        <Switch
+                            checked={settings.privateAccount}
+                            onChange={(value) => save({ privateAccount: value })}
+                            aria-labelledby="setting-private"
+                        />
                     </div>
-                    <p className={styles.para3}>Allow accounts you follow and anyone you message to see when you were last active or are currently active on Novagram apps.
-                     When this is turned off, you won't be able to see the Activity Status of other accounts.</p>
 
-                     <p className={styles.para3}>You can continue to use our services if active status is off.</p>
-                    <div className={styles.line}></div>
+                    <div className={styles.row}>
+                        <div className={styles.rowText}>
+                            <div id="setting-activity" className={styles.rowTitle}>Show activity status</div>
+                            <p className={styles.rowDesc}>
+                                Let accounts you follow and anyone you message see when you were last active.
+                                If you turn this off, you won't see theirs either.
+                            </p>
+                        </div>
+                        <Switch
+                            checked={settings.activityStatus}
+                            onChange={(value) => save({ activityStatus: value })}
+                            aria-labelledby="setting-activity"
+                        />
+                    </div>
                 </div>
+            )}
 
-                <div className={styles['privacy-container']}>
-                    <p>Story</p>
-
-                    <button className={styles['privacy-buttons']}>Edit story settings</button>
-                    <div className={styles.line}></div>
-                </div>
-
-                <div className={styles['privacy-container']}>
-                    <p>Comments</p>
-
-                    <button className={styles['privacy-buttons']}>Edit comment settings</button>
-                    <div className={styles.line}></div>
-                </div>
-
-                <div className={styles['privacy-container']}>
-                    <p>Two-Factor-Authentication</p>
-
-                    <button className={styles['privacy-buttons']}>Edit Two-Factor-Authentication</button>
-                    <div className={styles.line}></div>
-                </div>
-           </div>
-        </div>
+            <p className={styles.hint}>This is a demo, so these preferences are saved but don't change what other accounts can see.</p>
+        </section>
     )
 }

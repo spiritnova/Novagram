@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import styles from './Follower.module.css'
 
-export default function Follower({username, name, picture, type, close}){
+export default function Follower({username, name, picture, type, close, onRemove}){
 
     const defaultImage = username.charAt(0).toUpperCase()
 
@@ -20,9 +20,9 @@ export default function Follower({username, name, picture, type, close}){
                     </Link>
                 </div>
             </div>
-            <div className={`${darkTheme ? styles.remove : styles['remove-light']}`}>
-                <button>{type !== 'follower' ? 'Unfollow' : 'Remove'}</button>
-            </div>
+            {onRemove && <div className={`${darkTheme ? styles.remove : styles['remove-light']}`}>
+                <button onClick={onRemove}>{type !== 'follower' ? 'Unfollow' : 'Remove'}</button>
+            </div>}
         </div>
     )
 }

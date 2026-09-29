@@ -1,0 +1,90 @@
+.stories{
+    --text: white;
+    --gap-bg: #121212;
+
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.25rem 0 1rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.stories::-webkit-scrollbar{
+    display: none;
+}
+
+.light{
+    --text: black;
+    --gap-bg: white;
+}
+
+.story{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    width: 4.5rem;
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    font: inherit;
+}
+
+.ring{
+    display: flex;
+    padding: 3px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
+    transition: transform 150ms ease;
+}
+
+.story:hover .ring{
+    transform: scale(1.06);
+}
+
+.story:focus-visible{
+    outline: 2px solid rgb(55, 147, 240);
+    outline-offset: 2px;
+    border-radius: 8px;
+}
+
+.seen{
+    background: rgba(128, 128, 128, 0.5);
+}
+
+.avatar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+    overflow: hidden;
+    border: 3px solid var(--gap-bg);
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--gap-bg);
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.avatar img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.name{
+    width: 100%;
+    font-size: 0.75rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .ring{ transition: none; }
+}

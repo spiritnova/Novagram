@@ -4,20 +4,25 @@
   margin: 0;
 }
 
+/* form controls don't inherit the page font by default */
+button, input, textarea, select {
+  font-family: inherit;
+}
+
 #root{
   height: 100%;
 }
 
 
 html {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
   height: 100%;
 }
 
 body {
   height: 100%;
-  color: white;
-  background-color: #121212;
+  color: var(--color-text);
+  background-color: var(--color-bg);
   overflow-x: hidden;
 }
 

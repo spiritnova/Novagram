@@ -1,39 +1,39 @@
+import { Bell, CircleHelp, History, Lock, Palette, ShieldCheck, User } from 'lucide-react'
+import { NavLink, Outlet } from 'react-router-dom'
 import styles from './Settings.module.css'
-import { Link, Outlet } from 'react-router-dom'
-import { useTheme } from '../../context/ThemeContext'
-import { useState } from 'react'
+
+const SECTIONS = [
+    { to: '/settings', label: 'Edit profile', icon: User, end: true },
+    { to: '/settings/appearance', label: 'Appearance', icon: Palette },
+    { to: '/settings/password_change', label: 'Password', icon: Lock },
+    { to: '/settings/emails/notifications', label: 'Notifications', icon: Bell },
+    { to: '/settings/privacy_and_security', label: 'Privacy', icon: ShieldCheck },
+    { to: '/settings/login_activity', label: 'Login activity', icon: History },
+    { to: '/settings/help', label: 'Help', icon: CircleHelp },
+]
 
 export default function Settings(){
-
-    const [showDropdown, setShowDropdown] = useState(false)
-
-    const darkTheme = useTheme()
     return(
-        <div className={darkTheme ? styles.wrapper : styles['wrapper-light']}>
-            <div className={darkTheme ? styles.sidebar : styles['sidebar-light']}>
-                <ul className={darkTheme ? styles['sidebar-links'] : styles['sidebar-links-light']}>
-                    <li><Link to="/settings">Edit profile</Link></li>
-                    <li><Link to="/settings/password_change">Change password</Link></li>
-                    <li><Link to="/settings/emails/notifications">Email notifications</Link></li>
-                    <li><Link to="/settings/privacy_and_security">Privacy and Security</Link></li>
-                    <li><Link to="/settings/login_activity">Login Activity</Link></li>
-                    <li><Link to="/settings/help">Help</Link></li>
+        <div className={styles.page}>
+            <nav className={styles.menu} aria-label="Settings sections">
+                <h1 className={styles.menuTitle}>Settings</h1>
+                <ul className={styles.menuList}>
+                    {SECTIONS.map(({ to, label, icon: Icon, end }) => (
+                        <li key={to}>
+                            <NavLink
+                                to={to}
+                                end={end}
+                                className={({ isActive }) => `${styles.menuLink} ${isActive ? styles.menuActive : ''}`}
+                            >
+                                <Icon size={18} strokeWidth={2} aria-hidden="true" />
+                                <span>{label}</span>
+                            </NavLink>
+                        </li>
+                    ))}
                 </ul>
-            </div>
+            </nav>
 
-            <div className={styles.mobileNavbar}>
-                <button onClick={() => setShowDropdown(prev => !prev)} className={`${darkTheme ? styles.dropbtn : styles['dropbtn-light']}`}>More settings</button>
-                {showDropdown && <div className={`${darkTheme ? styles.dropdownContent : styles['dropdownContent-light']}`}>
-                    <Link onClick={() => setShowDropdown(false)} to="/settings">Edit profile</Link>
-                    <Link onClick={() => setShowDropdown(false)} to="/settings/password_change">Change password</Link>
-                    <Link onClick={() => setShowDropdown(false)} to="/settings/emails/notifications">Email notifications</Link>
-                    <Link onClick={() => setShowDropdown(false)} to="/settings/privacy_and_security">Privacy and Security</Link>
-                    <Link onClick={() => setShowDropdown(false)} to="/settings/login_activity">Login Activity</Link>
-                    <Link onClick={() => setShowDropdown(false)} to="/settings/help">Help</Link>
-                </div>}
-            </div>
-            
-            <div className={styles.container}>
+            <div className={styles.panel}>
                 <Outlet/>
             </div>
         </div>

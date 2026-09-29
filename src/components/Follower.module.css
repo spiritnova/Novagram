@@ -9,6 +9,7 @@
 .user{
     display: flex;
     width: 50%;
+    min-width: 0;
 }
 
 .userPicture{
@@ -38,6 +39,7 @@
 .userInfo{
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .userInfo a{
@@ -58,9 +60,22 @@
     font-size: 14px;
 }
 
+.userInfo div{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .userInfo-light{
     display: flex;
     flex-direction: column;
+    min-width: 0;
+}
+
+.userInfo-light div{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .userInfo-light a{

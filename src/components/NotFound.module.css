@@ -9,6 +9,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 0 24px;
+    box-sizing: border-box;
     z-index: 2;
 }
 
@@ -34,6 +37,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 0 24px;
+    box-sizing: border-box;
     z-index: 2;
 }
 

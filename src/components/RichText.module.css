@@ -1,0 +1,10 @@
+/* :any-link outranks parent rules like ".modal-comment-details a" that set a link colour */
+.link:any-link{
+    color: var(--color-link);
+    text-decoration: none;
+}
+
+.link:any-link:hover{
+    color: var(--color-link);
+    text-decoration: underline;
+}

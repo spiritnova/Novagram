@@ -1,0 +1,64 @@
+.wrap{
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+.row{
+    -webkit-overflow-scrolling: touch;
+}
+
+/* soft edges hint that the row continues */
+.fadeEnd{
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent);
+}
+
+.fadeStart{
+    -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 3rem), transparent);
+    mask-image: linear-gradient(to left, #000 calc(100% - 3rem), transparent);
+}
+
+.fadeStart.fadeEnd{
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 3rem, #000 calc(100% - 3rem), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 3rem, #000 calc(100% - 3rem), transparent);
+}
+
+.arrow{
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background-color var(--transition);
+}
+
+.arrow:hover{
+    background: var(--color-surface-hover);
+}
+
+.left{
+    left: 0;
+}
+
+.right{
+    right: 0;
+}
+
+/* touch screens scroll by swiping, so the buttons would only get in the way */
+@media (hover: none){
+    .arrow{
+        display: none;
+    }
+}

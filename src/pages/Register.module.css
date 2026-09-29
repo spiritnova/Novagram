@@ -27,3 +27,18 @@
 .regBtn:disabled:hover{
     transform: scale(1);
 }
+
+.media{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    color: #666;
+    font-size: 0.85em;
+    text-align: center;
+}
+
+.facebook{
+    color: var(--login-blue);
+    flex-shrink: 0;
+}

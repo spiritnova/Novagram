@@ -1,310 +1,211 @@
-.wrapper{
+.page{
+    width: 100%;
+    max-width: 58rem;
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-4) var(--space-6);
+    color: var(--color-text);
+}
+
+.header{
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    grid-template-areas:
+        "avatar top"
+        "avatar stats"
+        "avatar about";
+    align-content: start;
+    column-gap: var(--space-6);
+    row-gap: var(--space-4);
+    max-width: 44rem;
+    margin: 0 auto;
+}
+
+.avatar{
+    grid-area: avatar;
     display: flex;
+    align-items: center;
     justify-content: center;
-    text-align: center;
-    height: 20rem;
-    padding: 20px;
-    position: relative;
-}
-
-.section{
-    justify-content: center;
-    text-align: center;
-}
-
-.profile-img-div{
-    justify-content: center;
-    text-align: right;
-    margin-top: 50px;
-    width: 50%;
-    display: flex;
-}
-
-.profile-img{
-    width: 150px;
-    height: 150px;
+    width: 9.5rem;
+    height: 9.5rem;
+    margin: 0 auto;
+    overflow: hidden;
+    background: var(--color-text);
+    color: var(--color-bg);
+    font-size: 3.5rem;
+    font-weight: 600;
     border-radius: 50%;
 }
 
-.profile-img img{
+.avatar img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
 }
 
-.defaultImg{
+.top{
+    grid-area: top;
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
-    background-color: blue;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin-left: 4rem;
+    gap: var(--space-3) var(--space-4);
 }
 
-.defaultImg span{
-    color: white;
-    font-size: 75px;
+.username{
+    font-size: 1.25rem;
+    font-weight: 500;
+    overflow-wrap: anywhere;
 }
 
-.profile-data{
-    justify-content: center;
-    text-align: left;
-    width: 80%;
-    margin-top: 10px;
-}
-
-.profile-username{
+.actions{
     display: flex;
     align-items: center;
+    gap: var(--space-2);
 }
 
-.profile-username p{
-    font-size: 20px;
-    margin-bottom: 0 !important;
+.iconButton{
+    padding: 0 var(--space-2);
+    font-size: 1.2rem;
+}
+
+/* "Following" turns into "Unfollow" on hover without the button changing width */
+.swap{
+    display: inline-grid;
+}
+
+.swap > span{
+    grid-area: 1 / 1;
+    text-align: center;
+}
+
+.hover{
+    visibility: hidden;
+}
+
+.followButton:hover .idle{
+    visibility: hidden;
+}
+
+.followButton:hover .hover{
+    visibility: visible;
+    color: var(--color-danger);
+}
+
+.about{
+    grid-area: about;
+    min-width: 0;
+}
+
+.name{
+    font-weight: 600;
 }
 
 .bio{
+    margin-top: var(--space-1);
+    line-height: 1.4;
     white-space: pre-line;
-    width: 150px;
+    overflow-wrap: anywhere;
 }
 
-.setting{
-    cursor: pointer;
-    margin-left: 20px;
-    padding: 7px 18px;
-    border-radius: 8px;
-    font-weight:600;
-    background-color: #fff;
-    text-decoration: none;
-    color: black;
-    font-size: 14px;
+.skeletonLines{
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    grid-area: top;
 }
 
-.setting:hover{
-    background-color: rgb(220, 220, 220);
-    color: black;
-}
-
-.setting-light{
-    cursor: pointer;
-    margin-left: 20px;
-    padding: 7px 18px;
-    border-radius: 8px;
-    font-weight:600;
-    background-color: rgb(45, 45, 45);
-    text-decoration: none;
-    color: #fff;
-    font-size: 14px;
-}
-
-.setting-light:hover{
-    background-color: #333333;
-    color: white;
-}
-
-.profile-description{
-    margin-top: 25px;
-    font-size: 14px;
-}
-
-.profile-description div{
-    font-weight: bold;
-}
-
-.profile-description p{
-    margin-bottom: 0px;
-}
-
-.profile-description-mobile{
-    padding:0 2rem;
-    margin-bottom: 4rem;
-    display: none;
-}
-
-.icon{
-    font-size: 22px;
-    margin-left: 15px;
-    color: white;
-}
-
-.icon-light{
-    color: #2f2f2f;
-    font-size: 22px;
-    margin-left: 15px;
-}
-
-.icon-light:hover{
-    color: #3d3d3d;
-}
-
-.icon:hover{
-    color: rgb(206, 206, 206);
-}
-
-.divider{
+.tabs{
+    display: flex;
     justify-content: center;
-    text-align: center;
+    gap: var(--space-6);
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+}
+
+.tab{
     display: flex;
-}
-
-.line{
-    background-color: #343434;
-    width: 960px;
-    height: 1px;
-}
-
-.line-light{
-    background-color: #cccccc;
-    width: 960px;
-    height: 1px;
-}
-
-.links{
-    display: flex;
-    flex-direction: row;
     align-items: center;
-    color: white;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-1);
+    margin-top: -1px;
+    color: var(--color-text-muted);
+    font-size: var(--font-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     text-decoration: none;
-    font-size: 14px;
-    margin-right: 44px;
-    margin-left: 40px;
-    margin-bottom: 19px;
-    border-top: 1px solid white;
-    padding-top: 15px;
+    border-top: 1px solid transparent;
 }
 
-.links:hover{
-    color: white;
+.tab:hover{
+    color: var(--color-text);
 }
 
-.links-light{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    color: black;
-    text-decoration: none;
-    font-size: 14px;
-    margin-right: 44px;
-    margin-left: 40px;
-    margin-bottom: 19px;
-    border-top: 1px solid black;
-    padding-top: 15px;
+.tabActive{
+    color: var(--color-text);
+    border-top-color: var(--color-text);
 }
 
 .routes{
-    text-align: center;
-    justify-content: flex-start;
-    display: flex;
-    padding: 0 165px;
+    padding-top: var(--space-2);
 }
 
-.nav{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 55px;
-}
-
-.icons{
-    margin-right: 10px;
-}
-
-
-
-.loader{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-}
-
-.follow{
-    padding: 4px 16px !important;
-    border-radius: 8px;
-    background-color: rgb(82, 121, 249);
-    color: white;
-    margin-left: 2rem;
-}
-
-@media (min-width: 1041px) and (max-width: 1260px){
-    .routes{
-        padding: 0 30px;
+@media (max-width: 768px){
+    .page{
+        padding: var(--space-4) var(--space-3);
     }
-}
 
-@media (max-width: 1040px){
-    .routes{
-        padding: 0;
+    .header{
+        grid-template-columns: 5.5rem 1fr;
+        grid-template-areas:
+            "top top"
+            "avatar stats"
+            "about about";
+        column-gap: var(--space-4);
+        row-gap: var(--space-3);
     }
-}
 
-@media (max-width : 768px){
-    .profile-img-div{
+    .avatar{
+        width: 5.5rem;
+        height: 5.5rem;
+        font-size: 2rem;
+    }
+
+    /* the username stays on top and the buttons drop to their own full-width row */
+    .top{
+        display: contents;
+    }
+
+    .username{
+        grid-area: top;
+        font-size: var(--font-lg);
+        font-weight: 600;
+    }
+
+    .actions{
+        order: 10;
+        grid-column: 1 / -1;
+        grid-row: 4;
+    }
+
+    .actions > *{
+        flex: 1;
+    }
+
+    .actions > .iconButton{
+        flex: 0 0 auto;
+    }
+
+    .tabs{
+        gap: 0;
+        margin-top: var(--space-2);
+    }
+
+    .tab{
+        flex: 1;
         justify-content: center;
-        text-align: right;
-        margin-top: 30px;
-        width: 50%;
-        display: flex;
-        margin-right: 3rem;
     }
 
-    .profile-img{
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-    }
-
-}
-
-@media (max-width : 450px){
-    .wrapper{
-        height: 10rem;
-        align-items: start;
-    }
-
-    .profile-description{
+    .tab span{
         display: none;
-    }
-
-    .profile-description-mobile{
-        display: block;
-    }
-
-    .profile-img{
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-    }
-
-    .profile-img-div{
-        margin-right: 0;
-        align-items: center;
-    }
-
-    .profile-username{
-        flex-direction: column;
-    }
-
-    .profile-username p{
-        margin-bottom: 1rem !important;
-    }
-
-    .profile-username a:nth-child(3){
-        display: none;
-    }
-
-}
-
-@media (min-width : 1200px){
-    .profile-img{
-        margin-left: 10rem;
-    }
-}
-
-@media (min-width: 1600px){
-    .profile-img{
-        margin-left: 20rem;
     }
 }

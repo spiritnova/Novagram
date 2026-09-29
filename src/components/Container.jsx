@@ -1,17 +1,10 @@
-import { useTheme } from '../context/ThemeContext';
 import styles from './Container.module.css'
 
+// The main content area next to the sidebar
 export default function Container({children}){
-
-    const darkTheme = useTheme()
-
-    if(darkTheme){
-        document.body.style.backgroundColor = '#121212'
-    }
-
     return (
-        <div className={darkTheme ? styles['container'] : styles['container-light']}>
+        <main id="main" className={styles.container} tabIndex={-1}>
             {children}
-        </div>
+        </main>
     )
 }

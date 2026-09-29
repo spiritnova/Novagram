@@ -59,6 +59,30 @@
 }
 
 
+.loadMoreWrapper{
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.loadMore{
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid rgb(80, 80, 80);
+    background: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.loadMore:hover{
+    background-color: rgba(128, 128, 128, 0.15);
+}
+
+.loadMore:disabled{
+    opacity: 0.6;
+    cursor: default;
+}
+
 @media (max-width: 768px){
 
     .cards{
@@ -67,4 +91,143 @@
     .buttons svg{
         font-size: 1rem;
     }
+}
+
+@media (max-width: 480px){
+    .cards{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3%;
+    }
+}
+
+.status{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.status button{
+    padding: 0.5rem 1.25rem;
+    background-color: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.footerText{
+    margin: 1.5rem 0;
+    text-align: center;
+    color: rgb(128, 128, 128);
+    font-size: 0.9rem;
+}
+
+
+.tags{
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tags::-webkit-scrollbar{
+    display: none;
+}
+
+.tag{
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    padding: 0.35rem 0.9rem;
+    color: inherit;
+    font-size: 0.85rem;
+    text-decoration: none;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-radius: 999px;
+}
+
+.tag span{
+    color: rgb(128, 128, 128);
+    font-size: 0.75rem;
+}
+
+.tag:hover{
+    background: rgba(128, 128, 128, 0.15);
+}
+
+.tagActive, .tagActive:hover{
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: white;
+}
+
+.tagActive span{
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.tagHeader{
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.tagHeader h1{
+    font-size: 1.5rem;
+}
+
+.tagHeader span{
+    color: rgb(128, 128, 128);
+}
+
+.tagHeader a{
+    margin-left: auto;
+    color: rgb(55, 147, 240);
+    text-decoration: none;
+}
+
+.tile{
+    display: block;
+    width: 100%;
+    padding: 0;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.tile:focus-visible{
+    outline: 2px solid rgb(55, 147, 240);
+    outline-offset: 2px;
+}
+
+.cards{
+    grid-auto-flow: dense;
+}
+
+.featured{
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.buttons{
+    gap: 1rem;
+}
+
+.buttons span{
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: white;
+    font-weight: 600;
+}
+
+.buttons span svg{
+    font-size: 1.1rem;
 }

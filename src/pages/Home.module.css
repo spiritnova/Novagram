@@ -1,213 +1,82 @@
-.wrapper{
-    width: 100%;
+/* The feed and the suggestions column sit side by side as one centred block. */
+
+.layout{
     display: flex;
+    align-items: flex-start;
     justify-content: center;
-}
-.cards{
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    margin-right: 20rem;
-    overflow-x: hidden;
-}
-
-.card{
-    display: flex;
-    flex-direction: column;
-
-    margin-bottom: 2rem;
-}
-
-.info{
-    display: flex;
-    align-items: center;
-    padding: 10px 0px;
-}
-
-.username{
-    margin-left: 0.5rem;
-    font-weight: 600;
-    letter-spacing: 0.05rem;
-}
-
-.username a{
-    text-decoration: none;
-    color: white;
-}
-
-.username a:hover{
-    color: whitesmoke;
-}
-
-.pfp{
-    width: 2rem;
-    height: 2rem;
-    background-color: white;
-    border-radius: 50%;
-}
-
-.light{
-    background-color: black;
-    color: white;
-}
-
-.light-text{
-    color: black !important;
-}
-
-.light-text a{
-    color: black !important;
-}
-
-.light-text button{
-    color: rgb(129, 129, 129) !important;
-}
-
-.date{
-    margin-left: 0.5rem;
-    color: rgb(180, 180, 180);
-}
-.date-light{
-    margin-left: 0.5rem;
-    color: rgb(102, 102, 102);
-}
-
-.img{
-    vertical-align: top;
-    height: 468px;
-    width: 468px;
-}
-
-.img img{
+    gap: 4rem;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: var(--space-5) var(--space-4);
+}
+
+.feed{
+    display: flex;
+    flex: 0 1 37.5rem;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+}
+
+.status{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+.status h2{
+    color: var(--color-text);
+}
+
+.status a{
+    color: var(--color-accent-text);
+}
+
+.status button, .retry{
+    padding: var(--space-2) var(--space-4);
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    background: var(--color-accent);
+    border: none;
+    border-radius: var(--radius-md);
     cursor: pointer;
 }
 
-
-.buttons{
-    padding: 10px 0px;
-}
-
-.buttons button{
-    background: none;
-    color: white;
-    font-size: 1.4rem;
-    margin-right: 1rem;
-    border: none;
-}
-
-.buttons button:hover{
-    animation: heartbeat 300ms ease-in-out;
-}
-
-@keyframes heartbeat {
-    0%{
-        transform: scale(1);
-    }
-
-    50%{
-        transform: scale(1.3);
-    }
-
-    100%{
-        transform: scale(1);
-    }
-}
-
-
-.footer{
-    display: flex;
-    flex-direction: column;
-}
-
-.footer button{
-    text-align: left;
-    background: none;
-    color: rgb(148, 148, 148);
-    border: none;
-}
-.footer-light{
-    display: flex;
-    flex-direction: column;
-}
-
-.footer-light button{
-    text-align: left;
-    background: none;
-    color: #266bff;
-    border: none;
-}
-
-.post{
-    width: 30rem;
-    border-bottom: 1px solid white;
-}
-
-.post input{
-    background: none;
-    color: white;
-    border: none;
-    padding: 10px 0px;
-    outline: none;
-    font-size: 15px;
-    width: 26rem;
-}
-
-.post button{
-    background: none;
-    color: rgb(55, 147, 240);
-    font-weight: 500;
-}
-
-.post-light{
-    width: 30rem;
-    border-bottom: 1px solid rgb(0, 0, 0);
-}
-
-.post-light input{
-    background: none;
-    color: black;
-    border: none;
-    padding: 10px 0px;
-    outline: none;
-    font-size: 15px;
-    width: 26rem;
-}
-
-.post-light button{
-    background: none;
-    color: rgb(55, 147, 240);
-    font-weight: 500;
-}
-
-.empty{
+.sentinel{
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    position: fixed;
-    top: 15rem;
-    left: 6rem;
-
+    height: 1px;
 }
 
+.more{
+    margin: 0 auto var(--space-6);
+    color: var(--color-text-muted);
+    font-size: var(--font-sm);
+}
 
-@media (max-width: 1240px){
-    .empty{
-        left: 2rem;
-    }
+.retry{
+    align-self: center;
+    margin-bottom: var(--space-6);
 }
 
 @media (max-width: 768px){
-    .empty{
-        left: 0;
+    .layout{
+        padding: var(--space-3);
+    }
+}
+
+@media (min-width: 1800px){
+    .layout{
+        max-width: 74rem;
+        gap: 5rem;
     }
 
-    .cards{
-        margin-right: 0;
+    .feed{
+        flex-basis: 43rem;
     }
 }

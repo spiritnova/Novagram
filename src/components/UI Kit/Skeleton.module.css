@@ -1,0 +1,77 @@
+.skeleton{
+    background: linear-gradient(90deg, rgba(128,128,128,0.18) 25%, rgba(128,128,128,0.32) 50%, rgba(128,128,128,0.18) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+    border-radius: 6px;
+}
+
+@keyframes shimmer{
+    from{ background-position: 200% 0; }
+    to{ background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .skeleton{ animation: none; }
+}
+
+.feed{
+    width: 100%;
+}
+
+.stories{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.story{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.circle{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+
+.post{
+    margin-bottom: 2rem;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 10px 0;
+}
+
+.avatar{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}
+
+.image{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
+}
+
+.line{
+    height: 0.8rem;
+}
+
+.grid{
+    display: grid;
+    gap: 2%;
+}
+
+.tile{
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
+}
+

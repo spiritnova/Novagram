@@ -1,59 +1,47 @@
-.profile-info{
+.stats{
     display: flex;
-    align-items: center;
-    margin-top: 25px;
-    font-size: 16px;
+    gap: var(--space-6);
+    list-style: none;
 }
 
-.profile-info div{
-    margin-right: 40px;
-}
-
-.followBtn{
+.stat{
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-1);
+    padding: 0;
     background: none;
-    color: white;
-    margin-right: 2rem;
     border: none;
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--font-md);
 }
 
-.followBtn:active{
-    color: rgb(149, 149, 149);
+button.stat{
+    cursor: pointer;
 }
 
-.followBtn:disabled{
-    border: none;
+button.stat:hover span{
+    text-decoration: underline;
 }
 
-.followBtn-light{
-    background: none;
-    color: rgb(30, 30, 30);
-    margin-right: 2rem;
-    border: none;
+.stat b{
+    font-weight: 700;
 }
 
-.followBtn-light:active{
-    color: rgb(149, 149, 149);
-}
-
-.followBtn-light:disabled{
-    border: none;
-}
-
-@media (max-width : 768px){
-    .followDiv{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    .followBtn{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+@media (max-width: 768px){
+    .stats{
+        justify-content: space-around;
+        gap: var(--space-2);
     }
 
-    .profile-info{
-        display: none;
+    .stat{
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        font-size: var(--font-sm);
+    }
+
+    .stat b{
+        font-size: var(--font-lg);
     }
 }

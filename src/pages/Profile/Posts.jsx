@@ -1,14 +1,14 @@
 import styles from './Posts.module.css'
 import { useQuery } from '@tanstack/react-query'
-import { Link, useLocation, useNavigate, useOutletContext, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useOutletContext, useParams } from 'react-router-dom'
 
-import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Heart, MessageCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import Post from './Post'
 import Wrapper from '../../components/UI Kit/Wrapper'
-import Loader from '../../components/UI Kit/Loader'
+import { GridSkeleton } from '../../components/UI Kit/Skeleton'
+import { getUserPosts } from '../../mock/api'
 
 export default function Posts(){
     const [showModal, setShowModal] = useState(false)
@@ -19,8 +19,6 @@ export default function Posts(){
     const location = useLocation()
 
     const navigate = useNavigate()
-
-    let api = 'https://novagram-api.onrender.com'
 
     if (showModal){
         document.body.style.overflow = "hidden"
@@ -34,8 +32,7 @@ export default function Posts(){
 
     const postsQuery = useQuery({
         queryKey: ["posts", user.username],
-        queryFn:() => fetch(`${api}/${user.username}`)
-        .then(res => res.json()),
+        queryFn:() => getUserPosts(user.username),
     })
 
     useEffect(() => {
@@ -49,7 +46,7 @@ export default function Posts(){
         }
     }, [postsQuery.isError, postsQuery.error, navigate])
 
-    if(postsQuery.isLoading) return
+    if(postsQuery.isLoading) return <GridSkeleton />
           
     return(
         <Wrapper>
@@ -58,22 +55,23 @@ export default function Posts(){
             :
             <div className={styles.cards}>
                 {postsQuery.data.posts.map(post => (
-                    <Link key={post.id} onClick={
-                        () => {
+                    <button
+                        key={post.id}
+                        type="button"
+                        className={styles.card}
+                        aria-label={`Open post, ${post.likes} like${post.likes === 1 ? '' : 's'}, ${post.comments} comment${post.comments === 1 ? '' : 's'}`}
+                        onClick={() => {
                             setShowModal(true)
                             setPostId(post.id)
-                        }
-                        }>
-                        <div className={styles.card}>
-                            <img src={post.image} className={styles.test} alt="posts"/>
+                        }}
+                    >
+                            <img src={post.image} className={styles.test} alt=""/>
                             <div className={styles.buttons}>
-                                <FontAwesomeIcon icon={faHeart} className={styles.button}></FontAwesomeIcon>
-                                <FontAwesomeIcon icon={faComment} className={styles.button}></FontAwesomeIcon>
+                                <span><Heart size={20} fill="currentColor" aria-hidden="true" />{post.likes}</span>
+                                <span><MessageCircle size={20} fill="currentColor" aria-hidden="true" />{post.comments}</span>
                             </div>
-                        </div>
-                    </Link>
+                    </button>
                 ))}
-                {postsQuery.isLoading && <div className={styles.loader}><Loader type={'1'}/></div>}
                 {showModal && 
                 <Post 
                     onClose={() => setShowModal(false)}
